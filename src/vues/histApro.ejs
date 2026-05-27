@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/accordions.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:35 GMT -->
+<%- include('head')%>
+  <style>
+    .wrap-text {
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+  </style>
+  <body>
+
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+
+      <!-- App header starts -->
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+
+        <!-- Sidebar wrapper starts -->
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+        <!-- Sidebar wrapper ends -->
+
+        <!-- App container starts -->
+        <div class="app-container">
+
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="/index">Accueil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Historique des approvisionnement
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+
+            <!-- Sales stats starts -->
+            
+            <!-- Sales stats ends -->
+
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- App body starts -->
+          <div class="app-body">
+
+            <% if(msg) {%>
+              <div class="alert bg-white border alert-dismissible fade show <%= tc %>"  role="alert">
+                <b><%= msg %></b>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% }%>
+
+            <!-- Row starts -->
+            <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title">Historique des approvisionnement</h5>
+                    </div>
+                    <div class="card-body">
+  
+                      <!--  aria-controls="basicExample" Table starts id="basicExample" class="table truncate m-0 align-middle dataTable" aria-describedby="basicExample_filter">-->
+                      <div class="table-responsive">
+                        <table id="" class="table truncate m-0 align-middle dataTable customButtone" data-export-subtitle="Historique des approvisionnement" aria-describedby="basicExample_filter">
+                          <thead class="text-center">
+                            <tr>
+                              <th class="no-calc">ID</th>
+                              <th class="no-calc">Nom de l'article</th>
+                              <th class="no-calc">Quantiter reçu</th>
+                              <th class="no-calc">Prix a l'uniter</th>
+                              <th class="no-calc">Montant</th>
+                              <th class="no-calc">Destinataire</th>
+                              <th class="no-calc">Commantaire</th>
+                              <th class="no-calc">Date de l'operation</th>
+                              <th class="no-calc">Heure de l'operation</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center" id="tbody2">
+                            <% apros.forEach((apro, index) => { %>
+                              <tr>
+                                <td><%= apro.slug_id %></td>
+                                <td><%= apro.article.nom %></td>
+                                <td><%= apro.quantiter %></td>
+                                <td><%= apro.prix_unit %></td>
+                                <td ><%= apro.prix_unit * apro.quantiter %></td>
+                                <td><%= apro.caisse.nom %></td>
+                                <td class="wrap-text"><%= apro.commantaire %></td>
+                                <td><%= new Date(apro.created).getDate() %>-<%= new Date(apro.created).getMonth() + 1 %>-<%= new Date(apro.created).getFullYear()%></td>
+                                <td><%= new Date(apro.created).getHours() %>-<%= new Date(apro.created).getMinutes() %>-<%= new Date(apro.created).getSeconds()%></td>
+                              </tr>
+                            <% }) %>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- Table ends -->
+  
+                      <!-- Modal Delete Row -->
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- Row ends -->
+
+            <!-- Row starts -->
+            
+            <!-- Row ends -->
+
+          
+            <!-- Row starts -->
+            <!-- Row ends -->
+
+            <!-- Row starts -->
+            
+            <!-- Row ends -->
+           
+          </div>
+          <!-- App body ends -->
+
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+          <!-- App footer ends -->
+
+        </div>
+        <!-- App container ends -->
+
+      </div>
+      <!-- Main container ends -->
+
+    </div>
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <!-- Data Tables -->
+    <!-- Custom JS files -->
+
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted || 
+                               (typeof window.performance != "undefined" && 
+                                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Si l'utilisateur est revenu en arrière, on recharge la page proprement
+            window.location.reload();
+        }
+      });
+      
+    </script>
+    <%- include('script')%>
+  </body>
+  
+
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/accordions.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:35 GMT -->
+</html>

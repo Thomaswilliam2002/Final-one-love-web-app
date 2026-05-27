@@ -74,12 +74,12 @@
             <!-- Row starts -->
             <div class="row gx-3">
               <div class="col-sm-12">
-                <div class="accordion mb-3" id="accordionSpecialTitle<%= produit.id_produit %>">
+                <div class="accordion mb-3" id="accordionA<%= produit.id_produit %>">
                   <div class="accordion-item ">
                     <div >
                         <h2 class="accordion-header" id="headingSpecialTitle<%= produit.id_produit %>">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseSpecialTitle<%= produit.id_produit %>" aria-expanded="true"
+                            data-bs-target="#collapseSpecialTitle<%= produit.id_produit %>" aria-expanded="false"
                             aria-controls="collapseSpecialTitle<%= produit.id_produit %>">
                             <div class="d-flex flex-column">
                               <h5>Historique des achat/Entrer de produit</h5>
@@ -89,30 +89,30 @@
                     </div>
                     
                     <div id="collapseSpecialTitle<%= produit.id_produit %>" class="accordion-collapse collapse"
-                      aria-labelledby="headingSpecialTitle<%= produit.id_produit %>" data-bs-parent="#accordionSpecialTitle<%= produit.id_produit %>">
+                      aria-labelledby="headingSpecialTitle<%= produit.id_produit %>" data-bs-parent="#accordionA<%= produit.id_produit %>">
                       <div class="accordion-body">
                         <div class="table-responsive">
                           <table id=""  class="table truncate m-0 align-middle customButtone" data-export-subtitle="Liste des historiques d'approvisionnement du produit <%= produit.nom %>" aria-describedby="basicExample_filter">
                             <thead class="text-center">
                               <tr>
-                                <th>ID</th>
+                                <th class="no-calc">ID</th>
                                 <th>Quantiter AJouter</th>
-                                <th>Prix a l'uniter</th>
+                                <th class="no-calc">Prix a l'uniter</th>
                                 <th>Montant</th>
-                                <th>Emmeteur</th>
-                                <th>Date de l'operation</th>
-                                <th>Heure de l'operation</th>
-                                <th>Action</th>
+                                <th class="no-calc">Fournisseur</th>
+                                <th class="no-calc">Date de l'operation</th>
+                                <th class="no-calc">Heure de l'operation</th>
+                                <th class="no-calc">Action</th>
                               </tr>
                             </thead>
                             <tbody class="text-center" id="tbody1">
-                              <% i = 1; total_q = 0; total_p = 0; montant = 0; hachats.forEach((hachat, index) => {%>
+                              <% total_q = 0; total_p = 0; montant = 0; hachats.forEach((hachat, index) => {%>
                               <tr>
-                                <td><%= i %></td>
+                                <td><%= hachat.slug_id %></td>
                                 <td><%= hachat.quantiter %></td>
                                 <td><%= hachat.prix_unit %></td>
-                                <td class="calcule1"><%= hachat.prix_unit * hachat.quantiter %></td>
-                                <td><%= hachat.donneur %></td>
+                                <td><%= hachat.prix_unit * hachat.quantiter %></td>
+                                <td><%= hachat.Fournisseur.nom %></td>
                                 <td><%= new Date(hachat.created).getDate() %>-<%= new Date(hachat.created).getMonth() + 1 %>-<%= new Date(hachat.created).getFullYear()%></td>
                                 <td><%= new Date(hachat.created).getHours() %>-<%= new Date(hachat.created).getMinutes() %>-<%= new Date(hachat.created).getSeconds()%></td>
                                 <td>
@@ -214,20 +214,12 @@
                                   </div>
                                 </td>
                               </tr>
-                              <% i++; total_p += hachat.prix_unit; total_q += hachat.quantiter; montant += hachat.prix_unit * hachat.quantiter}) %>
+                              <% total_p += hachat.prix_unit; total_q += hachat.quantiter; montant += hachat.prix_unit * hachat.quantiter}) %>
                               <!-- <th >Total</th>
                               <th ><%= total_q %></th>
                               <th ><%= total_p %></th>
                               <th ><%= montant %></th> -->
                             </tbody>
-                          </table>
-                          <table id="" class="table truncate m-0 align-middle dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Somme des montant : </th>
-                                <th id="resulta1"></th>
-                              </tr>
-                            </thead>
                           </table>
                         </div>
                       </div>
@@ -246,12 +238,12 @@
             <!-- Row starts -->
             <div class="row gx-3">
               <div class="col-sm-12">
-                <div class="accordion mb-3" id="<%= produit.id_produit %>accordionSpecialTitle<%= produit.id_produit %>">
+                <div class="accordion mb-3" id="accordionB<%= produit.id_produit %>">
                   <div class="accordion-item ">
                     <div >
                         <h2 class="accordion-header" id="<%= produit.id_produit %>headingSpecialTitle<%= produit.id_produit %>">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#<%= produit.id_produit %>collapseSpecialTitle<%= produit.id_produit %>" aria-expanded="true"
+                            data-bs-target="#<%= produit.id_produit %>collapseSpecialTitle<%= produit.id_produit %>" aria-expanded="false"
                             aria-controls="<%= produit.id_produit %>collapseSpecialTitle<%= produit.id_produit %>">
                             <div class="d-flex flex-column">
                               <h5>Historique des Ventes/Sortie de produit</h5>
@@ -261,25 +253,25 @@
                     </div>
                     
                     <div id="<%= produit.id_produit %>collapseSpecialTitle<%= produit.id_produit %>" class="accordion-collapse collapse"
-                      aria-labelledby="<%= produit.id_produit %>headingSpecialTitle<%= produit.id_produit %>" data-bs-parent="#<%= produit.id_produit %>accordionSpecialTitle<%= produit.id_produit %>">
+                      aria-labelledby="<%= produit.id_produit %>headingSpecialTitle<%= produit.id_produit %>" data-bs-parent="#accordionB<%= produit.id_produit %>">
                       <div class="accordion-body">
                         <div class="table-responsive">
                           <table id="" class="table truncate m-0 align-middle dataTable customButtone" data-export-subtitle="Liste des historiques de vente du produit <%= produit.nom %>" aria-describedby="basicExample_filter">
                             <thead class="text-center">
                               <tr>
-                                <th>ID</th>
+                                <th class="no-calc">ID</th>
                                 <th>Quantiter Retirer</th>
-                                <th>Prix a l'uniter</th>
+                                <th class="no-calc">Prix a l'uniter</th>
                                 <th>Montant</th>
-                                <th>Destinataire</th>
-                                <th>Commantaire</th>
-                                <th>Date de l'operation</th>
-                                <th>Heure de l'operation</th>
-                                <th>Action</th> 
+                                <th class="no-calc">Destinataire</th>
+                                <th class="no-calc">Commantaire</th>
+                                <th class="no-calc">Date de l'operation</th>
+                                <th class="no-calc">Heure de l'operation</th>
+                                <th class="no-calc">Action</th> 
                               </tr>
                             </thead>
                             <tbody class="text-center" id="tbody2">
-                              <% i = 1; total_q = 0; total_p = 0; montant = 0%>
+                              <% total_q = 0; total_p = 0; montant = 0%>
                                 <% 
                                 // Initialisation d'un Set pour suivre les caisses déjà traitées
                                 // Cela permet d'afficher le bouton "Modifier" uniquement pour l'entrée la plus récente de chaque caisse
@@ -288,7 +280,7 @@
                               
                               <% hventes.forEach((hvente, index) => { %>
                                 <tr>
-                                  <td><%= i %></td>
+                                  <td><%= hvente.slug_id %></td>
                                   <td><%= hvente.quantiter %></td>
                                   <td><%= hvente.prix_unit %></td>
                                   <td class="calcule2"><%= hvente.prix_unit * hvente.quantiter %></td>
@@ -310,11 +302,11 @@
                                           caissesTraitees.add(hvente.caisse.id_caisse); 
                                       %>
                                         <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
-                                          data-bs-target="#<%= hvente.id_hist %>exampleModalCenter" data-bs-title="Modifier">
+                                          data-bs-target="#<%= hvente.id_hist %><%= hvente.id_hist %>exampleModalCenter" data-bs-title="Modifier">
                                           <i class="ri-edit-line"></i>
                                         </button>
                                         
-                                        <div class="modal fade" id="<%= hvente.id_hist %>exampleModalCenter" tabindex="-1" aria-labelledby="<%= hvente.id_hist %>exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal fade" id="<%= hvente.id_hist %><%= hvente.id_hist %>exampleModalCenter" tabindex="-1" aria-labelledby="<%= hvente.id_hist %>exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                               <div class="modal-header">
@@ -384,20 +376,12 @@
                                     </div>
                                   </td>
                                 </tr>
-                              <% i++; total_p += hvente.prix_unit; total_q += hvente.quantiter; montant += hvente.prix_unit * hvente.quantiter; }) %>
+                              <% total_p += hvente.prix_unit; total_q += hvente.quantiter; montant += hvente.prix_unit * hvente.quantiter; }) %>
                               <!-- <th >Total</th>
                               <th ><%= total_q %></th>
                               <th ><%= total_p %></th>
                               <th ><%= montant %></th> -->
                             </tbody>
-                          </table>
-                          <table id="" class="table truncate m-0 align-middle dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Somme des montant : </th>
-                                <th id="resulta2"></th>
-                              </tr>
-                            </thead>
                           </table>
                         </div>
                       </div>
@@ -411,7 +395,7 @@
             <!-- Row starts -->
             
             <!-- Row ends -->
-            <div class="col-xxl-6 col-xl-12" style="display: none;" id="graph">
+            <div style="display: none;" id="graph">
               <div class="card mb-3">
                 <div class="card-header">
                   <h5 class="card-title">Courbre de variation des montant des Achat/Entrer et Sortie/Vente du produit <span class="text-info"><%= produit.nom %></span> par année</h5>
@@ -496,6 +480,7 @@
             window.location.reload();
         }
       });
+      
       const text_colore = ['text-primary', 'text-info', 'text-danger', 'text-warning', 'text-success']
       const class_colore = ['badge bg-primary', 'badge bg-info', 'badge bg-danger', 'badge bg-warning', 'badge bg-success']
       traduct = (date) => {
@@ -509,10 +494,8 @@
       const anner = []
 
       const recettee = JSON.parse(`<%- JSON.stringify(histe) %>`)
-      console.log(recettee)
 
       const recettes = JSON.parse(`<%- JSON.stringify(hists) %>`)
-      console.log(recettes)
 
       recettee.forEach(element => {
         if(!anner.includes(element.mois.split('-')[0])){
@@ -613,54 +596,6 @@
               chart.render();
           }
       });
-
-      const resulta = document.getElementById('resulta1')
-      const observer= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule1')
-          let sum = 0
-          console.log(allCase.length)
-          if(allCase.length > 0){
-            allCase.forEach((td, index) => {
-              //console.log(td)
-              sum += parseFloat(td.innerText)
-              resulta.innerText = sum
-            })
-          }else{
-            resulta.innerText = 0
-          }
-        })
-      })
-
-      observer.observe(document.getElementById('tbody1'), {
-        childList: true,
-        subtree: true,
-        characterData: true
-      })
-      // ------------------------------------------------------------------
-      const resulta2 = document.getElementById('resulta2')
-      const observer2= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule2')
-          let sum = 0
-          console.log(allCase.length)
-          if(allCase.length > 0){
-            allCase.forEach((td, index) => {
-              //console.log(td)
-              sum += parseFloat(td.innerText)
-              resulta2.innerText = sum
-            })
-          }else{
-            resulta2.innerText = 0
-          }
-        })
-      })
-
-      observer2.observe(document.getElementById('tbody2'), {
-        childList: true,
-        subtree: true,
-        characterData: true
-      })
     </script>
     <%- include('script')%>
   </body>

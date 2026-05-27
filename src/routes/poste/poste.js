@@ -2,28 +2,8 @@ const {Poste, Personnel, sequelize, Occupe} = require('../../db/sequelize')
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 const { Op } = require('sequelize')
 
-// Poste.findOne({
-//     where: {nom_poste: 'Admin'}
-// })
-//     .then(poste => {
-//         if(poste){
-//             //console.log(poste)
-//         }else{
-//             Poste.create({
-//                 nom_poste: 'Admin',
-//                 salaire: 0,
-//                 description: ''
-//             })
-//                 .then(poste => {
-//                 })
-//                 .catch(_ => console.log('erreure de ajout', _))
-//         }
-        
-//     })
-//     .catch(_ => console.log('erreure de selection ', _))
-    
 allPoste = (app) => {
-    app.get('/allPoste', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/allPoste', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         Poste.findAll({
             where:{is_active: true},
             order:[['id_poste', 'DESC']]
@@ -31,7 +11,7 @@ allPoste = (app) => {
             .then(postes => {
                 const msg = "Liste recuperer avec succes"
                 //res.json({msg, data: postes})
-                res.status(200).render('poste', {postes: postes, msg: req.query.msg});
+                res.status(200).render('poste', {postes: postes, msg: req.query.msg, tc:req.query.tc});
             })
             .catch(_ => {
                 console.error(_);
@@ -90,7 +70,7 @@ updatePoste = (app) => {
             where: {id_poste: req.params.id}
         })
             .then(_ => {
-                res.redirect('/allPoste?msg=modif');
+                res.redirect('/allPoste?msg=Poste modifier avec succès&tc=alert-success');
             })
             .catch(_ => {
                 console.error(_);

@@ -78,23 +78,23 @@
                       <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des dépenses" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th aria-controls="basicExample">ID</th>
-                            <th>Nom de la Dépense</th>
+                            <th aria-controls="basicExample" class="no-calc">ID</th>
+                            <th class="no-calc">Nom de la Dépense</th>
                             <th>Montant</th>
-                            <th>Date</th>
-                            <th>Categorie</th>
-                            <th>Description</th>
-                            <th>Action</th>
+                            <th class="no-calc">Date</th>
+                            <th class="no-calc">Categorie</th>
+                            <th class="no-calc">Description</th>
+                            <th class="no-calc">Action</th>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
                           <% depenses.forEach(depense => { %>
                               <tr>
-                                <td><%= depense.id_depense %></td>
+                                <td><%= depense.slug_id %></td>
                                 <td>
                                     <%= depense.nom %>
                                 </td>
-                                <td class="calcule"><%= depense.montant %></td>
+                                <td><%= depense.montant %></td>
                                 <td><%=depense.date %></td>
                                 <td><%=depense.CategorieDepense.nom %></td>
                                 <td><%= depense.description %></td>
@@ -237,14 +237,6 @@
                       
                         <!-- <tr class="bg-info"><td colspan="3" id="resulta">ok</td></tr> -->
                       </table>
-                      <table id="" class="table truncate m-0 align-middle dataTable">
-                        <thead class="text-center">
-                          <tr>
-                            <th>Somme de Montant: </th>
-                            <th id="resulta"></th>
-                          </tr>
-                        </thead>
-                      </table>
                     </div>
                     <!-- Table ends -->
 
@@ -350,10 +342,10 @@
   
                     <!-- Table start -->
                     <div class="table-responsive">
-                      <table class="table customButtone m-0 randomTableColors" data-export-subtitle="Liste des Montant dépenser par Mois">
+                      <table class="table customButtone m-0 randomTableColors " data-export-subtitle="Liste des Montant dépenser par Mois">
                         <thead>
                           <tr>
-                            <th>Dépense</th>
+                            <th class="no-calc">Dépense</th>
                             <th class="mois">Jan</th>
                             <th class="mois">Feb</th>
                             <th class="mois">Mar</th>
@@ -459,20 +451,6 @@
         }
       });
 
-      const resulta = document.getElementById('resulta')
-      const observer= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule')
-          let sum = 0
-          allCase.forEach((td, index) => {
-            // console.log(td)
-            sum += parseFloat(td.innerText)
-          })
-          resulta.innerText = sum
-        //   console.log('change', allCase)
-        })
-      })
-
       observer.observe(document.getElementById('tbody'), {
         childList: true,
         subtree: true,
@@ -541,7 +519,7 @@
         if(anner === element.mois.split('-')[0]){
             for(let j = 0; j < all_month.length; j++){
             if(all_month[j] === traduct(element.mois)){
-                //console.log(element.total_recette, typeof element.total_recette)
+                console.log(element.total_recette, typeof element.total_recette)
                 recettes[j] = element.total_recette
             }
             }

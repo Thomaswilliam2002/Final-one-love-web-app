@@ -2,12 +2,10 @@ const {CategorieDepense, Depense} = require('../../db/sequelize');
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 const {fn, col, where} = require('sequelize');
 const formAddDepense = (app) => {
-    app.get('/formAddDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/formAddDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const categories = await CategorieDepense.findAll()
             if(categories){
-                // res.status(200).render('add-depense', {categories: categories});
-                console.log("formAddDepense",categories);
                 res.redirect('/index');
             }else{
                 console.error(_);
@@ -35,7 +33,7 @@ const depenceTest = (app) => {
 }
 
 const allDepense = (app) => {
-    app.get('/allDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/allDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const depenses = await Depense.findAll({
                 include:[
@@ -45,18 +43,6 @@ const allDepense = (app) => {
                 order:[['id_depense', 'DESC']]
             })
             const categories = await CategorieDepense.findAll({where:{is_active: true}});
-            // const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
-
-            // const sum_depenses = await Depense.findAll({
-            //     attributes:[ 
-            //         [moisExpr, "mois"], 
-            //         [fn('SUM', col('montant')),'total_recette'],
-            //     ],
-            //         group: [moisExpr, col('montant')],
-            //         order: [[moisExpr, 'DESC']],
-            //         raw:true
-            // });
-
             //Utilise literal pour garantir que PostgreSQL comprenne l'expression de groupe
             const sum_depenses = await Depense.findAll({
                 attributes: [
@@ -83,10 +69,9 @@ const allDepense = (app) => {
 }
 
 const addDepense = (app) => {
-    app.post('/addDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.post('/addDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const {nom, montant, desc, date, categ} = req.body;
-            console.log("categorie", date)
             const depense = await Depense.create({
                 nom: nom,
                 montant: montant,
@@ -111,7 +96,7 @@ const addDepense = (app) => {
 }
 
 const updateDepense = (app) => {
-    app.put('/updateDepense/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.put('/updateDepense/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const {nom, montant, desc, date, categ} = req.body;
 
@@ -141,7 +126,7 @@ const updateDepense = (app) => {
 }
 
 const deleteDepense = (app) => {
-    app.delete('/deleteDepense/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.delete('/deleteDepense/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
 
             const [depense] = await Depense.update({

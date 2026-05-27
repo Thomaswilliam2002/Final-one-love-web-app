@@ -138,6 +138,7 @@
         // 1. Initialisation du Graphique Morris
         const rawData = JSON.parse(`<%- JSON.stringify(chartData) %>`);
         const keysCaisses = JSON.parse(`<%- JSON.stringify(caisses) %>`);
+        console.log(rawData)
 
         if (rawData.length > 0) {
             new Morris.Area({

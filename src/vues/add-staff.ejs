@@ -124,7 +124,7 @@
                         <div class="col-xxl-3 col-lg-4 col-sm-6">
                           <div class="mb-3">
                             <label class="form-label" for="a3">Numero de Telephone<span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="a3" placeholder="Enter un numero Mobile" name="numero" required>
+                            <input type="text" class="form-control" id="a3" placeholder="Enter un numero Mobile" name="numero" required>
                           </div>
                         </div>
                         <div class="col-xxl-3 col-lg-4 col-sm-6">
@@ -194,22 +194,31 @@
                         </div>
                         <% if(!indice || indice !== 'admin'){ %>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
-                            <div class="mb-3">
-                              <label class="form-label" for="a7">Mot de passe <span class="text-danger">*</span></label>
+                            <label class="form-label" for="a7">Mot de passe <span class="text-danger">*</span></label>
+                            <div class="mb-3 input-group">
                               <input type="password"  class="form-control" id="Pwd" placeholder="Cree un mot de passe" required name="mdp">
+                              <button class="btn btn-outline-secondary" onclick="showPassword('Pwd', 'showPwd')" type="button">
+                                <i class="ri-eye-line text-primary" id="showPwd"></i>
+                              </button>
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
-                            <div class="mb-3">
-                              <label class="form-label" for="a7">Confirmer le mot de passe <span class="text-danger">*</span></label>
+                            <label class="form-label" for="a7">Confirmer le mot de passe <span class="text-danger">*</span></label>
+                            <div class="mb-3 input-group">
                               <input type="password"  class="form-control" id="confPwd" placeholder="Cree un mot de passe" required>
+                              <button class="btn btn-outline-secondary" onclick="showPassword('confPwd', 'showConfPwd')" type="button">
+                                <i class="ri-eye-line text-primary" id="showConfPwd"></i>
+                              </button>
                             </div>
                           </div>
                         <% }else{ %>
                           <div class="col-xxl-3 col-lg-4 col-sm-6" style="visibility: hidden;">
-                            <div class="mb-3">
-                              <label class="form-label" for="a7">Mot de passe <span class="text-danger">*</span></label>
-                              <input type="password"  class="form-control" id="Pwd" placeholder="Cree un mot de passe" value="admin" required name="mdp">
+                            <label class="form-label" for="a7">Mot de passe <span class="text-danger">*</span></label>
+                            <div class="mb-3 input-group">
+                              <input type="password"  class="form-control" id="Pwd" placeholder="Cree un mot de passe" value="admin"  name="mdp">
+                              <button class="btn btn-outline-secondary" onclick="showPassword('Pwd', 'showPwd')" type="button">
+                                <i class="ri-eye-line text-primary" id="showPwd"></i>
+                              </button>
                             </div>
                           </div>
                         <% } %>
@@ -403,6 +412,17 @@
       }else{
         document.getElementById('dep').style.display = 'none'
       }
+    }
+
+    function showPassword(id, icon) {
+      const inputPwd = document.getElementById(id);
+      const show = document.getElementById(icon);
+
+      const type = inputPwd.getAttribute('type') === "password" ? 'text' : "password";
+      inputPwd.setAttribute('type', type);
+      show.classList.toggle('ri-eye-off-line')
+      show.classList.toggle('ri-eye-line')
+    
     }
   </script>
 

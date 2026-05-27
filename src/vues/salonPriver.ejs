@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('head')%>
+
+  <body>
+
+    <div class="page-wrapper">
+
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+
+      <div class="main-container">
+
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+
+        <div class="app-container">
+
+          <div class="app-hero-header d-flex align-items-center">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="/index">Accueil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Salon Privé
+              </li>
+            </ol>
+          </div>
+
+          <div class="app-body">
+            <% if(msg) {%>
+                <div class="alert bg-white border alert-dismissible fade show <%= tc%>" role="alert">
+                <b><%= msg%></b>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }%>
+
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Marquer les Danses au niveau des Salons Privé</h5>
+                </div>
+                <div class="card-body bg-secondary-subtle">
+                  <div class="row justify-content-around align-items-center">
+                    <% if(salons.length > 0){salons.forEach(salon => { %>
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m">
+                        <div class="card border-primary mb-3">
+                          <div class="card-body text-center">
+                            <h5 class="card-title mt-2"><%= salon.nom %></h5>
+                            <p class="card-text mb-1">
+                              <strong>Prix :</strong> <%= salon.prix %> FCFA
+                            </p>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#<%= salon.id_salon %>">
+                              Marquer une Danse
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal fade" id="<%= salon.id_salon %>" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="/addSalonJournal" method="POST">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Danse</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+                              
+                              <div class="modal-body">
+                                <p>Prix d'une Danse : <strong><%= salon.prix %> FCFA</strong></p>
+                                <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                                  <div class="mb-3">
+                                    <label class="form-label">Banseuses</label>
+                                    <select name="danseuse" id="" class="form-select" required>
+                                        <% if(danseuses.length > 0){danseuses.forEach(danseuse => { %>
+                                            <option value="<%= danseuse.Personnel.id_personnel %>" ><%= danseuse.Personnel.nom %> <%= danseuse.Personnel.prenom %></option>
+                                        <% })}else{ %>
+                                          <option value="" >Aucune danseuse n'est enregistrer</option>
+                                        <% } %>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-12 col-lg-4 col-sm-12">
+                                  <div class="mb-3">
+                                      <label class="form-label">Marqueur</label>
+                                    <input type="text" class="form-control" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" readonly required>
+                                  </div>
+                                </div>
+                                <input type="hidden" class="form-control" value="<%= user.Personnel.id_personnel %>" name="marqueur">
+                                <input type="hidden" class="form-control" value="<%= salon.prix %>" name="montant">
+                                <input type="hidden" class="form-control" value="<%= salon.id_salon %>" name="id_salon">
+                                <div class="col-xxl-12 col-lg-12 col-sm-12">
+                                  <div class="mb-3">
+                                    <label class="form-label">Commantaire</label>
+                                    <textarea class="form-control" rows="2" name="commentaire" placeholder="Commantaire"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-success">Valider la Danse</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    <% })} else{ %>
+                      <div class="alert bg-white border alert-dismissible fade show text-bg-danger" role="alert">
+                        <b>Aucun Salon Privé Disponible</b>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+            </div>
+            
+            <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
+
+              <div class="mb-5"></div> <div class="row gx-3" id="">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Ajouter un nouveau salon Privé</h5>
+                    </div>
+                    <div class="card-body">
+                      <form action="/addsalon" method="post">
+                          <div class="row gx-3">
+                              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                  <div class="mb-3">
+                                    <label class="form-label">Nom</label>
+                                    <input type="text" name="nom" class="form-control" required>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                  <div class="mb-3">
+                                      <label class="form-label">Prix</label>
+                                    <input type="number" name="prix" min="0" step="0,01" class="form-control" required>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-3 col-lg-4 col-sm-12">
+                                  <div class="mb-3">
+                                    <label class="form-label">Adresse</label>
+                                    <textarea class="form-control" rows="1" name="adresse" placeholder="Adresse"></textarea>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-3 col-lg-4 col-sm-12">
+                                  <div class="mb-3">
+                                    <label class="form-label">Commantaire</label>
+                                    <textarea class="form-control" rows="2" name="commantaire" placeholder="Commantaire"></textarea>
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="d-flex justify-content-end">
+                              <button type="submit" class="btn btn-primary">Ajouter le salon Privé</button>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <br>
+            <%}%>
+            <%if(['comptable', 'admin', 'caissier central'].includes(user.Poste.nom_poste.toLowerCase())){%>
+              <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title">Liste des Salons Privé</h5>
+                      <a href="#formAddsalons" class="btn btn-primary ms-auto">Ajouter un nouveau salon Privé</a>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des salons">
+                          <thead class="text-center align-middle">
+                            <tr>
+                              <th class="no-calc">ID</th>
+                              <th class="no-calc">Nom</th>
+                              <th class="no-calc">Prix</th>
+                              <th class="no-calc">Adresse</th>
+                              <th class="no-calc">Commantaire</th>
+                              <th class="no-calc">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center align-middle" id="tbody">
+                            <% salons.forEach(salon => { %>
+                              <tr>
+                                <td><%= salon.slug_id %></td>
+                                <td><%= salon.nom %></td>
+                                <td><%= salon.prix %></td>
+                                <td><%= salon.adresse %></td>
+                                <td><%= salon.commentaire %></td>
+                                <td>
+                                  <div class="d-inline-flex gap-1">
+                                      <button type="button" data-bs-toggle="modal" data-bs-target="#del<%= salon.id_salon %>" class="btn btn-outline-danger btn-sm">
+                                          <i class="ri-delete-bin-line"></i>
+                                      </button>
+                                      
+                                      <button type="button" data-bs-toggle="modal" data-bs-target="#edit<%= salon.id_salon %>" class="btn btn-outline-success btn-sm">
+                                          <i class="ri-edit-box-line"></i>
+                                      </button>
+                                  </div>
+
+                                  <div class="modal fade" id="del<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Confirmer la suppression</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>Voulez-vous vraiment supprimer ce <strong> salons</strong> ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                          <form action="/deleteSalon/<%= salon.id_salon %>?_method=DELETE" method="post">
+                                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="modal fade" id="edit<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Modification des information du salon</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="/updateSalon/<%= salon.id_salon %>?_method=PUT" method="post">
+                                          <div class="modal-body text-start">
+                                              <div class="row gx-3">
+                                                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                      <div class="mb-3">
+                                                        <label class="form-label">Nom</label>
+                                                        <input type="text" value="<%= salon.nom %>" name="nom" class="form-control" required>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                      <div class="mb-3">
+                                                          <label class="form-label">Prix</label>
+                                                        <input type="number" value="<%= salon.prix %>" name="prix" min="0" step="0,01" class="form-control" required>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-xxl-3 col-lg-4 col-sm-12">
+                                                      <div class="mb-3">
+                                                        <label class="form-label">Adresse</label>
+                                                        <textarea class="form-control" rows="1" name="adresse" placeholder="Adresse"><%= salon.adresse %></textarea>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-xxl-3 col-lg-4 col-sm-12">
+                                                      <div class="mb-3">
+                                                        <label class="form-label">Commantaire</label>
+                                                        <textarea class="form-control" rows="2"  name="Commantaire" placeholder="Commantaire"><%= salon.commentaire %></textarea>
+                                                      </div>
+                                                    </div>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <br>
+
+              <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title">Liste des Historiques des Salons Privé</h5>
+                      <!-- <a href="#formAddsalons" class="btn btn-primary ms-auto">Ajouter un nouveau salon Privé</a> -->
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des journaux des salons">
+                          <thead class="text-center align-middle">
+                            <tr>
+                              <th class="no-calc">ID</th>
+                              <th class="no-calc">Nom du Salon</th>
+                              <th >Montant</th>
+                              <th class="no-calc">Danseuse</th>
+                              <th class="no-calc">Marqueur</th>
+                              <th class="no-calc">Date</th>
+                              <th class="no-calc">Heure</th>
+                              <th class="no-calc">Commantaire</th>
+                              <th class="no-calc">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center align-middle" id="tbody">
+                            <% salonsJournals.forEach(salonsJournal => { %>
+                              <tr>
+                                <td><%= salonsJournal.slug_id %></td>
+                                <td><%= salonsJournal.SalonPrive.nom %></td>
+                                <td><%= salonsJournal.montant %></td>
+                                <td><%= salonsJournal.detailsDanseuse.nom %> <%= salonsJournal.detailsDanseuse.prenom %></td>
+                                <td><%= salonsJournal.detailsMarqueur.nom %> <%= salonsJournal.detailsMarqueur.prenom %></td>
+                                <td><%= salonsJournal.date %></td>
+                                <td><%= salonsJournal.heure %></td>
+                                <td><%= salonsJournal.commentaire %></td>
+                                <td>
+                                  <div class="d-inline-flex gap-1">
+                                      <button type="button" data-bs-toggle="modal" data-bs-target="#j<%= salonsJournal.id_journal %>" class="btn btn-outline-danger btn-sm">
+                                          <i class="ri-delete-bin-line"></i>
+                                      </button>
+                                  </div>
+
+                                  <div class="modal fade" id="j<%= salonsJournal.id_journal %>" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Confirmer la suppression</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>Voulez-vous vraiment supprimer ce <strong> Journal</strong> ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                          <form action="/deleteSalonJournal/<%= salonsJournal.id_journal %>?_method=DELETE" method="post">
+                                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+
+        </div>
+        </div>
+      </div>
+    <%- include('script')%>
+    
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+      });
+    </script>
+  </body>
+</html>

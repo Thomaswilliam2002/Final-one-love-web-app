@@ -92,7 +92,7 @@
       const inputPwd = document.getElementById('pwd');
       const show = document.getElementById('view');
 
-      show.addEventListener('click', () => {
+      show.addEventListener('click', () => { 
         const type = inputPwd.getAttribute('type') === "password" ? 'text' : "password";
         inputPwd.setAttribute('type', type);
         show.classList.toggle('ri-eye-off-line')

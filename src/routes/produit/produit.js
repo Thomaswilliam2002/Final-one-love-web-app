@@ -1,20 +1,21 @@
 const {Produit, Caisse} = require('../../db/sequelize');
 const {Categorie, HistCaisse} = require('../../db/sequelize');
 const {HistEntrer} = require('../../db/sequelize');
-const {HistSortie} = require('../../db/sequelize');
+const {HistSortie, Fournisseur} = require('../../db/sequelize');
 const {fn, col, literal, Op, where} = require('sequelize');
 const { sequelize } = require('../../db/sequelize'); 
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 
 allProduit = (app) => {
-    app.get('/allProduit', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/allProduit', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
 
             const [
                 produits,
                 categories,
                 sumhe,
-                caisses
+                caisses,
+                fournisseurs
             ] = await Promise.all([
 
                 Produit.findAll({
@@ -55,7 +56,9 @@ allProduit = (app) => {
                     raw: true
                 }),
 
-                Caisse.findAll()
+                Caisse.findAll({where: {is_active: true}}),
+
+                Fournisseur.findAll({where: {is_active: true}})
 
             ]);
 
@@ -64,6 +67,7 @@ allProduit = (app) => {
                 sumhes: sumhe,
                 categories,
                 caisses,
+                fournisseurs: fournisseurs,
                 msg: req.query.msg,
                 tc: req.query.tc
             });
@@ -76,7 +80,7 @@ allProduit = (app) => {
 };
 
 formAddProduit = (app) => {
-    app.get('/formAddProduit', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/formAddProduit', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         Categorie.findAll()
             .then(categories => {
                 //const msg = "Liste recuperer avec succes"
@@ -91,7 +95,7 @@ formAddProduit = (app) => {
 }
 
 oneProduit = (app) => {
-    app.get('/oneProduit/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/oneProduit/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
 
             const produit = await Produit.findByPk(req.params.id);
@@ -103,7 +107,13 @@ oneProduit = (app) => {
             const [hachats, hventesRaw, hr, hs] = await Promise.all([
 
                 HistEntrer.findAll({
-                    where: { id_probal: produit.id_produit, type: 'produit', is_active: true }, order: [['created', 'DESC']]
+                    where: { id_probal: produit.id_produit, type: 'produit', is_active: true }, order: [['created', 'DESC']],
+                    
+                    include: [
+                        {
+                            model: Fournisseur,
+                        }
+                    ]
                 }),
 
                 HistSortie.findAll({
@@ -115,11 +125,11 @@ oneProduit = (app) => {
                         [literal("TO_CHAR(\"HistEntrer\".\"created\", 'YYYY-MM')"), "mois"],
                         'id_probal',
                         'type',
-                        [literal("SUM(\"quantiter\" * \"prix_unit\")"), 'total_recette'],
+                        [literal("SUM(\"quantiter\" * \"prix_unit\")"), 'recette'],
                         [literal('(SELECT "nom" FROM "Produits" WHERE "Produits"."id_produit" = "HistEntrer"."id_probal")'), 'nom']
                     ],
                     where: {
-                        type: { [Op.in]: ["produit"] }, is_active: true
+                        type: { [Op.in]: ["produit"] }, is_active: true, id_probal: req.params.id
                     },
                     group: [
                         "id_probal",
@@ -190,7 +200,7 @@ oneProduit = (app) => {
 };
 
 addProduit = (app) => {
-    app.post('/addProduit', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.post('/addProduit', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         const {nom, categ, qt, seuil, desc, prix} = req.body;
         Produit.create({
             nom: nom,
@@ -225,7 +235,7 @@ addProduit = (app) => {
 }
 
 updateProduit = (app) => {
-    app.put('/updateProduit/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.put('/updateProduit/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         const {nom, categ, seuil, desc} = req.body;
         Produit.update({
             nom: nom, 
@@ -236,8 +246,6 @@ updateProduit = (app) => {
             where:{id_produit: req.params.id}
         })
             .then(_ => {
-                // const msg = "Modification du bar avec succes"
-                // res.json({msg})
                 res.redirect('/allProduit?type=article&msg=Modification du produit avec succes&tc=alert-success')
             })
             .catch(_ => {
@@ -249,7 +257,7 @@ updateProduit = (app) => {
 }
 
 deleteProduit = (app) => {
-    app.delete('/deleteProduit/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.delete('/deleteProduit/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         // Import de sequelize pour la transaction si non global
         // const t = await sequelize.transaction();
         let t;
@@ -258,7 +266,6 @@ deleteProduit = (app) => {
             const produitId = req.params.id;
             const produit = await Produit.findByPk(produitId, { transaction: t });
             if (!produit) {
-                console.error('Produit introuvable');
                 await t.rollback();
                 return res.redirect('/notFound');
             }
@@ -278,8 +285,6 @@ deleteProduit = (app) => {
                 where: { id_probal: produitId, type: 'produit' }, 
                 transaction: t 
             });
-
-            console.log('HistCaisse depasser');
 
             // 3. Supprimer le produit lui-même
             await Produit.update({ is_active: false }, { where: { id_produit: produitId }, transaction: t });

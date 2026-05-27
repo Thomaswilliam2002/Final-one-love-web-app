@@ -86,7 +86,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text bg-white text-success border-success"><i class="fas fa-cash-register"></i></span>
                                     <select name="id_caisse" class="form-select border-success shadow-sm" required>
-                                        <% if(caisse){ caisse.forEach(c => { %>
+                                        <% if(caisse && caisse.length > 0){ caisse.forEach(c => { %>
                                             <option value="<%= c.id_caisse %>"><%= c.nom %> (<%= c.type_lieu %>)</option>
                                         <% })} else { %>
                                             <option value="" disabled selected>Aucune Caisse disponible</option>
@@ -100,7 +100,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text bg-white text-success border-success"><i class="fas fa-user-tie"></i></span>
                                     <select name="id_personnel" class="form-select border-success shadow-sm" required>
-                                        <% if(personnels){ personnels.forEach(p => { %>
+                                        <% if(personnels && personnels.length > 0){ personnels.forEach(p => { %>
                                             <option value="<%= p.Personnel.id_personnel %>"><%= p.Personnel.nom %> <%= p.Personnel.prenom %></option>
                                         <% })} else { %>
                                             <option value="" disabled selected>Aucun Personnel disponible</option>
@@ -185,9 +185,11 @@
                                             <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
                                             <select name="id_personnel" class="form-select border-primary" required>
                                                 <!-- <option value="" disabled selected>Choisir un personnel...</option> -->
-                                                <% personnels.forEach(p => { %>
+                                                <% if(personnels && personnels.length > 0){ personnels.forEach(p => { %>
                                                     <option value="<%= p.Personnel.id_personnel %>"><%= p.Personnel.nom %> <%= p.Personnel.prenom %></option>
-                                                <% }) %>
+                                                <% })} else { %>
+                                                    <option value="" disabled selected>Aucun personnel disponible</option>
+                                                <% } %>
                                             </select>
                                         </div>
                                     </div>
@@ -225,9 +227,11 @@
                                 <div class="input-group">
                                     <span class="input-group-text bg-white text-danger border-danger"><i class="fas fa-cash-register"></i></span>
                                     <select name="id_caisse" id="caisseSelect" class="form-select border-danger shadow-sm" required>
-                                        <% if(caisse){ caisse.forEach(c => { %>
+                                        <% if(caisse && caisse.length > 0){caisse.forEach(c => { %>
                                             <option value="<%= c.id_caisse %>"><%= c.nom %> (<%= c.type_lieu %>)</option>
-                                        <% })} %>
+                                        <% })} else { %>
+                                            <option value="" disabled selected>Aucune caisse disponible</option>
+                                        <% }%>
                                     </select>
                                 </div>
                             </div>
@@ -237,7 +241,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text bg-white text-danger border-danger"><i class="fas fa-user-tie"></i></span>
                                     <select name="id_personnel" id="personnelSelect" class="form-select border-danger shadow-sm" required>
-                                        
+                                        <option value="" disabled selected>Aucun personnel disponible</option>
                                     </select>
                                 </div>
                             </div>
@@ -374,10 +378,11 @@
             caisse => caisse.id_caisse == selectedCaisse
         );
 
-        personnelSelect.innerHTML = '';
-        // <option value="">-- Choisir un personnel --</option>
+        personnelSelect.innerHTML = '<option value="" disabled selected>-- Choisir un personnel --</option>';
+        // <option value="" disabled selected>-- Choisir un personnel --</option>
 
         if (nb_caisse_personnel && nb_caisse_personnel.Personnels) {
+            personnelSelect.innerHTML = ''
             nb_caisse_personnel.Personnels.forEach(personnel => {
                 personnelSelect.insertAdjacentHTML(
                     'beforeend',

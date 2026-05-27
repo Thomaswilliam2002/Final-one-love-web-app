@@ -55,16 +55,16 @@
                       <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des Catégories de depense">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Nom de la Catégorie</th>
-                            <th>Description</th>
-                            <th>Action</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom de la Catégorie</th>
+                            <th class="no-calc">Description</th>
+                            <th class="no-calc">Action</th>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
                           <% categories.forEach(categorie => { %>
                             <tr>
-                              <td><%= categorie.id_categ %></td>
+                              <td><%= categorie.slug_id %></td>
                               <td><%= categorie.nom %></td>
                               <td><%= categorie.description %></td>
                               <td>

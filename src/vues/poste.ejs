@@ -77,21 +77,28 @@
                         <thead class="text-center">
                           <tr>
                             <th aria-controls="basicExample">ID</th>
-                            <th>Nom du poste</th>
+                            <th class="no-calc">Nom du poste</th>
                             <th>Salaire</th>
-                            <th>Description</th>
-                            <th>Action</th>
+                            <th class="no-calc">Description</th>
+                            <%
+                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                            %>
+                              <th class="no-calc">Action</th>
+                            <% } %>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
                           <% ref = ['admin', 'comptable', 'caissier']; postes.forEach(poste => { %>
                               <tr>
-                                <td><%= poste.id_poste %></td>
+                                <td><%= poste.slug_id %></td>
                                 <td>
                                     <%= poste.nom_poste %>
                                 </td>
                                 <td class="calcule"><%= poste.salaire %></td>
                                 <td><%= poste.description %></td>
+                                <%
+                                  if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                %>
                                 <td>
                                   <div class="d-inline-flex gap-1">
                                     <% if(!ref.includes(poste.nom_poste.toLowerCase())){ %>
@@ -215,6 +222,7 @@
                                     </a>
                                   </div>
                                 </td>
+                                <%}%>
                               </tr>
                           <% }) %>
                         </tbody>
@@ -240,52 +248,56 @@
                 </div>
               </div>
             </div>
+            <%
+              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+            %>
             <!-- Row ends -->
              <br>
              <!-- ----------------------------------------------------------------------------------- -->
-            <div class="row gx-3">
-              <div class="col-sm-12">
-                <div class="card">
-                  <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="card-title">Ajouter un nouveau Poste</h5>
-                  </div>
-                  <div class="card-body">
-                    <form action="/addPoste" method="post" id="formAddPoste">
-                      <!-- Row starts -->
-                      <div class="row gx-3">
+              <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title">Ajouter un nouveau Poste</h5>
+                    </div>
+                    <div class="card-body">
+                      <form action="/addPoste" method="post" id="formAddPoste">
+                        <!-- Row starts -->
+                        <div class="row gx-3">
+                          <div class="col-sm-12">
+                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                              <h6 class="m-0">Details du Poste</h6>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Nom du poste<span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="a1" style="text-transform: capitalize;" placeholder="Entrer le nom" name="nom" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a2">Salaire <span class="text-danger">*</span></label>
+                              <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le salaire" name="salaire" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a2">Description <span class="text-danger">*</span></label>
+                              <textarea class="form-control" id="a8" placeholder="Enter une description du poste" rows="2" name="desc" ></textarea>
+                            </div>
+                          </div>
+                        <!-- Row ends -->
                         <div class="col-sm-12">
-                          <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                            <h6 class="m-0">Details du Poste</h6>
+                          <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
                           </div>
                         </div>
-                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                          <div class="mb-3">
-                            <label class="form-label" for="a1">Nom du poste<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="a1" style="text-transform: capitalize;" placeholder="Entrer le nom" name="nom" required>
-                          </div>
-                        </div>
-                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                          <div class="mb-3">
-                            <label class="form-label" for="a2">Salaire <span class="text-danger">*</span></label>
-                            <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le salaire" name="salaire" required>
-                          </div>
-                        </div>
-                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                          <div class="mb-3">
-                            <label class="form-label" for="a2">Description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="a8" placeholder="Enter une description du poste" rows="2" name="desc" ></textarea>
-                          </div>
-                        </div>
-                      <!-- Row ends -->
-                      <div class="col-sm-12">
-                        <div class="d-flex gap-2 justify-content-end">
-                          <button type="submit" class="btn btn-primary">Ajouter</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                      </form>
+                    </div>
+                </div>
               </div>
-            </div>
+            <% } %>
          </div>
           <!-- App body ends -->
 

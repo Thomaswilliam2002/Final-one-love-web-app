@@ -1,5 +1,6 @@
+const crypto = require('crypto')
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('HistCaisse', {
+    const HistCaisse = sequelize.define('HistCaisse', {
         id_hist: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -29,15 +30,47 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            defaultValue: sequelize.literal('CURRENT_DATE')
+        },
         is_active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        }
+        },
+        slug_id: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
+        hooks: {
+            beforeCreate: async (histCaise) => {
+                histCaise.slug_id = await HistCaisse.generateCustomId();
+            }
+        },
         timestamps: true,
         createdAt: 'created',
         updatedAt: false
     })
+
+    HistCaisse.generateCustomId = async function () {
+        let newId;
+        let created = false;
+
+        while (!created) {
+            const year = new Date().getFullYear();
+            const randomStr = crypto.randomBytes(5).toString('hex').toUpperCase();
+            newId = `HC-${year}-${randomStr}`;
+
+            const exists = await HistCaisse.findOne({ where: { slug_id: newId } });
+            if (!exists) created = true;
+        }
+
+        return newId;
+    };
+
+    return HistCaisse;
 }

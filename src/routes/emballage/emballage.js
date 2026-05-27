@@ -1,19 +1,20 @@
 const {Emballage, Caisse} = require('../../db/sequelize');
 const {Categorie, HistCaisse} = require('../../db/sequelize');
 const {HistEntrer} = require('../../db/sequelize');
-const {HistSortie} = require('../../db/sequelize');
+const {HistSortie, Fournisseur} = require('../../db/sequelize');
 const {fn, col, literal, Op, where} = require('sequelize');
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 const { sequelize } = require('../../db/sequelize'); 
 
 allEmballage = (app) => {
-    app.get('/allEmballage', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/allEmballage', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             // On lance toutes les requêtes en parallèle
-            const [emballages, categories, caisses] = await Promise.all([
+            const [emballages, categories, caisses, fournisseurs] = await Promise.all([
                 Emballage.findAll({ where: { is_active: true }, order: [['id_emballage', 'DESC']] }),
                 Categorie.findAll({ where: { is_active: true } }),
                 Caisse.findAll({ where: { is_active: true } }),
+                Fournisseur.findAll({ where: { is_active: true } })
             ]);
 
             // On renvoie la vue avec toutes les données
@@ -21,6 +22,7 @@ allEmballage = (app) => {
                 emballages: emballages,
                 categories: categories,
                 caisses,
+                fournisseurs,
                 msg: req.query.msg,
                 tc: req.query.tc
             });
@@ -33,7 +35,7 @@ allEmballage = (app) => {
 }
 
 formAddEmballage = (app) => {
-    app.get('/formAddEmballage', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/formAddEmballage', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         Categorie.findAll({ where: { is_active: true } })
             .then(categories => {
                 //const msg = "Liste recuperer avec succes"
@@ -48,7 +50,7 @@ formAddEmballage = (app) => {
 }
 
 oneEmballage = (app) => {
-    app.get('/oneEmballage/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/oneEmballage/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
 
         try {
 
@@ -104,7 +106,13 @@ oneEmballage = (app) => {
                     id_probal: emballage.id_emballage, 
                     type: 'emballage', 
                     is_active: true 
-                }
+                },
+                order: [['created', 'DESC']],
+                include: [
+                    {
+                        model: Fournisseur,
+                    }
+                ]
             });
 
             const pSortieDetail = HistSortie.findAll({
@@ -149,7 +157,8 @@ oneEmballage = (app) => {
                 hachats: hachats,
                 hventes: hventes,
                 msg: req.query.msg,
-                type: req.query.type
+                type: req.query.type,
+                tc: req.query.tc
             });
 
         } catch (err) {
@@ -163,7 +172,7 @@ oneEmballage = (app) => {
 }
 
 addEmballage = (app) => {
-    app.post('/addEmballage', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.post('/addEmballage', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         const {nom, categ, qt, seuil, desc, prix} = req.body;
         Emballage.create({
             nom: nom,
@@ -198,7 +207,7 @@ addEmballage = (app) => {
 }
 
 updateEmballage = (app) => {
-    app.put('/updateEmballage/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.put('/updateEmballage/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         const {nom, categ, seuil, desc} = req.body;
         Emballage.update({
             nom: nom,
@@ -222,7 +231,7 @@ updateEmballage = (app) => {
 }
 
 deleteEmballage = (app) => {
-    app.delete('/deleteEmballage/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.delete('/deleteEmballage/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         // Import de sequelize pour gérer la transaction
         const t = await sequelize.transaction();
         
@@ -284,58 +293,6 @@ deleteEmballage = (app) => {
         }
     });
 };
-
-// deleteEmballage = (app) => {
-//     // Note: Assure-tu que Emballage, HistSortie, HistEntrer, HistCaisse et sequelize sont importés
-//     app.delete('/deleteEmballage/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
-//         let t;
-//         try {
-//             // Initialisation de la transaction
-//             t = await sequelize.transaction();
-//             const emballageId = req.params.id;
-            
-//             // 1. Vérifier l'existence
-//             const emballage = await Emballage.findByPk(emballageId, { transaction: t });
-
-//             if (!emballage) {
-//                 await t.rollback();
-//                 return res.status(404).redirect('/notFound');
-//             }
-
-//             // 2. Désactiver l'historique des Sorties
-//             await HistSortie.update(
-//                 { is_active: false }, 
-//                 { where: { id_probal: emballageId, type: 'emballage' }, transaction: t }
-//             );
-
-//             // 3. Désactiver l'historique des Entrées (Correction ici : ajout du type)
-//             await HistEntrer.update(
-//                 { is_active: false }, 
-//                 { where: { id_probal: emballageId, type: 'emballage' }, transaction: t }
-//             );
-
-//             // 4. Désactiver l'historique Caisse
-//             await HistCaisse.update(
-//                 { is_active: false }, 
-//                 { where: { id_probal: emballageId, type: 'emballage' }, transaction: t }
-//             );
-
-//             // 5. Désactiver l'emballage lui-même
-//             // Utilisation directe de l'instance trouvée au point 1
-//             await emballage.update({ is_active: false }, { transaction: t });
-
-//             // Validation
-//             await t.commit();
-            
-//             res.redirect('/allEmballage?type=article&msg=Suppression de l\'emballage avec succes&tc=alert-success');
-
-//         } catch (err) {
-//             if (t) await t.rollback();
-//             console.error("Erreur suppression emballage:", err);
-//             res.status(500).redirect('/notFound');
-//         }
-//     });
-// };
 
 module.exports = {
     allEmballage,

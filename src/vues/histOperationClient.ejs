@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/doctors-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:08 GMT -->
+<%- include('head')%>
+
+  <body>
+
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+
+      <!-- App header starts -->
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+
+        <!-- Sidebar wrapper starts -->
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+        <!-- Sidebar wrapper ends -->
+
+        <!-- App container starts -->
+        <div class="app-container">
+
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="/index">Accueil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Liste des Opération
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+
+            <!-- Sales stats starts -->
+            
+            <!-- Sales stats ends -->
+
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- App body starts -->
+          <div class="app-body">
+            <!-- Row starts -->
+            <% if(msg) {%>
+                <div class="alert border alert-dismissible fade show <%= tc %>" role="alert">
+                  <%= msg %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }%>
+            <div class="row gx-3">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Historique des Séjours</h5>
+                    <!-- <a href="/formAddJournal" class="btn btn-primary ms-auto">Ajouter une Journal</a> -->
+                  </div>
+                  <div class="card-body">
+                    
+                    <!-- Table starts -->
+                    <div class="table-responsive">
+                      <table id="" class="customButtone table truncate m-0 text-center align-middle dataTable" data-export-subtitle="Historique des séjours client des appartement one love" aria-describedby="basicExample_filter">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom & Prenom du client</th>
+                            <th class="no-calc">Appart attribué</th>
+                            <th class="no-calc">Date de début</th>
+                            <th class="no-calc">Date de fin prévu</th>
+                            <th class="no-calc">Date de fin réel</th>
+                            <th>Montant a payer</th>
+                            <th>Déjà a payer</th>
+                            <th>Reste a payer</th>
+                            <th class="no-calc">Status</th>
+                            <th class="no-calc">Commentaire</th>
+                            <th class="no-calc">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% AppartJournalEnrichies.forEach(journal => { %>
+                                <tr>
+                                    <td><%= journal.slug_id%></td>
+                                    <td><%= journal.Client.nom_client%> <%= journal.Client.prenom_client%></td>
+                                    <td><%= journal.Appartement.nom_appart %></td>
+                                    <td><%= journal.date_debut%></td>
+                                    <td><%= journal.date_fin%></td>
+                                    <td><%= journal.date_fin_reel%></td>
+                                    <td><%= journal.loyer%></td>
+                                    <td><%= journal.deja_payer%></td>
+                                    <td><%= journal.reste%></td>
+                                    <td><%= journal.status %></td>
+                                    <td><%= journal.commentaire %></td>
+                                    <td>
+                                        <div class="d-inline-flex gap-3">
+                                            <!-- ----------------------------------------------------------------------------------- -->
+                                            <div class="col-sm-4">
+                                            <!-- Card starts -->
+                                                <!-- Button trigger modal -->
+                                                <button type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#appj<%= journal.id_journal %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="appj<%= journal.id_journal %>ModalCenter" tabindex="-1"
+                                                    aria-labelledby="appj<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="appj<%= journal.id_journal %>ModalCenterTitle">
+                                                            Confirmer
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <p>Voulez-vous vraiment supprimer ce Séjour ?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                            annuler
+                                                        </button>
+                                                        <form action="/deleteSejour/<%= journal.id_journal %>?_method=DELETE" method="post">
+                                                            <div class="col-sm-12">
+                                                            <div class="d-flex gap-2 justify-content-end">
+                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            <!-- Card ends -->
+                                            </div>
+                                            <!-- ----------------------------------------------------------------------------------- -->
+                                              <!-- Card starts -->
+                                              <!-- Button trigger modal -->
+                                              <button type="button" data-bs-toggle="modal"
+                                              data-bs-target="#update<%= journal.id_journal %>ModalCenter" class="btn btn-outline-success btn-sm">
+                                              <i class="ri-edit-box-line"></i>
+                                              </button>
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="update<%= journal.id_journal %>ModalCenter" tabindex="-1"
+                                                aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title" id="update<%= journal.id_journal %>ModalCenterTitle" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                                                        Modification 
+                                                      </h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <form action="/updateSejour/<%= journal.id_journal %>?_method=PUT" method="post">
+                                                        <div class="row gx-3">
+                                                          <div class="col-sm-12">
+                                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                                                              <h6 class="m-0">Details du séjour</h6>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a1">Nom et Prenom du Client <span class="text-danger">*</span></label>
+                                                              <input type="text" class="form-control" value="<%= journal.Client.nom_client%> <%= journal.Client.prenom_client%>" readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a1">Prix nuitée <span class="text-danger">*</span></label>
+                                                              <input type="number" min="0" step="0.01" value="<%= journal.loyer%>" class="form-control" readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a1">Nombre de nuitée <span class="text-danger">*</span></label>
+                                                              <input type="number" min="1" class="form-control" value="<%= journal?.nuiter ? journal?.nuiter : 0 %>" readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a1">Nom d'Appartement attribuer <span class="text-danger">*</span></label>
+                                                              <input type="text" class="form-control" value="<%= journal.Appartement.nom_appart %>" readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a2">Date arrivée <span class="text-danger">*</span></label>
+                                                              <input type="date" class="form-control" value="<%= journal.date_debut%>" readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a2">Date départ prévu <span class="text-danger">*</span></label>
+                                                              <input type="date" class="form-control" value="<%= journal.date_fin%>"  readonly required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a2">Date départ réel <span class="text-danger">*</span></label>
+                                                              <input type="date" class="form-control" value="<%= journal.date_fin_reel%>" name="date_fin_reel" placeholder="Entrer la date" >
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                                            <div class="mb-3">
+                                                              <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
+                                                              <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"><%= journal.Commentaire %></textarea>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                          annuler
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger">Appliquer les modification</button>
+                                                      </form>
+                                                    </div>
+                                                  </div>
+                                                <!-- </form> -->
+                                                </div>
+                                              </div>
+                                              <!-- Card ends -->
+                                            <!-- ----------------------------------------------------------------------------------- -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table ends -->
+
+                    <!-- Modal Delete Row -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="my-4"></div>
+
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Historique des Paement des Séjour</h5>
+                    <!-- <a href="/formAddJournal" class="btn btn-primary ms-auto">Ajouter une Journal</a> -->
+                  </div>
+                  <div class="card-body">
+                    
+                    <!-- Table starts -->
+                    <div class="table-responsive">
+                      <table id="" class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Historique des Avance sur Salaire déclaré du personnel" aria-describedby="basicExample_filter">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom & Prenom du client</th>
+                            <th class="no-calc">Période</th>
+                            <th>Montant</th>
+                            <th class="no-calc">Date de l'Operation</th>
+                            <th class="no-calc">Mode de Paiement</th>
+                            <th class="no-calc">Commentaire</th>
+                            <th class="no-calc">Actions </th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% paiementSejoures.forEach(Journal => { %>
+                                <tr>
+                                    <td><%= Journal.slug_id %></td>
+                                    <td><%= Journal.AppartJournal.Client.nom_client %> <%= Journal.AppartJournal.Client.prenom_client %></td>
+                                    <td>Du <%= Journal.AppartJournal.date_debut %> au <%= Journal?.AppartJournal?.date_fin_reel ? Journal?.AppartJournal?.date_fin_reel : Journal?.AppartJournal?.date_fin %></td>
+                                    <td><%= Journal.montant %></td>
+                                    <td><%= Journal.date %></td>
+                                    <td><%= Journal.modePaiment %></td>
+                                    <td><%= Journal.commentaire %></td>
+                                    <td>
+                                      <div class="d-inline-flex gap-1">
+                                          <!-- ----------------------------------------------------------------------------------- -->
+                                          <div class="col-sm-4">
+                                          <!-- Card starts -->
+                                              <!-- Button trigger modal -->
+                                              <button type="button" data-bs-toggle="modal"
+                                                  data-bs-target="#paiS<%= Journal.id_journal %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                  <i class="ri-delete-bin-line"></i>
+                                              </button>
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="paiS<%= Journal.id_journal %>ModalCenter" tabindex="-1"
+                                                  aria-labelledby="paiS<%= Journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+                                                  <div class="modal-dialog modal-dialog-centered">
+                                                  <div class="modal-content">
+                                                      <div class="modal-header">
+                                                      <h5 class="modal-title" id="paiS<%= Journal.id_journal %>ModalCenterTitle">
+                                                          Confirmer
+                                                      </h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                      <p>Voulez-vous vraiment supprimer cet Historique de paiement de Séjour ?</p>
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                          annuler
+                                                      </button>
+                                                      <form action="/deletePaiementSejour/<%= Journal.id_journal %>?_method=DELETE" method="post">
+                                                          <div class="col-sm-12">
+                                                          <div class="d-flex gap-2 justify-content-end">
+                                                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                          </div>
+                                                          </div>
+                                                      </form>
+                                                      </div>
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                          <!-- Card ends -->
+                                          </div>
+                                      </div>
+                                  </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table ends -->
+
+                    <!-- Modal Delete Row -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="my-4"></div>
+
+              
+            </div>
+            <!-- Row ends -->
+
+          </div>
+          <!-- App body ends -->
+
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+          <!-- App footer ends -->
+
+        </div>
+        <!-- App container ends -->
+
+      </div>
+      <!-- Main container ends -->
+
+    </div>
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <%- include('script')%>
+    <script>
+      observer.observe(document.getElementById('tbody'), {
+        childList: true,
+        subtree: true,
+        characterData: true
+      })
+      
+    </script>
+  </body>
+
+
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/doctors-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:08 GMT -->
+</html>

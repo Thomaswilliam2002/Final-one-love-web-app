@@ -72,7 +72,6 @@ onePersonnel = (app) => {
                 const caisses = personnel.Caisses || []; // Sequelize met les caisses dans un tableau .Caisses
     
                 // On rend la vue avec toutes les données
-                console.log('occupe tour de boucle',occupe)
                 res.status(200).render('staff-profil', {
                     occupe: occupe, 
                     indice: req.query.indice, 
@@ -94,7 +93,7 @@ onePersonnel = (app) => {
 
 formAddPersonnel = (app) =>{
     app.get(['/formAddPersonnel', '/inscription'], (req, res) => {
-        Poste.findAll()
+        Poste.findAll({where: { is_active: true }})
             .then(postes => {
                 res.status(200).render('add-staff', {postes: postes, indice: req.query.indice, msg: req.query.msg, tc: req.query.tc})
             })
@@ -116,7 +115,6 @@ formEditAdmin = (app) =>{
     app.get('/formEditAdmin/:id', protrctionRoot, authorise('admin'), (req, res) => {
         Personnel.findByPk(req.params.id)
             .then(personnel => {
-                //console.log(personnel.id_personnel)
                 Occupe.findAll({ 
                     include:[
                         {model:Personnel, where: {id_personnel: personnel.id_personnel}, required: true},
@@ -142,24 +140,24 @@ formEditAdmin = (app) =>{
 }
 
 formEditPersonnel = (app) =>{
-    app.get('/formEditPersonnel/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), (req, res) => {
-        Personnel.findByPk(req.params.id)
-            .then(personnel => {
-                Poste.findAll()
-                .then(postes => {
-                    res.status(200).render('edit-staff', {personnel: personnel, postes: postes})
-                })
-                .catch(_ => {
-                    console.error(_);
-                    res.redirect('/notFound');
-                    return; // On stoppe tout ici !
-                })
+    app.get('/formEditPersonnel/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+        try{
+            const personnel = await  Personnel.findByPk(req.params.id)
+            const occupe = await Occupe.findOne({
+                where:{id_personnel: personnel.id_personnel, is_active: true},
+                include:[
+                    {
+                        model:Poste,
+                        where: {is_active: true}
+                    }
+                ]
             })
-            .catch(_ => {
-                console.error(_);
-                res.redirect('/notFound');
-                return; // On stoppe tout ici !
-            })
+            res.status(200).render('edit-staff', {personnel: personnel,occupe})
+        }catch(_) {
+            console.error(_);
+            res.redirect('/notFound');
+            return; // On stoppe tout ici !
+        }
     })
 }
 
@@ -213,8 +211,8 @@ addPersonnel = (app) => {
                 const post = await Poste.findByPk(poste);
 
                 if (post) {
-                    res.json(post);
-                    return;
+                    // res.json(post);
+                    // return;
                     if (post.nom_poste.toLowerCase() === 'comptable') type = 'comptable';
                     else if (post.nom_poste.toLowerCase() === 'caissier central') type = 'caissier central';
                     else if (post.nom_poste.toLowerCase() === 'caissier') type = 'caissier';
@@ -359,9 +357,8 @@ addPersonnel = (app) => {
 
 updatePersonnel = (app) => {
     app.put(['/updatePersonnel/:id'], (req, res) => {
-        console.log(req.query.type)
         if (req.query.type === 'staff'){
-            const {nom, prenom, email, numero, age, selectGenderOptions, qualification, poste, departement, sdepartement, desc, adresse, periode} = req.body;
+            const {nom, prenom, email, numero, age, selectGenderOptions, desc, adresse, periode} = req.body;
             Personnel.update({
                 nom: nom,
                 prenom: prenom,
@@ -376,28 +373,8 @@ updatePersonnel = (app) => {
                 where: {id_personnel: req.params.id}
             })
                 .then(personnel => {
-                    Poste.findByPk(poste)
-                        .then(poste =>{
-                            Occupe.update({
-                                salaire:poste.salaire,
-                                id_poste: poste.id_poste
-                            },{
-                                where: {id_personnel: req.params.id}
-                            })
-                                .then(occupe =>{
-                                    res.redirect(`/onePersonnel/${req.params.id}`);
-                                })
-                                .catch(_ => {
-                                    console.error(_);
-                                    res.redirect('/notFound');
-                                    return; // On stoppe tout ici !
-                                })
-                        })
-                        .catch(_ => {
-                            console.error(_);
-                            res.redirect('/notFound');
-                            return; // On stoppe tout ici !
-                        })
+                    res.redirect(`/onePersonnel/${req.params.id}`);
+                  
                 })
                 .catch(_ => {
                     console.error(_);
@@ -420,19 +397,7 @@ updatePersonnel = (app) => {
                 where: {id_personnel: req.params.id}
             })
                 .then(personnel => {
-                            Occupe.update({
-                                salaire:salaire
-                            },{
-                                where: {id_personnel: req.params.id}
-                            })
-                                .then(occupe =>{
-                                    res.redirect('/allPersonnel?allType=admin&msg=modif&type=admin');
-                                })
-                                .catch(_ => {
-                                    console.error(_);
-                                    res.redirect('/notFound');
-                                    return; // On stoppe tout ici !
-                                })
+                    res.redirect('/allPersonnel?allType=admin&msg=modif&type=admin');
                 })
                 .catch(_ => {
                     console.error(_);

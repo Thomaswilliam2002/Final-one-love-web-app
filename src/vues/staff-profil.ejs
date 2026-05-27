@@ -70,11 +70,14 @@
 
                 <!-- Table starts -->
                  <% if(user.Personnel.type_personnel === 'caissier'){ %>
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Listes des Caisses de ce caissier</h5>
+                  </div>
                   <div class="table-responsive">
                     <table class="table customButtone truncate m-0 align-middle" data-export-subtitle="Liste des caisses gere par <%= occupe.Personnel.nom %> <%= occupe.Personnel.prenom %>">
                       <thead class="text-center">
                         <tr>
-                          <th>#</th>
+                          <th>ID</th>
                           <th>Nom de la Caisse</th>
                           <th>Département</th>
                           <th>Sous Département</th>
@@ -83,7 +86,7 @@
                       <tbody class="text-center">
                         <% caisses.forEach((caisse, i) => { %>
                           <tr>
-                            <td><%= i %></td>
+                            <td><%= caisse.slug_id %></td>
                             <td><%= caisse.nom %></td>
                             <td><%= caisse.type_lieu %></td>
                             <td><%= caisse.nom_lieu %></td>
@@ -97,25 +100,28 @@
                   <br>
                   <br>
                 <!-- Table starts -->
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5 class="card-title">Listes des Sanctions</h5>
+                </div>
                 <div class="table-responsive">
                     <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des sanctions de <%= occupe.Personnel.nom %> <%= occupe.Personnel.prenom %>" aria-describedby="basicExample_filter">
                       <thead class="text-center">
                         <tr>
-                          <th aria-controls="basicExample">ID</th>
-                          <th>Motif</th>
-                          <th>Description</th>
-                          <th>Date de la sanction</th>
+                          <th aria-controls="basicExample" class="no-calc">ID</th>
+                          <th class="no-calc">Motif</th>
+                          <th class="no-calc">Description</th>
+                          <th class="no-calc">Date de la sanction</th>
                           <th>Montrant defalquer</th>
                           <% if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){ %>
-                            <th>Actions</th>
+                            <th class="no-calc">Actions</th>
                           <%}%>
                         </tr>
                       </thead>
                       <tbody class="text-center">
-                        <% i = 1; s = 0%>
+                        <% s = 0%>
                         <% occupe.Sanctions.forEach(sanction => { %>
                           <tr>
-                            <td><%= i %></td>
+                            <td><%= sanction.slug_id %></td>
                             <td><%= sanction.motif %></td>
                             <td><%= sanction.description %></td>
                             <td><%= new Date(sanction.date).getDate() < 10 ? `0${new Date(sanction.date).getDate()}` : new Date(sanction.date).getDate()  %>-<%= new Date(sanction.date).getMonth() + 1 < 10 ? `0${new Date(sanction.date).getMonth() + 1}` : new Date(sanction.date).getMonth() + 1 %>-<%= new Date(sanction.date).getFullYear()%></td>
@@ -226,11 +232,7 @@
                               </td>
                             <%}%>
                           </tr>
-                        <% i++; s += sanction.montan_defalquer }) %>
-                        <tr class="text-center">
-                          <td colspan="5">Total des montant a defalquer</td>
-                          <td><%= s %></td>
-                        </tr> 
+                        <% }) %>
                       </tbody>
                     </table>
                   </div>

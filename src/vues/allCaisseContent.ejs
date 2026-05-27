@@ -119,9 +119,9 @@
                                                 <table class="table truncate m-0 align-middle customButtone" data-export-subtitle="Liste des Produits de la caisse: <%= caisse.nom_caisse %>">
                                                     <thead class="text-center">
                                                         <tr>
-                                                            <th>ID</th>
-                                                            <th>Nom</th>
-                                                            <th>Prix Unitaire</th>
+                                                            <th class="no-calc">ID</th>
+                                                            <th class="no-calc">Nom</th>
+                                                            <th class="no-calc">Prix Unitaire</th>
                                                             <th>Quantité Disponible</th>
                                                         </tr>
                                                     </thead>
@@ -148,16 +148,16 @@
                                                 <table class="table truncate m-0 align-middle customButtone" data-export-subtitle="Liste des Emballages de la caisse: <%= caisse.nom_caisse %>">
                                                     <thead class="text-center">
                                                         <tr>
-                                                            <th>ID</th>
-                                                            <th>Nom</th>
-                                                            <th>Prix Unitaire</th>
+                                                            <th class="no-calc">ID</th>
+                                                            <th class="no-calc">Nom</th>
+                                                            <th class="no-calc">Prix Unitaire</th>
                                                             <th>Quantité Disponible</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="text-center">
                                                         <% caisse?.inventaire?.emballages?.forEach((emballage, i) => { %>
                                                             <tr>
-                                                                <td><%= i + 1 %></td>
+                                                                <td><%= emballage.slug_id %></td>
                                                                 <td><%= emballage.nom %></td>
                                                                 <td><%= emballage.prix_unitaire %></td>
                                                                 <td><%= emballage.quantite_disponible %></td>

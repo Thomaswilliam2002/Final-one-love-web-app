@@ -88,23 +88,23 @@
 
                     <!-- Table starts -->
                     <div class="table-responsive">
-                      <table class="table customButtone m-0 align-middle">
+                      <table class="table customButtone m-0 align-middle" data-export-subtitle="Historique des Clients des Appartements ONE LOVE">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Nom</th>
-                            <th>Prenome</th>
-                            <th>Numero</th>
-                            <th>Comentaire</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prenome</th>
+                            <th class="no-calc">Numero</th>
+                            <th class="no-calc">Comentaire</th>
                             <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
-                              <th>Actions</th>
+                              <th class="no-calc">Actions</th>
                             <%}%>
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                          <% i = 1; clients.forEach(client => { %>
+                          <% clients.forEach(client => { %>
                           <tr>
-                            <td><%= i %></td>
+                            <td><%= client.slug_id %></td>
                             <td><%= client.nom_client %></td>
                             <td><%= client.prenom_client %></td>
                             <td><%= client.numero_client %></td>
@@ -161,7 +161,7 @@
                               </td>
                             <%}%>
                           </tr>
-                        <% i++}) %>
+                        <%}) %>
                         </tbody>
                       </table>
                     </div>
@@ -178,13 +178,13 @@
 
                     <!-- Table starts -->
                     <div class="table-responsive">
-                      <table id="" class="table m-0 align-middle customButtone">
+                      <table id="" class="table m-0 align-middle customButtone dataTable" data-export-subtitle="Journaux des Appartements ONE LOVE">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Appart attribué</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Appart attribué</th>
+                            <th class="no-calc">Date de début</th>
+                            <th class="no-calc">Date de fin</th>
                             <th>Montant</th>
                             <th>Nuitée</th>
                           </tr>
@@ -192,7 +192,7 @@
                         <tbody class="text-center">
                           <% japparts.forEach((journal, index) => { %>
                             <tr>
-                              <td><%= index + 1 %></td>
+                              <td><%= journal.slug_id %></td>
                               <td><%= journal.Appartement.nom_appart %></td>
                               <td><%= journal.date_debut%></td>
                               <td><%= journal.date_fin%></td>
@@ -224,7 +224,7 @@
                     </div>
                     <div class="modal-body">
                       <div class="table-responsive">
-                        <table class="table customButtone m-0 align-middle" data-export-subtitle="Liste des Clients">
+                        <table class="table customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des Clients">
                           <thead class="text-center">
                             <tr>
                               <th>ID</th>
@@ -300,7 +300,7 @@
                 if(journal.id_client === parseInt(id)){
                   modolBody.insertAdjacentHTML('beforeend',`
                       <tr>
-                        <td>${index + 1}</td>
+                        <td>${journal.slug_id}</td>
                         <td>${journal.date_debut}</td>
                         <td>${journal.date_fin}</td>
                         <td>${journal.loyer}</td>
@@ -310,7 +310,6 @@
                     `)
                 }
               });
-              // document.getElementById('modalText').textContent = text;
           });
       });
     </script>

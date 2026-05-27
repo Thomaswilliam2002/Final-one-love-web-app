@@ -1,5 +1,6 @@
+const crypto = require('crypto');
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Presence', {
+    const Presence = sequelize.define('Presence', {
         id_presence: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -46,10 +47,38 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
+        },
+        slug_id: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true
         }
     }, {
+        hooks: {
+            beforeCreate: async (presence) => {
+                presence.slug_id = await Presence.generateCustomId();
+            }
+        },
         timestamps: true,
         createdAt: 'created',
         updatedAt: 'updated'
     })
+    
+    Presence.generateCustomId = async function () {
+        let newId;
+        let created = false;
+
+        while (!created) {
+            const year = new Date().getFullYear();
+            const randomStr = crypto.randomBytes(5).toString('hex').toUpperCase();
+            newId = `PRC-${year}-${randomStr}`;
+
+            const exists = await Presence.findOne({ where: { slug_id: newId } });
+            if (!exists) created = true;
+        }
+
+        return newId;
+    };
+
+    return Presence;
 }

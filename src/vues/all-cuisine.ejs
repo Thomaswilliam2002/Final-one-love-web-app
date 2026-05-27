@@ -57,7 +57,7 @@
           <!-- App body starts -->
           <div class="app-body">
             <% if(msg) {%>
-              <div class="alert bg-white border alert-dismissible fade show <%= tc %>" role="alert">
+              <div class="alert bg-white border alert-dismissible fade show <%= tc || 'alert-success' %>" role="alert">
                 <%= msg %>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
@@ -75,17 +75,19 @@
                   <div class="card-body">
                     <!-- Table starts -->
                     <div class="table-responsive">
-                      <table id="customButtone" data-export-subtitle="Liste des Cuisines" class="table truncate m-0 align-middle dataTable" aria-describedby="basicExample_filter">
+                      <table id="" data-export-subtitle="Liste des Cuisines" class="table customButtone truncate m-0 text-center align-middle dataTable" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th>Cuisine</th>
-                            <th>Non et Prenomdu locataire </th>
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Cuisine</th>
+                            <th class="no-calc">Non et Prenomdu locataire </th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
                           <% cuisines.forEach(cuisine => { %>
                           <tr>
+                            <td><%= cuisine.slug_id %></td>
                             <td>
                                 <%= cuisine.nom_cuisine %>
                             </td>

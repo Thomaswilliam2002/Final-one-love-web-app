@@ -36,11 +36,13 @@ oneBVJournal = (app) => {
 addBVJournal = (app) => {
     app.post('/addBVJournal', async(req, res) => {
         try{
-            const {barClub, montant, date} = req.body;
+            const {barClub, montant, date, commentaire, manquant} = req.body;
             const barVipJournal = await BarVipJournal.create({
                 recette: montant,
                 date: date,
-                id_barVip: parseInt(barClub.split(' ')[0])
+                id_barVip: parseInt(barClub.split(' ')[0]),
+                manquant: manquant,
+                commentaire: commentaire
             })
 
             if(barVipJournal){
@@ -89,16 +91,6 @@ deleteBVJournal = (app) => {
             res.redirect('/notFound')
             return
         }
-
-    //     BarVipJournal.findByPk(req.params.id)
-    //         .then(barVipJournal => {
-    //             const appartDel = barVipJournal;
-    //             BarVipJournal.destroy({where: {id_barVip: appartDel.id_barVip}})
-    //                 .then(_ => {
-    //                     res.redirect('/allBVJournal?msg=sup')
-    //                 })
-    //                 .catch(_ => res.redirect('/notFound'))
-    //         })
     })
 }
 

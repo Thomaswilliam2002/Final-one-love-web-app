@@ -1,7 +1,7 @@
 const {Personnel} = require('../db/sequelize');
 
 const protrctionRoot = async (req, res, next) =>{
-    if(!req.session.user){
+    if(!req?.session?.user){
         return res.redirect('/login')
     }
 
@@ -22,6 +22,9 @@ const authorise = (...roles) =>{
     return (req, res, next) => {
         const userRole = req.session?.user?.Personnel.type_personnel;
         if(!roles.includes(userRole)){
+            if(req.path === '/index'){
+                return res.redirect('/onePersonnel/' + req.session.user.Personnel.id_personnel)
+            }
             return res.status(403).json({message: 'acces reffuser'})
         } 
         next();

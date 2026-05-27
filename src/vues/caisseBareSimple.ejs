@@ -77,10 +77,10 @@
 
                     <!-- Table start -->
                     <div class="table-responsive">
-                      <table id="customButtons" class="table m-0 randomTableColors">
+                      <table id="" class="customButtone table text-center align-middle m-0 randomTableColors" data-export-subtitle="Tableau des recette des Bars Simple">
                         <thead>
                           <tr>
-                            <th>Department</th>
+                            <th class="no-calc">Department</th>
                             <th class="mois">Jan</th>
                             <th class="mois">Feb</th>
                             <th class="mois">Mar</th>
@@ -191,7 +191,7 @@
             window.location.reload();
         }
       });
-      const text_colore = ['text-primary', 'text-info', 'text-danger', 'text-warning', 'text-success']
+      const text_colore = ['text-primary', 'text-info', 'text-danger', 'text-warning', 'text-success'] //text_colore[id % text_colore.length]
       const class_colore = ['badge bg-primary', 'badge bg-info', 'badge bg-danger', 'badge bg-warning', 'badge bg-success']
       traduct = (date) => {
           const dates = new Date(`${date.split('-')[0]}-${date.split('-')[1]}-01`);
@@ -367,7 +367,7 @@
 
           tbody.insertAdjacentHTML('beforeend',`
             <tr>
-              <td><span class="${class_colore[id]}"> ${nom[index]} ${anner}</span></td>
+              <td><span class="${class_colore[id % class_colore.length]}"> ${nom[index]} ${anner}</span></td>
               <td>${recettes[0]}</td>
               <td>${recettes[1]}</td>
               <td>${recettes[2]}</td>
@@ -395,6 +395,29 @@
           boole++
         })
       })
+      
+      setTimeout(() => {
+
+        const selector = ".customButtone";
+
+        $(selector).each(function () {
+
+            if ($.fn.DataTable.isDataTable(this)) {
+
+                $(this).DataTable().destroy();
+
+                // Nettoyage classes/styles DataTable
+                $(this).removeClass('dataTable');
+                $(this).css('width', '');
+
+            }
+
+        });
+
+        customButtone(selector);
+
+      }, 100);
+      
     </script>
   </body>
 <!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/income.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:18 GMT -->

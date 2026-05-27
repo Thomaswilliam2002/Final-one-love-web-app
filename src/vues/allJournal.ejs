@@ -76,19 +76,25 @@
                       <table id="" class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Liste des Journaux des Bars/Clubs" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th>Nom</th>
-                            <th>Montant</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th>Montant recuperer</th>
+                            <th>Montant manquant</th>
+                            <th class="no-calc">Date</th>
+                            <th class="no-calc">Commentaire</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
                             <% if(type === 'simple'){ %>
                                 <% Journals.forEach(Journal => { %>
                                     <tr>
+                                        <td><%= Journal.slug_id %></td>
                                         <td><%= Journal.BarSimple.nom %></td>
-                                        <td class="calcule"><%= Journal.recette %></td>
+                                        <td><%= Journal.recette %></td>
+                                        <td><%= Journal.manquant %></td>
                                         <td><%= Journal.date %></td>
+                                        <td><%= Journal.commentaire %></td>
                                         <td>
                                             <div class="d-inline-flex gap-1">
                                               <!-- ----------------------------------------------------------------------------------- -->
@@ -137,9 +143,12 @@
                             <% } else if(type === 'vip'){ %>
                                 <% Journals.forEach(Journal => { %>
                                     <tr>
+                                        <td><%= Journal.slug_id %></td>
                                         <td><%= Journal.BarVip.nom %></td>
                                         <td class="calcule"><%= Journal.recette %></td>
+                                        <td><%= Journal.manquant %></td>
                                         <td><%= Journal.date %></td>
+                                        <td><%= Journal.commentaire %></td>
                                         <td>
                                             <div class="d-inline-flex gap-1">
                                               <!-- ----------------------------------------------------------------------------------- -->
@@ -188,9 +197,12 @@
                             <% } else if(type === 'cc') {%>
                               <% Journals.forEach(Journal => { %>
                                 <tr>
+                                    <td><%= Journal.slug_id %></td>
                                     <td><%= Journal.CrazyClub ? Journal.CrazyClub.nom : '-' %></td>
                                     <td class="calcule"><%= Journal.recette %></td>
+                                    <td><%= Journal.manquant %></td>
                                     <td><%= Journal.date %></td>
+                                    <td><%= Journal.commentaire %></td>
                                     <td>
                                         <div class="d-inline-flex gap-1">
                                           <!-- ----------------------------------------------------------------------------------- -->
@@ -236,23 +248,67 @@
                                     </td>
                                 </tr>
                               <% }) %>
-                            <% } %>
+                              <% } else if(type === 'sp') {%>
+                                <% Journals.forEach(Journal => { %>
+                                  <tr>
+                                      <td><%= Journal.slug_id %></td>
+                                      <td><%= Journal.SalonPrive.nom %></td>
+                                      <td class="calcule"><%= Journal.recette %></td>
+                                      <td><%= Journal.manquant %></td>
+                                      <td><%= Journal.date %></td>
+                                      <td><%= Journal.commentaire %></td>
+                                      <td>
+                                          <div class="d-inline-flex gap-1">
+                                            <!-- ----------------------------------------------------------------------------------- -->
+                                            <div class="col-sm-4">
+                                              <!-- Card starts -->
+                                                  <!-- Button trigger modal -->
+                                                  <button type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#<%= Journal.id_journal %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                  </button>
+                                                  <!-- Modal -->
+                                                  <div class="modal fade" id="<%= Journal.id_journal %>ModalCenter" tabindex="-1"
+                                                    aria-labelledby="<%= Journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h5 class="modal-title" id="<%= Journal.id_journal %>ModalCenterTitle">
+                                                            Confirmer
+                                                          </h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                            annuler
+                                                          </button>
+                                                          <form action="/deleteSPJournal/<%= Journal.id_journal %>?_method=DELETE" method="post">
+                                                            <div class="col-sm-12">
+                                                              <div class="d-flex gap-2 justify-content-end">
+                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                              </div>
+                                                            </div>
+                                                          </form>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              <!-- Card ends -->
+                                            </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                                <% }) %>
+                              <% } %>
                         </tbody>
-                      </table>
-                      <table id="" class="table truncate m-0 align-middle dataTable">
-                        <thead class="text-center">
-                          <tr>
-                            <th>Somme des loyer: </th>
-                            <th id="resulta"></th>
-                          </tr>
-                        </thead>
                       </table>
                     </div>
                     <!-- Table ends -->
 
                     <!-- Modal Delete Row -->
-                    
-
                   </div>
                 </div>
               </div>
@@ -307,6 +363,7 @@
         subtree: true,
         characterData: true
       })
+      
     </script>
   </body>
 

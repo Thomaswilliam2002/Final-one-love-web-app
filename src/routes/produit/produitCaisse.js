@@ -11,7 +11,7 @@ statsRecetteMoris = (app) => {
             '/stats/recette/:annee/:mois/:semaine'
         ],
         protrctionRoot,
-        authorise('admin', 'comptable'),
+        authorise('admin', 'comptable', 'caissier central'),
 
         async (req, res) => {
 
@@ -292,45 +292,8 @@ statsRecetteMoris = (app) => {
     );
 };
 
-// addHistCaisse = (app) => {
-//     app.post('/addHistCaisse', protrctionRoot, authorise('admin','comptable','caissier'), async (req, res) => {
-
-//         const { qte, prix, type, idpro, caisse } = req.body;
-
-//         try {
-
-//             if(!qte || !prix || !idpro || !caisse){
-//                 return res.redirect('/notFound');
-//             }
-
-//             const ajoutHist = await HistCaisse.create({
-//                 quantiter: qte,
-//                 prix_unit: prix,
-//                 type: type,
-//                 id_probal: idpro,
-//                 id_caisse: caisse,
-//                 id_caissier: req.session.user.Personnel.id_personnel
-//             });
-
-//             const role = req.session.user.Poste.nom_poste;
-
-//             if(role === 'Caissier'){
-//                 res.redirect(`/allProduitCaisse/${req.session.user.Personnel.id_personnel}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-//             }
-//             else{
-//                 res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-//             }
-
-//         } catch (e) {
-//             console.error(e);
-//             res.redirect('/notFound');
-//         }
-
-//     })
-// }
-
 allProduitCaisse = (app) => {
-    app.get('/allProduitCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+    app.get('/allProduitCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) => {
 
         try {
 
@@ -517,7 +480,7 @@ allProduitCaisse = (app) => {
 };
 
 allCaisseArticle = (app) => {
-    app.get('/allCaisseArticle/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+    app.get('/allCaisseArticle/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) => {
 
         try {
 
@@ -671,7 +634,7 @@ allCaisseContent = (app) => {
     app.get(
         '/allCaisseContent',
         protrctionRoot,
-        authorise('admin', 'comptable'),
+        authorise('admin', 'comptable', 'caissier central'),
         async (req, res) => {
 
             try {
@@ -847,7 +810,7 @@ allCaisseContent = (app) => {
 };
 
 addHistCaisse = (app) => {
-    app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) =>{
+    app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) =>{
         const {qte, prix, type, idpro, caisse, caissier, nom} = req.body;
         try{
             const ajoutHist = await HistCaisse.create({
@@ -873,7 +836,7 @@ addHistCaisse = (app) => {
 )}
 
 allHistCaisse = (app) => {
-    app.get(['/allHistCaisse/:id', '/allHistCaisse'], protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+    app.get(['/allHistCaisse/:id', '/allHistCaisse'], protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) => {
         try {
             let hists;
 
@@ -929,8 +892,6 @@ allHistCaisse = (app) => {
                 };
             }));
 
-            console.log(histsEnrichi)
-
             res.status(200).render('allHistCaisse', {
                 hists: histsEnrichi,
                 msg: req.query.msg,
@@ -945,7 +906,7 @@ allHistCaisse = (app) => {
 };
 
 deleteHistCaisse = (app) => {
-    app.delete('/deleteHistCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+    app.delete('/deleteHistCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) => {
         try {
             // 1. Trouver l'enregistrement de vente
             const histDel = await HistCaisse.findByPk(req.params.id);

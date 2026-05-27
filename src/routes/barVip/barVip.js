@@ -103,15 +103,6 @@ deleteBarV = (app) => {
             return;
         }
 
-    //     BarVip.findByPk(req.params.id)
-    //         .then(barV => {
-    //             const appartDel = barV;
-    //             BarVip.destroy({where: {id_barVip: appartDel.id_barVip}})
-    //                 .then(_ => {
-    //                     res.redirect('/allBarClub?type=barv&msg=sup')
-    //                 })
-    //                 .catch(_ => res.redirect('/notFound'))
-    //         })
     })
 }
 

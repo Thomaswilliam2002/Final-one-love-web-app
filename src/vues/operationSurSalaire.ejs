@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/edit-staff.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:14 GMT -->
+<%- include('head')%>
+
+  <body>
+
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+
+      <!-- App header starts -->
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+
+        <!-- Sidebar wrapper starts -->
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+        <!-- Sidebar wrapper ends -->
+
+        <!-- App container starts -->
+        <div class="app-container">
+
+          <!-- App hero header starts -->
+          
+          <!-- App body ends --> 
+
+          <!-- =---------------------------------------------------------------------- -->
+          <!-- App body starts -->
+          <div class="app-body">
+
+            <!-- App hero header starts -->
+          <div class=" d-flex align-items-center">
+
+            <div class="col-sm-12">
+                <!-- Card starts -->
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                      
+                      <button type="button" class="btn btn-info">
+                        <a href="#newSalaire" class="text-white"><i class="ri-sticky-note-add-line">Nouveau Salaires</i></a> 
+                      </button>
+                      <button type="button" class="btn btn-info">
+                        <a href="#newAvanceSalaire" class="text-white"><i class="ri-sticky-note-add-line">Avance sur salaire</i></a> 
+                      </button>
+                      <button type="button" class="btn btn-info">
+                        <a href="#newPaiementSalaire" class="text-white"><i class="ri-sticky-note-add-line">Paiement Salaire</i></a> 
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card ends -->
+              </div>
+
+          </div>
+          <!-- App body ends --> 
+
+            <!-- Row starts -->
+            <div class="row gx-3">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Ajouter un Nouveau Salaires a <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> qui occupe le poste <%= personnel.Poste.nom_poste %></h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addSalaire" method="post" id="newSalaire" name="newSalaire">
+                    <!-- Row starts -->
+                    <div class="row gx-3"> 
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details</h6>
+                        </div>
+                      </div>
+                    <input type="hidden" class="form-control" value="<%= personnel.id_occupe %>" name="id_occupe">
+                    <input type="hidden" class="form-control" value="<%= personnel.Personnel.id_personnel %>" name="id_personnel">
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Salaire Brute du Poste<span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" class="form-control" value="<%= personnel.Poste.salaire %>" readonly required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Primes<span class="text-danger">*</span></label>
+                          <input type="number" min="0" step="0.01" class="form-control" name="primes" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Deductions<span class="text-danger">*</span></label>
+                          <input type="number" min="0" step="0.01" class="form-control" name="deductions" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Salaire Net<span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" class="form-control" name="montant_net" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Date de Debut<span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" id="a1" name="debut_periode"  required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Date de Fin<span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" id="a1" name="fin_periode"  required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                          <label class="form-label" for="a8">Commantaire <span class="text-danger">*</span></label>
+                          <textarea class="form-control" placeholder="Enter un Commantaire" rows="2" name="commentaire"></textarea>
+                        </div>
+                    </div>
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter</button>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+
+              <div class="col-sm-12 ">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Ajouter une nouvelle avance sur Salaires a <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> qui occupe le poste <%= personnel.Poste.nom_poste %></h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addASalaire" method="post" id="newAvanceSalaire" name="newAvanceSalaire">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details de l'Opperation</h6>
+                        </div>
+                      </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Salaire Cible<span class="text-danger">*</span></label>
+                          <select class="form-select" id="poste" name="id_salaire">
+                            <% if(allSalaires && allSalaires.length > 0){ allSalaires.forEach(salaire =>{ %>
+                                  <option value="<%= salaire.id_salaire %>" >Salaire du <%= salaire.debut_periode %> au <%= salaire.fin_periode %> </option>
+                            <% } ) }else if (!allSalaires || allSalaires.length === 0){ %>
+                              <option value="">Aucun Salaire en coure</option>
+                            <% } %>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Montant<span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" class="form-control" name="montant" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Mode de paiement<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="a1" name="date_debut"  required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Date de l'opperation<span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" id="a1" name="date"  required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                          <label class="form-label" for="a8">Commantaire <span class="text-danger">*</span></label>
+                          <textarea class="form-control" placeholder="Enter un Commantaire" rows="2" name="commentaire"></textarea>
+                        </div>
+                    </div>
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter</button>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+
+              <div class="col-sm-12 ">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Effectuer le paiement de Salaires a <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> qui occupe le poste <%= personnel.Poste.nom_poste %></h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addPSalaire" method="post" id="newPaiementSalaire" name="newPaiementSalaire">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details de l'Opperation</h6>
+                        </div>
+                      </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Salaire Cible<span class="text-danger">*</span></label>
+                          <select class="form-select" id="poste" name="id_salaire">
+                            <% if(allSalaires && allSalaires.length > 0){ allSalaires.forEach(salaire =>{ %>
+                                  <option value="<%= salaire.id_salaire %>" >Salaire du <%= salaire.debut_periode %> au <%= salaire.debut_periode %> </option>
+                            <% } ) }else if (!allSalaires || allSalaires.length === 0){ %>
+                              <option value="">Aucun Salaire en coure</option>
+                            <% } %>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Montant<span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" class="form-control" name="montant" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Mode de paiement<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="a1" name="date_debut"  required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Date de l'opperation<span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" id="a1" name="date"  required>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                          <label class="form-label" for="a8">Commantaire <span class="text-danger">*</span></label>
+                          <textarea class="form-control" placeholder="Enter un Commantaire" rows="2" name="commentaire"></textarea>
+                        </div>
+                    </div>
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter</button>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row ends -->
+
+            <br>
+            
+        </div>
+            
+             <!-- =---------------------------------------------------------------------- -->
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+          <!-- App footer ends -->
+        </div>
+        <!-- App container ends -->
+
+      </div>
+      
+      
+    </div>
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <%- include('script')%>
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted || 
+                              (typeof window.performance != "undefined" && 
+                                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Si l'utilisateur est revenu en arrière, on recharge la page proprement
+            window.location.reload();
+        }
+      });
+    </script>
+  </body>
+
+
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/edit-staff.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:14 GMT -->
+</html>

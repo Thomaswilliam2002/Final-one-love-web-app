@@ -18,8 +18,8 @@ allMClose = (app) => {
             .then(maisonColses => {
                 Chambre.findAll({
                     include:[
-                        {model: ChambreJournal, where: {is_active: true}, required: true},
-                        {model:MaisonColse, where: {is_active: true}, required: true}
+                        {model: ChambreJournal, where: {is_active: true}, required: false},
+                        {model:MaisonColse, where: {is_active: true}, required: false}
                     ],
                     where:{is_active: true},
                     order:[['id_chambre', 'ASC']]

@@ -75,7 +75,7 @@
                             <table  class="table truncate m-0 align-middle ">
                               <thead class="text-center">
                                 <tr>
-                                  <!-- <th>ID</th> -->
+                                  <th><%= maisonColse.slug_id %></th>
                                   <th><%= maisonColse.nom %></th>
                                   <th><%= maisonColse.adresse %></th>
                                   <th><%= maisonColse.nb_chambre %> chambre(s)</th>
@@ -215,18 +215,18 @@
                               <table id="" class="table truncate m-0 align-middle customButtone" >
                                 <thead class="text-center">
                                   <tr>
-                                    <th >ID</th>
-                                    <th>Nom</th>
-                                    <th>Loyer</th>
-                                    <th>Disponibiliter</th>
-                                    <th>Description</th>
-                                    <th>Action</th>
+                                    <th class="no-calc">ID</th>
+                                    <th class="no-calc">Nom</th>
+                                    <th class="no-calc">Loyer</th>
+                                    <th class="no-calc">Disponibiliter</th>
+                                    <th class="no-calc">Description</th>
+                                    <th class="no-calc">Action</th>
                                   </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                  <% i = 1; chambres.forEach(chambre => {if(chambre.id_mclose === maisonColse.id_mclose){%>
+                                  <% chambres.forEach(chambre => {if(chambre.id_mclose === maisonColse.id_mclose){%>
                                     <tr>
-                                      <td><%= i %></td>
+                                      <td><%= chambre.slug_id %></td>
                                       <td>
                                           <%= chambre.nom %>
                                       </td>
@@ -357,7 +357,7 @@
                                         </div>
                                       </td>
                                     </tr>
-                                  <% i++}}) %>
+                                  <%}}) %>
                                 </tbody>
                               </table>
                             </div>
@@ -392,21 +392,21 @@
               <table id="" class="table m-0 align-middle customButtone">
                 <thead class="text-center">
                   <tr>
-                    <th>ID</th>
-                    <th>Chambre</th>
-                    <th>Maison close</th>
-                    <th>Montant reçu</th> 
+                    <th class="no-calc">ID</th>
+                    <th class="no-calc">Chambre</th>
+                    <th class="no-calc">Maison close</th>
+                    <th>Montant reçu Aujourd'hui</th> 
                     <th>Montant attendu</th>
                   </tr>
                 </thead>
                 <tbody class="text-center">
                   
-                  <% i = 1; const today = new Date().toISOString().split('T')[0]; %>
+                  <% const today = new Date().toISOString().split('T')[0]; %>
                   <% let tta = 0; let ttr = 0 %>
                   <% chambres.forEach(chambre => { %> 
                     
                     <tr>
-                      <td><%= i %></td>
+                      <td><%= chambre.slug_id %></td>
                       <td><%= chambre.nom %></td>
                       <td><%= chambre.MaisonClose.nom %></td>
 
@@ -424,10 +424,10 @@
                         <%= journalDuJour ? journalDuJour.loyer : 0 %> FCFA
                       </td>
 
-                      <td><%= chambre.loyer %> FCFA</td>
+                      <td><%= chambre.loyer %></td>
                     </tr>
-                  <% i++ }) %>
-                  <tfoot class="text-center">
+                  <%}) %>
+                  <!-- <tfoot class="text-center">
                     <tr>
                       <td>-</td>
                       <td>-</td>
@@ -435,7 +435,7 @@
                       <td><%= ttr %></td>
                       <td></td>
                     </tr>
-                  </tfoot>
+                  </tfoot> -->
                 </tbody>
               </table>
             </div>
@@ -473,6 +473,9 @@
             window.location.reload();
         }
       });
+
+      // const data = JSON.parse(`<%- JSON.stringify(chambres) %>`);
+      // console.log(data);
     </script>
   </body>
   

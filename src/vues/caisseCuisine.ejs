@@ -77,10 +77,10 @@
 
                     <!-- Table start -->
                     <div class="table-responsive">
-                      <table id="customButtons" class="table m-0 randomTableColors">
+                      <table id="" class="table text-center align-middle customButtone m-0 randomTableColors" data-export-subtitle="Tableau des recette des Cuisine">
                         <thead>
                           <tr>
-                            <th>Department</th>
+                            <th class="no-calc">Department</th>
                             <th class="mois">Jan</th>
                             <th class="mois">Feb</th>
                             <th class="mois">Mar</th>
@@ -343,7 +343,7 @@
 
         tbody.insertAdjacentHTML('beforeend',`
         <tr>
-            <td><span class="${class_colore[ia]}">Cuisine ${anner}</span></td>
+            <td><span class="${class_colore[id % class_colore.length]}">Cuisine ${anner}</span></td>
             <td>${recettes[0]}</td>
             <td>${recettes[1]}</td>
             <td>${recettes[2]}</td>
@@ -369,6 +369,29 @@
 
         chart.render();
       })
+
+            
+      setTimeout(() => {
+
+      const selector = ".customButtone";
+
+      $(selector).each(function () {
+
+          if ($.fn.DataTable.isDataTable(this)) {
+
+              $(this).DataTable().destroy();
+
+              // Nettoyage classes/styles DataTable
+              $(this).removeClass('dataTable');
+              $(this).css('width', '');
+
+          }
+
+      });
+
+      customButtone(selector);
+
+    }, 100);
     </script>
     <%- include('script')%>
   </body>

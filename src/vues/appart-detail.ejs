@@ -85,25 +85,6 @@
                 <div class="row gx-3">
                   <div class="col-sm-12">
                     <div class="accordion mb-3" id="accordionSpecialTitle">
-                      <!-- <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingSpecialTitleOne">
-                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseSpecialTitleOne" aria-expanded="true"
-                            aria-controls="collapseSpecialTitleOne">
-                            <div class="d-flex flex-column">
-                              <h5 class="m-0">Comparatif</h5>
-                            </div>
-                          </button>
-                        </h2>
-                        <div id="collapseSpecialTitleOne" class="accordion-collapse collapse show"
-                          aria-labelledby="headingSpecialTitleOne">
-                          <div class="accordion-body">
-                            
-                              
-                             
-                          </div>
-                        </div>
-                      </div> -->
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="headingSpecialTitleTwo">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -120,10 +101,10 @@
                           <!-- ---------------------------b start------------------------------------- -->
                               <!-- Table start -->
                               <div class="table-responsive">
-                                <table class="table customButtone m-0 randomTableColors" data-export-subtitle="Recette mensuelle de l'appartement: <%= appartement.nom_appart %>">
+                                <table class="table text-center align-middle customButtone m-0 randomTableColors" data-export-subtitle="Recette mensuelle de l'appartement: <%= appartement.nom_appart %>">
                                   <thead>
                                     <tr>
-                                      <th>Apartement</th>
+                                      <th class="no-calc">Apartement</th>
                                       <th class="mois">Jan</th>
                                       <th class="mois">Feb</th>
                                       <th class="mois">Mar</th>
@@ -144,49 +125,6 @@
                                   </tbody>
                                 </table>
                               </div>
-                            <!-- Table end -->
-                            <!-- <div class="row gx-3">
-                              <div class="col-sm-12">
-                                <div class="card mb-3">
-                                  <div class="card-header">
-                                    <h5 class="card-title">Courbre de variation des recette des Bar simple par année</h5>
-                                  </div>
-                                 
-                                  <div class="">
-                                    <div class="">
-                                      <div class="card-body">
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="false">
-                                          <div class="carousel-indicators">
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                              class="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                              aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                              aria-label="Slide 3"></button>
-                                          </div>
-                                          <div class="carousel-inner pb-3" id="pp">
-                
-                                          </div>
-                
-                                          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide="prev" >
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                          </button>
-                                          <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide="next" >
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                          </button>
-                
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                   
-                                  
-                                </div>
-                              </div>
-                            </div> -->
-                          <!-- --------------------------------b end-------------------------------- -->
                           </div>
                         </div>
                       </div>
@@ -221,7 +159,6 @@
 			************ JavaScript Files *************
 		************* -->
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
-    <script src="assets/vendor/apex/apexcharts.min.js"></script>
     <%- include('script')%>
     <script>
       window.addEventListener("pageshow", function (event) {
@@ -248,17 +185,17 @@
       
   
       let recette = JSON.parse(`<%- JSON.stringify(courbe_info) %>`)
-      console.log(recette)
+      let app = JSON.parse(`<%- JSON.stringify(appartement) %>`)
+      // console.log(recette)
       if(recette.length === 0){
         let d = new Date().toISOString().slice(0,7);
         recette.push(JSON.parse(JSON.stringify({
             "mois": d,
             "id_journal": 1,
-            "total_recette": 0,
+            "total_recette": 0, 
             "NomAppart": "..."
         })))
       }
-      // console.log(recette)
   
       recette.forEach(element => {
         if(!anner.includes(element.mois.split('-')[0])){
@@ -266,10 +203,9 @@
         }
       });
   
-      const nom = recette[0]['NomAppart']
-      
+      const nom = app.nom_appart
   
-      console.log(anner)
+      // console.log(anner)
       boole = 0
       // ----------------------------------------------------------------------
       anner.forEach((anner, ia) => {
@@ -283,14 +219,7 @@
           });
           all_total.push(total);
   
-        console.log('=>',nom, all_total)
-  
-        // pp.insertAdjacentHTML('beforeend',`
-        //   <div style = "background-color: red" class="card-body carousel-item ${ia === 0? 'active' : ''}" id="p${ia}">
-        //   </div>
-        // `)
-  
-        // const p = document.getElementById(`p${ia}`);
+        // console.log('=>',nom, all_total)
   
         const all_month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",]
         const recettes = Array(12).fill(0);
@@ -303,93 +232,7 @@
             }
           }
         })
-        // var options = {
-        //   chart: {
-        //     height: 300,
-        //     type: "line",
-        //     toolbar: {
-        //       show: true,
-        //     },
-        //   },
-        //   title:{
-        //     text: `${nom} ${anner}`,
-        //     aligne: 'left',
-        //     style:{
-        //       color: `red`,
-        //     }
-        //   },
-        //   dataLabels: {
-        //     enabled: false,
-        //   },
-        //   stroke: {
-        //     curve: "smooth",
-        //     width: 3,
-        //   },
-        //   series: [
-        //     {
-        //       name: "Recette",
-        //       data: recettes,
-        //     },
-        //   ],
-        //   grid: {
-        //     borderColor: "#d8dee6",
-        //     strokeDashArray: 5,
-        //     xaxis: {
-        //       lines: {
-        //         show: true,
-        //       },
-        //     },
-        //     yaxis: {
-        //       lines: {
-        //         show: true,
-        //       },
-        //     },
-        //     padding: {
-        //       top: 0,
-        //       right: 0,
-        //       bottom: 10,
-        //       left: 0,
-        //     },
-        //   },
-        //   xaxis: {
-        //     categories: all_month,
-        //   },
-        //   yaxis: {
-        //     labels: {
-        //       show: true,
-        //     },
-        //   },
-        //   colors: ["#116aef", "#ce313e", "#436ccf", "#dcad10", "#828382"],
-        //   markers: {
-        //     size: 0,
-        //     opacity: 0.3,
-        //     colors: ["#116aef", "#ce313e", "#436ccf", "#dcad10", "#828382"],
-        //     strokeColor: "#ffffff",
-        //     strokeWidth: 1,
-        //     hover: {
-        //       size: 7,
-        //     },
-        //   },
-        //   tooltip: {
-        //     y: {
-        //       formatter: function (val) {
-        //         return val + "FCFA";
-        //       },
-        //     },
-        //   },
-        // };
-  
-        // exi = document.getElementById(`income${ia}`);
-        // console.log(exi)
-        // if(!exi){
-        //   p.insertAdjacentHTML('beforeend',`
-        //     <div class="chart-height-lg">
-        //         <div style = "background-color: green" id="income${ia}" ></div>
-        //     </div>
-        //   `)
-        // }
-        // console.log(nom, anner)
-  
+
         tbody.insertAdjacentHTML('beforeend',`
           <tr>
             <td><span class="${class_colore[boole]}"> ${nom} ${anner}</span></td>
@@ -408,17 +251,32 @@
             <td>${all_total} FCFA</td>
           </tr>
         `)
-  
-        // const hot = document.getElementById(`income${ia}`);
-        // hot.insertAdjacentHTML('beforeend',`
-        //   <div class="" style = "background-color: blue" id="d${boole}-${anner}">
-        //   </div>
-        // `)
-        // var chart = new ApexCharts(document.querySelector(`#d${boole}-${anner}`), options);
-  
-        // chart.render();
+
         boole++
       })
+
+      // setTimeout(() => {
+
+      //   const selector = ".customButtone";
+
+      //   $(selector).each(function () {
+
+      //       if ($.fn.DataTable.isDataTable(this)) {
+
+      //           $(this).DataTable().destroy();
+
+      //           // Nettoyage classes/styles DataTable
+      //           $(this).removeClass('dataTable');
+      //           $(this).css('width', '');
+
+      //       }
+
+      //   });
+
+      //   customButtone(selector);
+
+      // }, 100);
+
     </script>
   </body>
 <!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/doctors-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:09 GMT -->

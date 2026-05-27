@@ -68,18 +68,18 @@
                     <table class="table table-hover align-middle customButtone" data-export-subtitle="Liste des Présences">
                       <thead class="text-center">
                         <tr>
-                          <th>Personnel</th>
-                          <th>État</th>
-                          <th>Début</th>
-                          <th>Fin</th>
-                          <th>Heures (Arr/Dep)</th>
-                          <th>Justification</th>
-                          <th>Actions</th>
+                          <th class="no-calc">Personnel</th>
+                          <th class="no-calc">État</th>
+                          <th class="no-calc">Début</th>
+                          <th class="no-calc">Fin</th>
+                          <th class="no-calc">Heures (Arr/Dep)</th>
+                          <th class="no-calc">Justification</th>
+                          <th class="no-calc">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="text-center">
                         <% presences.forEach(p => { %>
-                          <%if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){%>
+                          <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
                             <tr>
                               <td>
                                 <strong><%= p.Personnel.nom %> <%= p.Personnel.prenom %></strong>
@@ -99,11 +99,9 @@
                               </td>
                               <td><%= p.etat_presence === 'Absent' ? p.justification_absence : '---' %></td>
                               <td>
-                                <form action="/deletePresence/<%= p.id_presence %>?_method=DELETE" method="POST" onsubmit="return confirm('Supprimer cet enregistrement ?')">
-                                  <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="ri-delete-bin-line"></i>
-                                  </button>
-                                </form>
+                                <button type="button" onclick="confirmDelete('<%= p.id_presence %>')" class="btn btn-outline-danger btn-sm">
+                                  <i class="ri-delete-bin-line"></i>
+                                </button>
                               </td>
                             </tr>
                           <%} else { if(p.Personnel.id_personnel === user.Personnel.id_personnel) {%>
@@ -151,7 +149,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <%if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){%>
+                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
                   <div class="mb-3 text-center">
                     <label class="form-label">Employé de retour</label>
                     <select name="id_personnel" class="form-select" required>
@@ -192,7 +190,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <%if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){%>
+                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
                   <div class="mb-3 text-center">
                     <label class="form-label">Employé de retour</label>
                     <select name="id_personnel" class="form-select" required>
@@ -233,7 +231,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <%if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){%>
+                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
                   <div class="mb-3 text-center">
                     <label class="form-label">Employé de retour</label>
                     <select name="id_personnel" class="form-select" required>
@@ -278,7 +276,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-                <%if(['admin', 'comptable'].includes(user.Personnel.type_personnel)){%>
+                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
                   <div class="mb-3 text-center">
                     <label class="form-label">Employé de retour</label>
                     <select name="id_personnel" class="form-select" required>
@@ -320,8 +318,52 @@
   </div>
 
   <%- include('script') %>
+  <script src="/sweetalert2/sweetalert2.all.min.js"></script>
   <script>
-    
+    function confirmDelete(id) {
+      Swal.fire({
+        title: 'Êtes-vous sûr ?',
+        text: "Cette action supprimera définitivement la presence.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Oui, supprimer',
+        cancelButtonText: 'Annuler'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Redirection vers ta route de suppression
+          fetch(`/deletePresence/${id}?_method=DELETE`, {
+            method: 'POST'
+          })
+          .then(response => {
+            if (response.ok) {
+              Swal.fire(
+                'Suppression effectuée !',
+                'La presence a bien été supprimé.',
+                'success'
+              ).then(() => {
+                window.location.reload();
+              });
+            } else {
+              Swal.fire(
+                'Erreur',
+                'Une erreur s’est produite lors de la suppression de la presence.',
+                'error'
+              );
+            }
+          })
+          .catch(error => {
+            console.error('Erreur lors de la suppression de la presence:', error);
+            Swal.fire(
+              'Erreur',
+              'Une erreur s’est produite lors de la suppression de la presence.',
+              'error'
+            );
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>

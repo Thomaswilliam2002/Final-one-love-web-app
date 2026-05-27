@@ -1,5 +1,6 @@
+const crypto = require('crypto');
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Personnel', {
+    const Personnel = sequelize.define('Personnel', {
         id_personnel: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -65,11 +66,39 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
+        },
+        slug_id: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: true
         }
     },
     {
+        hooks: {
+            beforeCreate: async (personnel) => {
+                personnel.slug_id = await Personnel.generateCustomId();
+            }
+        },
         timestamps: true,
         createdAt: 'created',
         updatedAt: false
     })
+    
+    Personnel.generateCustomId = async function () {
+        let newId;
+        let created = false;
+
+        while (!created) {
+            const year = new Date().getFullYear();
+            const randomStr = crypto.randomBytes(5).toString('hex').toUpperCase();
+            newId = `PER-${year}-${randomStr}`;
+
+            const exists = await Personnel.findOne({ where: { slug_id: newId } });
+            if (!exists) created = true;
+        }
+
+        return newId;
+    };
+
+    return Personnel;
 }

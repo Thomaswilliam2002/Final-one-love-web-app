@@ -58,46 +58,10 @@
           <div class="app-body">
 
             <% if(msg) {%>
-              <% if(type === 'achat') {%>
-                <% if(msg === 'ajout') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-success" role="alert">
-                    <b>Achat </b> ajouter avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'modif') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-info" role="alert">
-                    <b>Achat </b> modifier avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'sup') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                    <b>Achat </b> supprimer avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-              <% }%>
-              <% if(type === 'vente') {%>
-                <% if(msg === 'ajout') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-success" role="alert">
-                    <b>Vente </b> ajouter avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'modif') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-info" role="alert">
-                    <b>Vente </b> modifier avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'sup') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                    <b>Vente </b> supprimer avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-              <% }%>
+              <div class="alert bg-white border alert-dismissible fade show <%= tc %>"  role="alert">
+                <b><%= msg %></b>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
             <% }%>
 
             <!-- Row starts -->
@@ -124,24 +88,24 @@
                           <table class="table customButtone m-0 align-middle" data-export-subtitle="Liste des historiques d'approvisionnement de l'emballage <%= emballage.nom %>">
                             <thead class="text-center">
                               <tr>
-                                <th >ID</th>
+                                <th class="no-calc">ID</th>
                                 <th>Quantiter AJouter</th>
-                                <th>Prix a l'uniter</th>
+                                <th class="no-calc">Prix a l'uniter</th>
                                 <th>Montant</th>
-                                <th>Destinateur</th>
-                                <th>Date de l'operation</th>
-                                <th>Heure de l'operation</th>
-                                <th>Action</th>
+                                <th class="no-calc">Fournisseur</th>
+                                <th class="no-calc">Date de l'operation</th>
+                                <th class="no-calc">Heure de l'operation</th>
+                                <th class="no-calc">Action</th>
                               </tr>
                             </thead>
                             <tbody class="text-center" id="tbody1">
-                              <% i = 0; total_q = 0; total_p = 0; montant = 0; hachats.forEach((hachat, index) => {%>
+                              <% total_q = 0; total_p = 0; montant = 0; hachats.forEach((hachat, index) => {%>
                               <tr>
-                                <td><%= i %></td>
+                                <td><%= hachat.slug_id %></td>
                                 <td><%= hachat.quantiter %></td>
                                 <td><%= hachat.prix_unit %></td>
-                                <td class="calcule1"><%= hachat.prix_unit * hachat.quantiter %></td>
-                                <td><%= hachat.donneur %></td>
+                                <td><%= hachat.prix_unit * hachat.quantiter %></td>
+                                <td><%= hachat.Fournisseur.nom %></td>
                                 <td><%= new Date(hachat.created).getDate() %>-<%= new Date(hachat.created).getMonth() + 1 %>-<%= new Date(hachat.created).getFullYear()%></td>
                                 <td><%= new Date(hachat.created).getHours() %>-<%= new Date(hachat.created).getMinutes() %>-<%= new Date(hachat.created).getSeconds()%></td>
                                 <td>
@@ -242,20 +206,12 @@
                                   </div>
                                 </td>
                               </tr>
-                              <% i++; total_p += hachat.prix_unit; total_q += hachat.quantiter; montant += hachat.prix_unit * hachat.quantiter}) %>
+                              <% total_p += hachat.prix_unit; total_q += hachat.quantiter; montant += hachat.prix_unit * hachat.quantiter}) %>
                               <!-- <th >Total</th>
                               <th ><%= total_q %></th>
                               <th ><%= total_p %></th>
                               <th ><%= montant %></th> -->
                             </tbody>
-                          </table>
-                          <table id="" class="table truncate m-0 align-middle dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Somme des montant : </th>
-                                <th id="resulta1"></th>
-                              </tr>
-                            </thead>
                           </table>
                         </div>
                       </div>
@@ -295,19 +251,19 @@
                           <table id=""  class="table truncate m-0 align-middle customButtone" data-export-subtitle="Liste des historiques de vente du l'emballage <%= emballage.nom %>" aria-describedby="basicExample_filter">
                             <thead class="text-center">
                               <tr>
-                                <th >ID</th>
+                                <th class="no-calc">ID</th>
                                 <th>Quantiter Retirer</th>
-                                <th>Prix a l'uniter</th>
+                                <th class="no-calc">Prix a l'uniter</th>
                                 <th>Montant</th>
-                                <th>Destinataire</th>
-                                <th>Commantaire</th>
-                                <th>Date de l'operation</th>
-                                <th>Heure de l'operation</th>
-                                <th>Action</th>
+                                <th class="no-calc">Destinataire</th>
+                                <th class="no-calc">Commantaire</th>
+                                <th class="no-calc">Date de l'operation</th>
+                                <th class="no-calc">Heure de l'operation</th>
+                                <th class="no-calc">Action</th>
                               </tr>
                             </thead>
                             <tbody class="text-center" id="tbody2">
-                              <% i = 1; total_q = 0; total_p = 0; montant = 0%>
+                              <% total_q = 0; total_p = 0; montant = 0%>
                                 <% 
                                 // Initialisation d'un Set pour suivre les caisses déjà traitées
                                 // Cela permet d'afficher le bouton "Modifier" uniquement pour l'entrée la plus récente de chaque caisse
@@ -316,7 +272,7 @@
                               
                               <% hventes.forEach((hvente, index) => { %>
                                 <tr>
-                                  <td><%= i %></td>
+                                  <td><%= hvente.slug_id %></td>
                                   <td><%= hvente.quantiter %></td>
                                   <td><%= hvente.prix_unit %></td>
                                   <td class="calcule2"><%= hvente.prix_unit * hvente.quantiter %></td>
@@ -412,20 +368,12 @@
                                     </div>
                                   </td>
                                 </tr>
-                              <% i++; total_p += hvente.prix_unit; total_q += hvente.quantiter; montant += hvente.prix_unit * hvente.quantiter; }) %>
+                              <% total_p += hvente.prix_unit; total_q += hvente.quantiter; montant += hvente.prix_unit * hvente.quantiter; }) %>
                               <!-- <th >Total</th>
                               <th ><%= total_q %></th>
                               <th ><%= total_p %></th>
                               <th ><%= montant %></th> -->
                             </tbody>
-                          </table>
-                          <table id="" class="table truncate m-0 align-middle dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Somme des montant : </th>
-                                <th id="resulta2"></th>
-                              </tr>
-                            </thead>
                           </table>
                         </div>
                       </div>
@@ -439,7 +387,7 @@
             <!-- Row starts -->
             
             <!-- Row ends -->
-            <div class="col-xxl-6 col-xl-12" style="display: none;" id="graph">
+            <div class="" style="display: none;" id="graph">
               <div class="card mb-3">
                 <div class="card-header">
                   <h5 class="card-title">Courbre de variation des montant des Achat/Entrer et Sortie/Vente de l'emballage <span class="text-info"><%= emballage.nom %></span> par année</h5>
@@ -551,222 +499,90 @@
       const graph = document.getElementById("graph");
 
       // ----------------------------------------------------------------------
-      anner.forEach((anner, ia) => {
-        let nb_he = 0
-        let nb_hs = 0
-          
-        recettee.forEach(element => {
-          nb_he++
-        });
+      // ----------------------------------------------------------------------
+      const all_month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-        let h = 1
-        recettes.forEach(element => {
-          nb_hs++
-        });
+      anner.forEach((anneeCourante, ia) => {
 
-        console.log(nb_he, nb_hs)
-        pp.insertAdjacentHTML('beforeend',`
-          <div class="card-body carousel-item ${ia === 0? 'active' : ''}" id="p${ia}">
-          </div>
-        `)
-
-        const p = document.getElementById(`p${ia}`);
-
-        for(let j = 0; j < nb_he; j++){
-          //console.log("ok")
-          const all_month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",]
+          // 1. Initialisation
           const recette_e = Array(12).fill(0);
           const recette_s = Array(12).fill(0);
-          for(let i = 0; i < all_month.length; i++){
-            //console.log(traduct(recettee[j].mois), recettee[j].mois, all_month[i])
-            if(recettee[j]){
-              if(all_month[i] === traduct(recettee[j].mois) && anner === recettee[j].mois.split('-')[0]){
-                recette_e[i] = recettee[j].recette
+          let hasData = false;
+
+          // 2. ENTRÉES (histe)
+          recettee.forEach(item => {
+              const [itemAnnee, itemMois] = item.mois.split('-');
+
+              if (itemAnnee === anneeCourante) {
+                  const moisNom = traduct(item.mois);
+                  const moisIndex = all_month.indexOf(moisNom);
+
+                  if (moisIndex !== -1) {
+                      const valeur = parseFloat(item.recette);
+                      recette_e[moisIndex] += isNaN(valeur) ? 0 : valeur;
+                      hasData = true;
+                  }
               }
-            }
-            if(recettes[j]){
-              if(all_month[i] === traduct(recettes[j].mois) && anner === recettes[j].mois.split('-')[0]){
-                recette_s[i] = recettes[j].recette
+          });
+
+          // 3. SORTIES (hists)
+          recettes.forEach(item => {
+              const [itemAnnee, itemMois] = item.mois.split('-');
+
+              if (itemAnnee === anneeCourante) {
+                  const moisNom = traduct(item.mois);
+                  const moisIndex = all_month.indexOf(moisNom);
+
+                  if (moisIndex !== -1) {
+                      const valeur = parseFloat(item.recette);
+                      recette_s[moisIndex] += isNaN(valeur) ? 0 : valeur;
+                      hasData = true;
+                  }
               }
-            }
-          }
-          //console.log(JSON.stringify(recette_e) !== JSON.stringify(Array(12).fill(0)) || JSON.stringify(recette_s) !== JSON.stringify(Array(12).fill(0)))
-          if(JSON.stringify(recette_e) !== JSON.stringify(Array(12).fill(0)) || JSON.stringify(recette_s) !== JSON.stringify(Array(12).fill(0))){
-            if(graph.style.display === 'none'){
-              graph.style.display = 'block'
-            }
-            exi = document.getElementById(`#income${ia}`);
-            if(!exi){
-              p.insertAdjacentHTML('beforeend',`
-                <div class="chart-height-lg">
-                    <div id="income${ia}" ></div>
-                </div>
-              `)
-            }
+          });
 
-            const hot = document.getElementById(`income${ia}`);
-            hot.insertAdjacentHTML('beforeend',`
-              <div class="" id="d${ia}-${anner}">
-              </div>
-            `)
+          // 4. Création graphique (1 seul par année)
+          if (hasData) {
+              if (graph.style.display === 'none') graph.style.display = 'block';
 
-            // ============================================================
-            var options = {
-              chart: {
-                height: 300,
-                type: "area",
-                toolbar: {
-                  show: true,
-                },
-              },
-              dataLabels: {
-                enabled: false,
-              },
-              stroke: {
-                curve: "smooth",
-                width: 3,
-              },
-              series: [
-                {
-                  name: "Achat/Entrer",
-                  data: recette_e,
-                },
-                {
-                  name: "Sortie/Vente",
-                  data: recette_s,
-                },
-              ],
-              grid: {
-                borderColor: "#dfd6ff",
-                strokeDashArray: 5,
-                xaxis: {
-                  lines: {
-                    show: true,
+              pp.insertAdjacentHTML('beforeend', `
+                  <div class="card-body carousel-item ${ia === 0 ? 'active' : ''}" id="p${ia}">
+                      <div class="chart-height-lg">
+                          <div id="income${ia}"></div>
+                      </div>
+                  </div>
+              `);
+
+              var options = {
+                  chart: {
+                      height: 300,
+                      type: "area",
+                      toolbar: { show: true },
                   },
-                },
-                yaxis: {
-                  lines: {
-                    show: true,
+                  title: {
+                      text: `Statistiques Année ${anneeCourante}`,
+                      align: 'left'
                   },
-                },
-                padding: {
-                  top: 0,
-                  right: 0,
-                  bottom: 10,
-                  left: 0,
-                },
-              },
-              xaxis: {
-                categories: [
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-                ],
-              },
-              yaxis: {
-                labels: {
-                  show: true,
-                },
-              },
-              colors: [
-                "#207a5a",
-                "#248a65",
-                "#116aef",
-                "#3ea37e",
-                "#53ad8d",
-                "#69b89b",
-                "#7ec2a9",
-                "#94ccb8",
-                "#a9d6c6",
-              ],
-              markers: {
-                size: 0,
-                opacity: 0.3,
-                colors: [
-                  "#2f477a",
-                  "#35508a",
-                  "#3b5999",
-                  "#4f6aa3",
-                  "#627aad",
-                  "#768bb8",
-                  "#899bc2",
-                  "#9daccc",
-                ],
-                strokeColor: "#ffffff",
-                strokeWidth: 2,
-                hover: {
-                  size: 7,
-                },
-              },
-            };
+                  stroke: { curve: "smooth", width: 3 },
+                  series: [
+                      { name: "Achat/Entrer", data: recette_e },
+                      { name: "Sortie/Vente", data: recette_s }
+                  ],
+                  xaxis: { categories: all_month },
+                  yaxis: {
+                      labels: {
+                          formatter: function (value) {
+                              return value.toLocaleString();
+                          }
+                      }
+                  },
+                  colors: ["#207a5a", "#116aef"],
+              };
 
-            var chart = new ApexCharts(document.querySelector(`#d${ia}-${anner}`), options);
-
-            chart.render();
-
-          // ============================================================
+              var chart = new ApexCharts(document.querySelector(`#income${ia}`), options);
+              chart.render();
           }
-          console.log('=>',recette_e)
-          console.log('=>',recette_s)
-        }
-      })
-
-      const resulta = document.getElementById('resulta1')
-      const observer= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule1')
-          let sum = 0
-          console.log(allCase.length)
-          if(allCase.length > 0){
-            allCase.forEach((td, index) => {
-              //console.log(td)
-              sum += parseFloat(td.innerText)
-              resulta.innerText = sum
-            })
-          }else{
-            resulta.innerText = 0
-          }
-        })
-      })
-
-      observer.observe(document.getElementById('tbody1'), {
-        childList: true,
-        subtree: true,
-        characterData: true
-      })
-      // ------------------------------------------------------------------
-      const resulta2 = document.getElementById('resulta2')
-      const observer2= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule2')
-          let sum = 0
-          console.log(allCase.length)
-          if(allCase.length > 0){
-            allCase.forEach((td, index) => {
-              //console.log(td)
-              sum += parseFloat(td.innerText)
-              resulta2.innerText = sum
-            })
-          }else{
-            resulta2.innerText = 0
-          }
-        })
-      })
-
-      observer2.observe(document.getElementById('tbody2'), {
-        childList: true,
-        subtree: true,
-        characterData: true
-      })
+      });
     </script>
   </body>
   

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/doctors-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:08 GMT -->
+<%- include('head')%>
+
+  <body>
+
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+
+      <!-- App header starts -->
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+
+        <!-- Sidebar wrapper starts -->
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+        <!-- Sidebar wrapper ends -->
+
+        <!-- App container starts -->
+        <div class="app-container">
+
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="/index">Accueil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Liste des Journaux
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+
+            <!-- Sales stats starts -->
+            
+            <!-- Sales stats ends -->
+
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- App body starts -->
+          <div class="app-body">
+            <!-- Row starts -->
+            <% if(msg) {%>
+                <div class="alert bg-white border alert-dismissible fade show <%= tc %>" role="alert">
+                  <%= msg %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }%>
+            <div class="row gx-3">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Historique des salaire déclaré du personnel</h5>
+                    <!-- <a href="/formAddJournal" class="btn btn-primary ms-auto">Ajouter une Journal</a> -->
+                  </div>
+                  <div class="card-body">
+                    
+                    <!-- Table starts -->
+                    <div class="table-responsive">
+                      <table id="" class="customButtone table truncate m-0 text-center align-middle dataTable" data-export-subtitle="Historique des salaire déclaré du personnel" aria-describedby="basicExample_filter">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prenom</th>
+                            <th class="no-calc">Poste</th>
+                            <th>Salaire du Poste</th>
+                            <th>Primes</th>
+                            <th>Desduction</th>
+                            <th class="no-calc">Status</th>
+                            <th class="no-calc">Debut Periode</th>
+                            <th class="no-calc">Fin Periode</th>
+                            <th class="no-calc">Commentaire</th>
+                            <%
+                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                            %>
+                              <th class="no-calc">Actions</th>
+                            <% } %>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% salaires.forEach(Journal => { %>
+                                <tr>
+                                    <td><%= Journal.slug_id %></td>
+                                    <td><%= Journal.Personnel.nom %></td>
+                                    <td><%= Journal.Personnel.prenom %></td>
+                                    <td><%= Journal.Occupe.Poste.nom_poste %></td>
+                                    <td><%= Journal.Occupe.Poste.salaire %></td>
+                                    <td><%= Journal.primes %></td>
+                                    <td><%= Journal.deductions %></td>
+                                    <td><%= Journal.status %></td>
+                                    <td><%= Journal.debut_periode %></td>
+                                    <td><%= Journal.fin_periode %></td>
+                                    <td><%= Journal.commentaire %></td>
+                                    <%
+                                      if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                    %>
+                                      <td>
+                                          <div class="d-inline-flex gap-1">
+                                              <!-- ----------------------------------------------------------------------------------- -->
+                                              <div class="col-sm-4">
+                                              <!-- Card starts -->
+                                                  <!-- Button trigger modal -->
+                                                  <button type="button" data-bs-toggle="modal"
+                                                      data-bs-target="#salaire<%= Journal.id_salaire %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                      <i class="ri-delete-bin-line"></i>
+                                                  </button>
+                                                  <!-- Modal -->
+                                                  <div class="modal fade" id="salaire<%= Journal.id_salaire %>ModalCenter" tabindex="-1"
+                                                      aria-labelledby="salaire<%= Journal.id_salaire %>ModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                          <div class="modal-header">
+                                                          <h5 class="modal-title" id="salaire<%= Journal.id_salaire %>ModalCenterTitle">
+                                                              Confirmer
+                                                          </h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                          <p>Voulez-vous vraiment supprimer cet Historique de Declaration de Salaire ?</p>
+                                                          <p>Noter bien que cella entainera la suppression de tout les avance et paiement de salaire rattacher</p>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                              annuler
+                                                          </button>
+                                                          <form action="/deleteSalaire/<%= Journal.id_salaire %>?_method=DELETE" method="post">
+                                                              <div class="col-sm-12">
+                                                              <div class="d-flex gap-2 justify-content-end">
+                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                              </div>
+                                                              </div>
+                                                          </form>
+                                                          </div>
+                                                      </div>
+                                                      </div>
+                                                  </div>
+                                              <!-- Card ends -->
+                                              </div>
+                                          </div>
+                                      </td>
+                                    <% } %>
+                                </tr>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table ends -->
+
+                    <!-- Modal Delete Row -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="my-4"></div>
+
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Historique des Avance sur Salaire déclaré du personnel</h5>
+                    <!-- <a href="/formAddJournal" class="btn btn-primary ms-auto">Ajouter une Journal</a> -->
+                  </div>
+                  <div class="card-body">
+                    
+                    <!-- Table starts -->
+                    <div class="table-responsive">
+                      <table id="" class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Historique des Avance sur Salaire déclaré du personnel" aria-describedby="basicExample_filter">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prenom</th>
+                            <th class="no-calc">Poste</th>
+                            <th>Avance</th>
+                            <th class="no-calc">Date de l'Operation</th>
+                            <th class="no-calc">Mode de Paiement</th>
+                            <th class="no-calc">Salaire</th>
+                            <th class="no-calc">Commentaire</th>
+                            <%
+                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                            %>
+                              <th class="no-calc">Actions</th>
+                            <% } %>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% avanceSalaires.forEach(Journal => { %>
+                                <tr>
+                                    <td><%= Journal.slug_id %></td>
+                                    <td><%= Journal.Salaire.Personnel.nom %></td>
+                                    <td><%= Journal.Salaire.Personnel.prenom %></td>
+                                    <td><%= Journal.Salaire.Occupe.Poste.nom_poste %></td>
+                                    <td><%= Journal.montant %></td>
+                                    <td><%= Journal.date %></td>
+                                    <td><%= Journal.modePaiment %></td>
+                                    <td>Du <%= Journal.Salaire.debut_periode %> au <%= Journal.Salaire.fin_periode %></td>
+                                    <td><%= Journal.commentaire %></td>
+                                    <%
+                                      if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                    %>
+                                      <td>
+                                          <div class="d-inline-flex gap-1">
+                                              <!-- ----------------------------------------------------------------------------------- -->
+                                              <div class="col-sm-4">
+                                              <!-- Card starts -->
+                                                  <!-- Button trigger modal -->
+                                                  <button type="button" data-bs-toggle="modal"
+                                                      data-bs-target="#avance<%= Journal.id_avance %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                      <i class="ri-delete-bin-line"></i>
+                                                  </button>
+                                                  <!-- Modal -->
+                                                  <div class="modal fade" id="avance<%= Journal.id_avance %>ModalCenter" tabindex="-1"
+                                                      aria-labelledby="avance<%= Journal.id_avance %>ModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                          <div class="modal-header">
+                                                          <h5 class="modal-title" id="avance<%= Journal.id_avance %>ModalCenterTitle">
+                                                              Confirmer
+                                                          </h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                          <p>Voulez-vous vraiment supprimer cet Historique d'Avence sur Salaire ?</p>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                              annuler
+                                                          </button>
+                                                          <form action="/deleteASalaire/<%= Journal.id_avance %>?_method=DELETE" method="post">
+                                                              <div class="col-sm-12">
+                                                              <div class="d-flex gap-2 justify-content-end">
+                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                              </div>
+                                                              </div>
+                                                          </form>
+                                                          </div>
+                                                      </div>
+                                                      </div>
+                                                  </div>
+                                              <!-- Card ends -->
+                                              </div>
+                                          </div>
+                                      </td>
+                                    <% } %>
+                                </tr>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table ends -->
+
+                    <!-- Modal Delete Row -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="my-4"></div>
+
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Historique des Paiement de Salaire déclaré du personnel</h5>
+                    <!-- <a href="/formAddJournal" class="btn btn-primary ms-auto">Ajouter une Journal</a> -->
+                  </div>
+                  <div class="card-body">
+                    
+                    <!-- Table starts -->
+                    <div class="table-responsive">
+                      <table id="" class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Historique des Paiement de Salaire déclaré du personnel" aria-describedby="basicExample_filter">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prenom</th>
+                            <th class="no-calc">Poste</th>
+                            <th>Montant</th>
+                            <th class="no-calc">Date de l'Operation</th>
+                            <th class="no-calc">Mode de Paiement</th>
+                            <th class="no-calc">Salaire</th>
+                            <th class="no-calc">Commentaire</th>
+                            <%
+                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                            %>
+                              <th class="no-calc">Actions</th>
+                            <% } %>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% paiementSalaires.forEach(Journal => { %>
+                                <tr>
+                                    <td><%= Journal.slug_id %></td>
+                                    <td><%= Journal.Salaire.Personnel.nom %></td>
+                                    <td><%= Journal.Salaire.Personnel.prenom %></td>
+                                    <td><%= Journal.Salaire.Occupe.Poste.nom_poste %></td>
+                                    <td><%= Journal.montant %></td>
+                                    <td><%= Journal.date %></td>
+                                    <td><%= Journal.modePaiment %></td>
+                                    <td>Du <%= Journal.Salaire.debut_periode %> au <%= Journal.Salaire.fin_periode %></td>
+                                    <td><%= Journal.commentaire %></td>
+                                    <%
+                                      if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                    %>
+                                      <td>
+                                          <div class="d-inline-flex gap-1">
+                                              <!-- ----------------------------------------------------------------------------------- -->
+                                              <div class="col-sm-4">
+                                              <!-- Card starts -->
+                                                  <!-- Button trigger modal -->
+                                                  <button type="button" data-bs-toggle="modal"
+                                                      data-bs-target="#paiement<%= Journal.id_paisal %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                      <i class="ri-delete-bin-line"></i>
+                                                  </button>
+                                                  <!-- Modal -->
+                                                  <div class="modal fade" id="paiement<%= Journal.id_paisal %>ModalCenter" tabindex="-1"
+                                                      aria-labelledby="paiement<%= Journal.id_paisal %>ModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                          <div class="modal-header">
+                                                          <h5 class="modal-title" id="paiement<%= Journal.id_paisal %>ModalCenterTitle">
+                                                              Confirmer
+                                                          </h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                          <p>Voulez-vous vraiment supprimer cet Historique de Paiement de Salaire ?</p>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                              annuler
+                                                          </button>
+                                                          <form action="/deletePSalaire/<%= Journal.id_paisal %>?_method=DELETE" method="post">
+                                                              <div class="col-sm-12">
+                                                              <div class="d-flex gap-2 justify-content-end">
+                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                              </div>
+                                                              </div>
+                                                          </form>
+                                                          </div>
+                                                      </div>
+                                                      </div>
+                                                  </div>
+                                              <!-- Card ends -->
+                                              </div>
+                                          </div>
+                                      </td>
+                                    <% } %>
+                                </tr>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table ends -->
+
+                    <!-- Modal Delete Row -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row ends -->
+
+          </div>
+          <!-- App body ends -->
+
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+          <!-- App footer ends -->
+
+        </div>
+        <!-- App container ends -->
+
+      </div>
+      <!-- Main container ends -->
+
+    </div>
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <%- include('script')%>
+    <script>
+      observer.observe(document.getElementById('tbody'), {
+        childList: true,
+        subtree: true,
+        characterData: true
+      })
+      
+    </script>
+  </body>
+
+
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/doctors-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:08 GMT -->
+</html>

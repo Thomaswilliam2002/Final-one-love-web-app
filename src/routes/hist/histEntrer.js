@@ -2,7 +2,6 @@ const { where } = require('sequelize');
 const {HistEntrer} = require('../../db/sequelize')
 const {Produit, Emballage, sequelize} = require('../../db/sequelize')
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
-const emballage = require('../../models/emballage');
 
 allHEntrer = (app) => {
     app.get('/allHEntrer', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
@@ -22,7 +21,7 @@ allHEntrer = (app) => {
 
 addHEntrer = (app) => {
     app.post('/addHEntrer/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
-        const {nb, prix, type, idpro, dest} = req.body;
+        const {nb, prix, type, idpro, fournisseur} = req.body;
         if(req.query.art === 'produit'){
             Produit.findByPk(req.params.id)
                 .then(produit => {
@@ -32,11 +31,9 @@ addHEntrer = (app) => {
                         prix_unit: prix,
                         type: type,
                         id_probal: idpro,
-                        donneur: 'One Love'
+                        id_fournisseur: fournisseur
                     })
                         .then(hentrer => {
-                            //const f = parseInt(q) + parseInt(nb)
-                            //console.log(f)
                             Produit.update({
                                 quantiter: parseInt(q) + parseInt(nb)
                             },{
@@ -72,11 +69,9 @@ addHEntrer = (app) => {
                         prix_unit: prix,
                         type: type,
                         id_probal: idpro,
-                        donneur: dest
+                        id_fournisseur: fournisseur
                     })
                         .then(hentrer => {
-                            //const f = parseInt(q) + parseInt(nb)
-                            //console.log(f)
                             Emballage.update({
                                 quantiter: parseInt(q) + parseInt(nb)
                             },{
@@ -106,6 +101,7 @@ addHEntrer = (app) => {
         
     })
 }
+
 updateHEntrer = (app) => {
     app.put('/updateHEntrer/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
         const t = await sequelize.transaction();
@@ -171,6 +167,7 @@ updateHEntrer = (app) => {
         }
     });
 };
+
 deleteHEntrer = (app) => {
     app.delete('/deleteHEntrer/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
 

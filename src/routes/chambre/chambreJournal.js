@@ -41,14 +41,15 @@ oneChJournal = (app) => {
 
 addChJournal = (app) => {
     app.post('/addChJournal', (req, res) => {
-        const {mclose1, chambre2, montant, date, commentaire} = req.body;
+        const {mclose1, chambre2, montant, date, commentaire, manquant} = req.body;
         ChambreJournal.create({
             loyer:montant,
             motif: '',
             description: commentaire,
             date: date,
             id_chambre: chambre2,
-            id_mclose: mclose1
+            id_mclose: mclose1,
+            manquant: manquant,
         })
             .then(chambreJournal => {
                 res.redirect('/formFondBarClub?msg=Journal ajouter avec succes&type=mclose')

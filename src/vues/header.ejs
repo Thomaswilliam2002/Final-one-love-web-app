@@ -1,6 +1,102 @@
-<div class="app-header d-flex align-items-center">
+<style>
+  /* ========================================= */
+  /* 🔥 HEADER PRO CLEAN */
+  /* ========================================= */
+  .app-header {
+      position: relative;
+      height: 60px;
+      background: #fff;
+  }
+  
+  /* Logo centré parfaitement */
+  /* .app-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+  } */
+  
+  .app-brand .logo {
+      height: 40px;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+  }
+  
+  .app-brand .logo:hover {
+      transform: scale(1.05);
+  }
+  
+  /* LEFT + RIGHT layers */
+  .app-header .d-flex {
+      z-index: 2;
+  }
+  
+  .header-actions {
+      margin-left: auto;
+      z-index: 2;
+  }
+  
+  /* ========================================= */
+  /* 🔥 NOTIFICATION CARD DESIGN */
+  /* ========================================= */
+  .notification-card {
+      background: #ffffff;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border-left: 4px solid #0d6efd;
+      position: relative;
+  }
+  
+  .notification-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+  
+  .notification-card .badge {
+      font-size: 10px;
+      padding: 4px 8px;
+      background: rgba(13,110,253,0.1);
+  }
+  
+  .notification-card .btn-outline-primary {
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 12px;
+  }
+  
+  .notification-card::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 8px;
+      height: 8px;
+      background: #0d6efd;
+      border-radius: 50%;
+  }
+  </style>
 
-    <!-- Toggle buttons starts -->
+  <style>
+  .dropdown-300{
+      max-height:100vh;      /* hauteur max = écran */
+      overflow-y:auto;       /* scroll vertical */
+      overflow-x:hidden;
+  }
+  
+
+  /* si tu veux laisser la place du header (60px ici) */
+  .dropdown-menu.dropdown-300{
+      max-height:calc(100vh - 60px);
+  }
+
+  /* optionnel: menu collé sous le header */
+  .dropdown-menu{
+      margin-top:8px;
+  }
+  </style>
+  
+  <div class="app-header d-flex align-items-center bg-info px-3">
+  
+    <!-- LEFT -->
     <div class="d-flex">
       <button class="toggle-sidebar">
         <i class="ri-menu-line"></i>
@@ -9,51 +105,204 @@
         <i class="ri-menu-line"></i>
       </button>
     </div>
-    <!-- Toggle buttons ends -->
-
-    <!-- App brand starts -->
-    <div class="app-brand ms-3">
-      <a href="/index" class="d-lg-block d-none">
-        <img src="/assets/images/logo_one_love.jpg" class="logo" alt="Medicare Admin Template">
-      </a>
-      <a href="/index" class="d-lg-none d-md-block">
-        <img src="/assets/images/logo_one_love.jpg" class="logo" alt="Medicare Admin Template">
+  
+    <!-- CENTER LOGO -->
+    <div class="app-brand m-2">
+      <a href="/index">
+        <img src="/assets/images/logo_one_love.jpg" class="logo" style="border-radius:50%;" alt="Platforme One Love">
       </a>
     </div>
-    <!-- App brand ends -->
-
-    <!-- App header actions starts -->
-    <div class="header-actions">
-
-      <!-- Search container starts -->
-      
-      <!-- Search container ends -->
-
-      <!-- Header actions starts -->
+  
+    <!-- RIGHT -->
+    <div class="header-actions d-flex align-items-center">
+  
       <div class="d-lg-flex d-none gap-2">
-
-        <!-- Select country dropdown starts -->
-        
-        <!-- Select country dropdown ends -->
-
-        <!-- Notifications dropdown starts -->
-        
-        <!-- Notifications dropdown ends -->
-
-        <!-- Notifications dropdown starts -->
-        <!--  -->
-        <!-- Notifications dropdown ends -->
-
-        <!-- Messages dropdown starts -->
-        
+  
+        <!-- Notifications -->
+        <div class="dropdown">
+          <div class="dropdown-toggle header-icon d-flex justify-content-center align-items-center"
+              role="button"
+              data-bs-toggle="dropdown"
+              style="cursor:pointer; width:40px; height:40px; border-radius:50%;">
+            
+            <i class="ri-alarm-warning-line" style="font-size:16px; position:relative;">
+              <span class="count-label d-flex justify-content-center align-items-center rounded-circle"
+                    style="position:absolute; top:-5px; right:-5px; width:15px; height:15px; background-color:red; font-size:10px; color:#fff;">
+              </span>
+            </i>
+          </div>
+  
+          <div class="dropdown-menu dropdown-menu-end dropdown-300">
+            <h5 class="fw-semibold px-3 py-2 text-primary">Notifications</h5>
+  
+            <div class="ct"></div>
+  
+          </div>
+        </div>
+  
       </div>
-      <!-- Header actions ends -->
-
-      <!-- Header user settings starts -->
-      
-      <!-- Header user settings ends -->
-
+  
+      <!-- USER -->
+      <div class="dropdown ms-2">
+        <a id="userSettings" class="dropdown-toggle d-flex align-items-center" href="#!" role="button"
+          data-bs-toggle="dropdown">
+          <div class="avatar-box">
+            <i class="ri-logout-circle-line"></i>
+          </div>
+        </a>
+  
+        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+          <div class="px-3 py-2">
+            <span class="small"><%= user.Personnel.nom %></span>
+            <h6 class="m-0"><%= user.Personnel.prenom %></h6>
+          </div>
+  
+          <div class="mx-3 my-2 d-grid">
+            <a href="/deconnexion" class="btn btn-danger">Deconnexion</a>
+          </div>
+        </div>
+      </div>
+  
     </div>
-    <!-- App header actions ends -->
-
+  
   </div>
+  
+  <!-- ========================================= -->
+  <!-- 🔥 MODAL NOTIFICATION -->
+  <!-- ========================================= -->
+  <div class="modal fade" id="notifModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow-lg border-0">
+  
+        <div class="modal-header bg-light">
+          <h5 class="modal-title fw-bold text-primary" id="notifModalTitle"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body bg-info-subtle">
+          <pre id="notifModalMessage" style="font-size: 14px;" class="text-muted"></pre>
+        </div>
+  
+        <div class="modal-footer">
+          <small id="notifModalDate" class="text-muted me-auto"></small>
+          <button class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+          <a href="/stock/pdf" class="btn btn-primary">📄 Télécharger en PDF</a>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+  
+      const notificationContainer = document.querySelector('.ct');
+      const badgeCount = document.querySelector('.count-label');
+  
+      async function loadNotifications() {
+          try {
+              const response = await fetch(`/allNotifNonLu/<%= user.Personnel.id_personnel %>`); 
+              const notificationsNonLu = await response.json();
+  
+              if(notificationsNonLu.type !== 'succes'){
+                  notificationContainer.innerHTML = `
+                      <div class="alert ${notificationsNonLu.tc || 'alert-info'} m-1">
+                          ${notificationsNonLu.message}
+                      </div>
+                  `;
+                  return;
+              }
+  
+              const notifications = notificationsNonLu.data;
+  
+              if (notifications.length > 0) {
+                  badgeCount.textContent = notifications.length > 99 ? '+99' : notifications.length;
+              } else {
+                  badgeCount.textContent = '0';
+                  notificationContainer.innerHTML = `
+                    <div class="alert alert-info m-1">
+                      Aucune notification
+                    </div>
+                  `;
+                  return;
+              }
+  
+              notificationContainer.innerHTML = '';
+  
+              notifications.forEach(notif => {
+  
+                  const shortMessage = notif.message.length > 80 
+                      ? notif.message.substring(0, 80) + '...' 
+                      : notif.message;
+  
+                  notificationContainer.insertAdjacentHTML('beforeend', `
+                  <div class="notification-card p-3 m-1 rounded-3 shadow-sm border-0 bg-info-subtle">
+  
+                    <div class="d-flex align-items-start">
+  
+                      <div class="flex-grow-1">
+  
+                        <div class="d-flex justify-content-around align-items-center">
+                          <span class="badge bg-info text-center align-middle">${notif.slug_id}</span>
+                          <small class="text-muted">${notif.date} • ${notif.heure}</small>
+                        </div>
+  
+                        <h6 class="fw-bold mt-1 mb-1">${notif.objet}</h6>
+  
+                        <p class="mb-2 small text-muted">${shortMessage}</p>
+  
+                        <div class="d-flex justify-content-between">
+  
+                          <button 
+                            class="btn btn-sm btn-outline-primary"
+                            onclick="openNotifModal('${notif.objet}', \`${notif.message}\`, '${notif.date}', '${notif.heure}')">
+                            Voir plus
+                          </button>
+  
+                          <button 
+                            id="id_${notif.id_notif}"
+                            class="btn btn-sm text-success fw-semibold"
+                            onclick="markAsRead('${notif.id_notif}')">
+                            ✔ Marquer comme lu
+                          </button>
+  
+                        </div>
+  
+                      </div>
+  
+                    </div>
+  
+                  </div>
+                  `);
+              });
+  
+          } catch (error) {
+              console.error(error);
+          }
+      }
+  
+      loadNotifications();
+      setInterval(loadNotifications, 60 * 60 * 1000);
+  });
+  
+  async function markAsRead(id) {
+      const response = await fetch(`/marquerLu/<%= user.Personnel.id_personnel %>/${id}?_method=PUT`, { method: 'POST' });
+      const mql = await response.json();
+  
+      if(mql.type === 'succes'){
+          const btn = document.getElementById(`id_${id}`)
+          btn.innerHTML = 'Lu';
+          btn.disabled = true;
+          btn.style.background = '#ccc';
+      }
+  }
+  
+  function openNotifModal(objet, message, date, heure) {
+      document.getElementById('notifModalTitle').textContent = objet;
+      document.getElementById('notifModalMessage').textContent = message;
+      document.getElementById('notifModalDate').textContent = `Le ${date} à ${heure}`;
+  
+      const modal = new bootstrap.Modal(document.getElementById('notifModal'));
+      modal.show();
+  }
+  </script>

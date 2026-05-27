@@ -69,21 +69,21 @@
                     <% }%>
                     <!-- Table starts -->
                     <div class="table-responsive">
-                      <table class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Liste des jouraux des Appartements" aria-describedby="basicExample_filter">
+                      <table class="customButtone table truncate m-0 text-center align-middle dataTable" data-export-subtitle="Liste des jouraux des Appartements" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Appartement</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Appartement</th>
                             <th>Montant</th>
-                            <th>Nuitée</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th class="no-calc">Nuitée</th>
+                            <th class="no-calc">Date</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
-                            <% i = 1;hfonds.forEach(Journal => { %>
+                            <% hfonds.forEach(Journal => { %>
                                 <tr>
-                                    <td><%= i %></td>
+                                    <td><%= Journal.slug_id %></td>
                                     <td><%= Journal.Appartement.nom_appart %></td>
                                     <td class="calcule"><%= Journal.loyer %></td>
                                     <td><%= Journal.nuiter %></td>

@@ -98,16 +98,6 @@ deleteBarS = (app) => {
             res.redirect('/notFound');
             return;
         }
-        // le code ci-dessous permet de supprimer un bar. il marche mais j'ai opter pour une supression logique
-        // BarSimple.findByPk(req.params.id)
-        //     .then(barS => {
-        //         const appartDel = barS;
-        //         BarSimple.destroy({where: {id_barSimple: appartDel.id_barSimple}})
-        //             .then(_ => {
-        //                 res.redirect('/allBarClub?type=bars&msg=sup')
-        //             })
-        //             .catch(_ => res.redirect('/notFound'))
-        //     })
     })
 }
 

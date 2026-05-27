@@ -10,7 +10,7 @@ allCuisine = (app) => {
             .then(cuisines => {
                 const msg = "Liste recuperer avec succes"
                 // res.json({msg, data: cuisines})
-                res.status(200).render('all-cuisine',{cuisines: cuisines, msg: req.query.msg})
+                res.status(200).render('all-cuisine',{cuisines: cuisines, msg: req.query.msg, tc:req.query.tc})
             })
             .catch(err => {
                 console.error(err);

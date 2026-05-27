@@ -77,10 +77,10 @@
 
                     <!-- Table start -->
                     <div class="table-responsive">
-                      <table id="customButtons" class="table m-0 randomTableColors">
+                      <table id="" class="table text-center align-middle customButtone m-0 randomTableColors" data-export-subtitle="Tableau des recette des Appartement">
                         <thead>
                           <tr>
-                            <th>Department</th>
+                            <th class="no-calc">Department</th>
                             <th class="mois">Jan</th>
                             <th class="mois">Feb</th>
                             <th class="mois">Mar</th>
@@ -202,6 +202,7 @@
       
 
       const recette = JSON.parse(`<%- JSON.stringify(all_bs_casse) %>`)
+      console.log(recette)
       if(recette.length === 0){
         let d = new Date().toISOString().slice(0,7);
         recette.push(JSON.parse(JSON.stringify({
@@ -233,7 +234,7 @@
         });
         all_total.push(total);
 
-        console.log('=>', all_total)
+        // console.log('=>', all_total)
 
         pp.insertAdjacentHTML('beforeend',`
           <div class="card-body carousel-item ${ia === 0? 'active' : ''}" id="p${ia}">
@@ -331,7 +332,7 @@
         };
 
         exi = document.getElementById(`#income${ia}`);
-        console.log(exi)
+        // console.log(exi)
         if(!exi){
         p.insertAdjacentHTML('beforeend',`
             <div class="chart-height-lg">
@@ -339,11 +340,11 @@
             </div>
         `)
         }
-        console.log(anner, all_total)
+        // console.log(anner, all_total)
 
         tbody.insertAdjacentHTML('beforeend',`
         <tr>
-            <td><span class="${class_colore[ia]}">Apparts ${anner}</span></td>
+            <td><span class="${class_colore[ia % class_colore.length]}">Apparts ${anner}</span></td>
             <td>${recettes[0]}</td>
             <td>${recettes[1]}</td>
             <td>${recettes[2]}</td>
@@ -369,6 +370,30 @@
 
         chart.render();
       })
+
+            
+      // setTimeout(() => {
+
+      //   const selector = ".customButtone";
+
+      //   $(selector).each(function () {
+
+      //       if ($.fn.DataTable.isDataTable(this)) {
+
+      //           $(this).DataTable().destroy();
+
+      //           // Nettoyage classes/styles DataTable
+      //           $(this).removeClass('dataTable');
+      //           $(this).css('width', '');
+
+      //       }
+
+      //   });
+
+      //   customButtone(selector);
+
+      // }, 100);
+
     </script>
     <%- include('script')%>
   </body>

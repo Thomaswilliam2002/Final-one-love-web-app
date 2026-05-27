@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('head')%>
+
+  <body>
+
+    <div class="page-wrapper">
+
+      <% if(user.Personnel.type_personnel === 'admin'){%>
+        <%- include('header')%>
+      <% }else{%>
+        <%- include('header-staff')%>
+      <% }%>
+
+      <div class="main-container">
+
+        <% if(user.Personnel.type_personnel === 'admin'){%>
+          <%- include('menu')%>
+        <% }else{%>
+          <%- include('menu-staff')%>
+        <% }%>
+
+        <div class="app-container">
+
+          <div class="app-hero-header d-flex align-items-center">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="/index">Accueil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Fournisseur
+              </li>
+            </ol>
+          </div>
+
+          <div class="app-body">
+            <% if(msg) {%>
+                <div class="alert bg-white border alert-dismissible fade show <%= tc%>" role="alert">
+                <b><%= msg%></b>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% }%>
+
+            <div class="row gx-3">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Liste des Fournisseur</h5>
+                    <a href="#formAddFournisseur" class="btn btn-primary ms-auto">Ajouter un nouveau Fournisseur</a>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des Catégories de depense">
+                        <thead class="text-center">
+                          <tr>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Pseudo</th>
+                            <th class="no-calc">Email</th>
+                            <th class="no-calc">Tel 1</th>
+                            <th class="no-calc">Tel 2</th>
+                            <th class="no-calc">Commantaire</th>
+                            <th class="no-calc">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center" id="tbody">
+                          <% fournisseurs.forEach(fournisseur => { %>
+                            <tr>
+                              <td><%= fournisseur.slug_id %></td>
+                              <td><%= fournisseur.nom %></td>
+                              <td><%= fournisseur.pseudo %></td>
+                              <td><%= fournisseur.email %></td>
+                              <td><%= fournisseur.numero1 %></td>
+                              <td><%= fournisseur.numero2 %></td>
+                              <td><%= fournisseur.commantaire %></td>
+                              <td>
+                                <div class="d-inline-flex gap-1">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#del<%= fournisseur.id_fournisseur %>" class="btn btn-outline-danger btn-sm">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </button>
+                                    
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#edit<%= fournisseur.id_fournisseur %>" class="btn btn-outline-success btn-sm">
+                                        <i class="ri-edit-box-line"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal fade" id="del<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Confirmer la suppression</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Voulez-vous vraiment supprimer le fournisseur <strong><%= fournisseur.nom %></strong> ?</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <form action="/deleteFournisseur<%= fournisseur.id_fournisseur %>?_method=DELETE" method="post">
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="modal fade" id="edit<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Modification des information du fournisseur</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <form action="/updateFournisseur/<%= fournisseur.id_fournisseur %>?_method=PUT" method="post">
+                                        <div class="modal-body text-start">
+                                          <div class="row gx-3">
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Nom</label>
+                                                <input type="text" class="form-control" value="<%= fournisseur.nom %>" name="nom" required>
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Pseudo</label>
+                                                <input type="text" class="form-control" value="<%= fournisseur.pseudo %>" name="pseudo">
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" value="<%= fournisseur.email %>" name="email">
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Tel 1</label>
+                                                <input type="text" class="form-control" value="<%= fournisseur.numero1 %>" name="numero1">
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Tel 2</label>
+                                                <input type="text" class="form-control" value="<%= fournisseur.numero2 %>" name="numero2">
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
+                                              <div class="mb-3">
+                                                <label class="form-label">Adresse</label>
+                                                <input type="text" class="form-control" value="<%= fournisseur.adresse %>" name="adresse">
+                                              </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-lg-6 col-sm-8">
+                                              <div class="mb-3">
+                                                <label class="form-label">Commantaire</label>
+                                                <textarea class="form-control" rows="3" name="desc" placeholder="Commantaire"><%= fournisseur.commantaire %></textarea>
+                                              </div>
+                                            </div>
+                  
+                                          </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                          <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-5"></div> <div class="row gx-3" id="formAddFournisseur">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Ajouter un nouveau Fournisseur</h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addFournisseur" method="post">
+                        <div class="row gx-3">
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Nom</label>
+                              <input type="text" class="form-control" name="nom" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Pseudo</label>
+                              <input type="text" class="form-control" name="pseudo">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Email</label>
+                              <input type="email" class="form-control" name="email">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Tel 1</label>
+                              <input type="text" class="form-control" name="numero1">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Tel 2</label>
+                              <input type="text" class="form-control" name="numero2">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Adresse</label>
+                              <input type="text" class="form-control" name="adresse">
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-8">
+                            <div class="mb-3">
+                              <label class="form-label">Commantaire</label>
+                              <textarea class="form-control" rows="3" name="desc" placeholder="Commantaire"></textarea>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Ajouter le Fournisseur</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-footer bg-white">
+            <span>© OneLove admin 2026</span>
+          </div>
+
+        </div>
+        </div>
+      </div>
+    <%- include('script')%>
+    
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+      });
+    </script>
+  </body>
+</html>

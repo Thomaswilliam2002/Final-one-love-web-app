@@ -15,8 +15,6 @@ allBSJournal = (app) => {
             order:[['id_journal', 'DESC']]
         })
             .then(barSimpleJournals => {
-                //res.json(barSimpleJournals)
-                console.log(barSimpleJournals)
                 res.status(200).render('allJournal', {Journals: barSimpleJournals, type: 'simple', msg: req.query.msg, indice: req.query.indice, tc: req.query.tc})
             })
             .catch(_ => res.redirect('/notFound'))
@@ -37,11 +35,13 @@ oneBSJournal = (app) => {
 addBSJournal = (app) => {
     app.post('/addBSJournal', async (req, res) => {
         try{
-            const {barClub, montant, date} = req.body;
+            const {barClub, montant, date, manquant, commentaire} = req.body;
             const barSimpleJournal = await BarSimpleJournal.create({
                 recette: montant,
                 date: date,
-                id_barSimple: parseInt(barClub.split(' ')[0])
+                id_barSimple: parseInt(barClub.split(' ')[0]),
+                manquant: manquant,
+                commentaire: commentaire
             })
             if(barSimpleJournal){
                 return res.redirect('/formFondBarClub?msg=Fond ajouter avec succes&type=bc&tc=alert-success')
@@ -89,16 +89,6 @@ deleteBSJournal = (app) => {
             res.redirect('/notFound')
             return
         }
-        // le code ci-dessous permet de supprimer un journal. il marche mais j'ai opter pour une supression logique
-        // BarSimpleJournal.findByPk(req.params.id)
-        //     .then(barSimpleJournal => {
-        //         const appartDel = barSimpleJournal;
-        //         BarSimpleJournal.destroy({where: {id_barSimple: appartDel.id_barSimple}})
-        //             .then(_ => {
-        //                 res.redirect('/allBSJournal?msg=sup')
-        //             })
-        //             .catch(_ => res.redirect('/notFound'))
-        //     })
     })
 }
 

@@ -118,12 +118,7 @@
                       <div class="col-xxl-3 col-lg-4 col-sm-6">
                         <div class="mb-3">
                           <label class="form-label" for="a5">Poste occuper <span class="text-danger">*</span></label>
-                          
-                          <select class="form-select" id="dep" name="poste">
-                            <% postes.forEach(poste => { if(poste.nom_poste === user.Poste.nom_poste){%>
-                              <option value="<%= poste.id_poste %>"><%= poste.nom_poste %></option>
-                            <% }}) %>
-                          </select>
+                          <input type="text" class="form-control" id="a7" value="<%= occupe.Poste.nom_poste %>" readonly>
                         </div>
                       </div>
                       <div class="col-xxl-3 col-lg-4 col-sm-6">
@@ -136,13 +131,10 @@
                         <div class="mb-3">
                           <label class="form-label" for="a5">Periode <span class="text-danger">*</span></label>
                           <select class="form-select" id="poste" name="periode">
-                            <%if(personnel.periode === user.Personnel.periode){%>
-                              <option value="<%= personnel.periode %>"><%= personnel.periode %></option>
-                            <% } %>
-                            <!-- <option value="Journalier">Journalier</option>
-                            <option value="Hebdomadere">Hebdomadere</option>
-                            <option value="Quinzene">Quinzene</option>
-                            <option value="Mensuel">Mensuel</option> -->
+                            <option value="Journalier" <%= personnel.periode === 'Journalier' ? 'selected' : '' %>>Journalier</option>
+                            <option value="Hebdomadere" <%= personnel.periode === 'Hebdomadere' ? 'selected' : '' %>>Hebdomadere</option>
+                            <option value="Quinzene" <%= personnel.periode === 'Quinzene' ? 'selected' : '' %>>Quinzene</option>
+                            <option value="Mensuel" <%= personnel.periode === 'Mensuel' ? 'selected' : '' %>>Mensuel</option>
                           </select>
                         </div>
                       </div>

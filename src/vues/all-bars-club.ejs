@@ -76,17 +76,19 @@
                     <!-- Table starts -->
                     <div class="table-responsive">
                       <table id="customButtone" data-export-subtitle="Liste des Bar et Club" class="table truncate m-0 align-middle dataTable" aria-describedby="basicExample_filter">
-                        <thead class="text-center">
+                        <thead class="text-center creatFooter">
                           <tr>
-                            <th>Nom</th>
-                            <th>Type</th>
-                            <th>Adresse</th>
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Type</th>
+                            <th class="no-calc">Adresse</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
                           <% bars.forEach(bar => { %>
                           <tr>
+                            <td><%= bar.slug_id %></td>
                             <td><%= bar.nom %></td>
                             <td>Bar Simple</td>
                             <td>
@@ -149,6 +151,7 @@
                           <!-- ---------------------------------------------------------------------- -->
                           <% barv.forEach(bar => { %>
                             <tr>
+                              <td><%= bar.slug_id %></td>
                               <td><%= bar.nom %></td>
                               <td>Bar VIP</td>
                               <td>
@@ -177,7 +180,6 @@
                                               </div>
                                               <div class="modal-body">
                                                 <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
-                                                
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -212,6 +214,7 @@
                         <!-- ---------------------------------------------------------------------- -->
                         <% crazyc.forEach(bar => { %>
                             <tr>
+                              <td><%= bar.slug_id %></td>
                               <td><%= bar.nom %></td>
                               <td>Crazy Club</td>
                               <td>

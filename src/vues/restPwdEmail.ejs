@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/reset-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:17:08 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Réinitialiser le mot de pass</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:title" content="Admin Templates - Dashboard Templates">
+    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:type" content="Website">
+    <link rel="shortcut icon" href="/assets/images/logo_one_love.jpg">
+
+    <!-- *************
+			************ CSS Files *************
+		************* -->
+    <link rel="stylesheet" href="/assets/fonts/remix/remixicon.css">
+    <link rel="stylesheet" href="/assets/css/main.min.css">
+
+  </head>
+
+  <body class="login-bg">
+
+    <!-- Container starts -->
+    <div class="container">
+
+      <!-- Auth wrapper starts -->
+      <div class="auth-wrapper">
+        <% if(msg) { %>
+          <div class="alert <%= tc || 'alert-info' %> alert-dismissible fade show" role="alert">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        <% } %>
+        <!-- Form starts -->
+        <form action="/resetPassword/<%= token %>" method="post" name="form">
+          
+          <div class="auth-box">
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <div>
+                <img style="width: 150px; height: 150px;" src="/assets/images/logo_one_love.jpg">
+              </div>
+            </div>
+
+            <h4 class="mb-4">Réinitialiser le mot de pass</h4>
+
+            <div id="msg" class="alert bg-white border alert-dismissible fade show text-danger" role="alert" style="display: none;">
+              <p>Les <b>nouveau mot de pass </b>ne sont pas identique !</p>
+              <p>Le mot de passe et sa confirmation doivent correspondre</p>
+              <p>Ces deux point sont obligatoire</p>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="newPwd">Nouveau mot de pass <span class="text-danger">*</span></label>
+              <div class="input-group ">
+                <input type="password" id="newPwd" name="password" class="form-control" placeholder="Entrer le nouveau mot de pass" required>
+                <button class="btn btn-outline-secondary" onclick="showPassword('newPwd', 'show')" type="button">
+                  <i class="ri-eye-line text-primary" id="show"></i>
+                </button>
+              </div>
+              <div class="form-text">
+                <p>Votre mot de pass doit faire entre 8-20 caractère.</p>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="confNewPwd">Confirmer le nouveau mot de pass <span class="text-danger">*</span></label>
+              <div class="input-group ">
+                <input type="password" id="confNewPwd" class="form-control" placeholder="Confirmer le nouveau mot de pass" required>
+                <button class="btn btn-outline-secondary" onclick="showPassword('confNewPwd', 'showConf')" type="button">
+                  <i class="ri-eye-line text-primary" id="showConf"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="mb-3 d-grid">
+              <button type="submit" class="btn btn-primary" id="btn"> 
+                Soumettre
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+        <!-- Form ends -->
+
+      </div>
+      <!-- Auth wrapper ends -->
+
+    </div>
+    <!-- Container ends -->
+    <script>
+      window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted || 
+                               (typeof window.performance != "undefined" && 
+                                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Si l'utilisateur est revenu en arrière, on recharge la page proprement
+            window.location.reload();
+        }
+      });
+      const npw = document.getElementById('newPwd');
+      const cnpw = document.getElementById('confNewPwd');
+      const btn = document.getElementById('btn');
+      const msg = document.getElementById('msg');
+      const f =document.querySelector('form')
+      f.addEventListener('submit', (e) => {
+        if(npw.value !== cnpw.value || npw.value === '' || cnpw.value === '' || npw.value.length < 8 || cnpw.value.length < 8){
+          e.preventDefault()
+          msg.style.display = "block";
+        }
+      })
+
+      // Show password
+      function showPassword(id, icon) {
+        const inputPwd = document.getElementById(id);
+        const show = document.getElementById(icon);
+
+        const type = inputPwd.getAttribute('type') === "password" ? 'text' : "password";
+        inputPwd.setAttribute('type', type);
+        show.classList.toggle('ri-eye-off-line')
+        show.classList.toggle('ri-eye-line')
+      
+      }
+</script>
+  </body>
+
+
+<!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/reset-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:17:08 GMT -->
+</html>

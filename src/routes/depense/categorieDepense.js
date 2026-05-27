@@ -2,10 +2,8 @@ const { where } = require('sequelize');
 const {CategorieDepense, Depense, sequelize} = require('../../db/sequelize');
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 formAddCategorieDepense = (app) => {
-    app.get('/formAddCategorieDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/formAddCategorieDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
-            // res.status(200).render('/index');
-            console.log("formAddCategorieDepense");
             res.redirect('/index');
         }catch(_){
             console.error(_);
@@ -16,9 +14,8 @@ formAddCategorieDepense = (app) => {
 }
 
 allCategorieDepense = (app) => {
-    app.get('/allCategorieDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/allCategorieDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
-            console.log("allCategorieDepense")
             const categories = await CategorieDepense.findAll({where: {is_active: true},order:[['id_categ', 'DESC']]});
             if(categories){
                 res.status(200).render('categorieDepense', {categories: categories, msg: req.query.msg , text_color: req.query.tc});
@@ -36,7 +33,7 @@ allCategorieDepense = (app) => {
 }
 
 addCategorieDepense = (app) => {
-    app.post('/addCategorieDepense', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.post('/addCategorieDepense', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const {nom, desc} = req.body;
 
@@ -61,7 +58,7 @@ addCategorieDepense = (app) => {
 }
 
 updateCategorieDepense = (app) => {
-    app.put('/updateCategorieDepense/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.put('/updateCategorieDepense/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const {nom, desc} = req.body;
 
@@ -88,7 +85,7 @@ updateCategorieDepense = (app) => {
 }
 
 deleteCategorieDepense = (app) =>{
-    app.delete('/deleteCategorieDepense/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.delete('/deleteCategorieDepense/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
 
         const t = await sequelize.transaction();
 

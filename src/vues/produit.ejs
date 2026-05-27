@@ -77,20 +77,20 @@
                       <table class="table truncate customButtone m-0 align-middle" data-export-subtitle="Liste des Produits">
                         <thead>
                           <tr class="text-center">
-                            <th>ID</th>
-                            <th>Nom du Produit</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom du Produit</th>
                             <th>Quantiter</th>
-                            <th>seuil de rappel</th>
-                            <th>Categorie</th>
-                            <th>Description</th>
-                            <th>Actions</th>
+                            <th class="no-calc">seuil de rappel</th>
+                            <th class="no-calc">Categorie</th>
+                            <th class="no-calc">Description</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <%produits.forEach((produit, index) => {const matricule = String(index + 1).padStart(4, "0");%> 
+                          <%produits.forEach((produit, index) => {%> 
                             
                           <tr class="text-center">
-                            <td><%= matricule %></td>
+                            <td><%= produit.slug_id %></td>
                             <td>
                               <%= produit.nom %>
                             </td>
@@ -103,48 +103,42 @@
                             <td>
                               <div class="d-inline-flex gap-1">
                                 
-                                  <!-- Card starts -->
-                                      <!-- Button trigger modal -->
-                                      <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#delete<%= produit.id_produit %>ModalCenter" class="btn btn-outline-danger btn-sm">
-                                        <i class="ri-delete-bin-line"></i>
-                                      </button>
-                                      <!-- Modal -->
-                                      <div class="modal fade" id="delete<%= produit.id_produit %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="delete<%= produit.id_produit %>ModalCenterTitle">
-                                                Confirmer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer l'article: <%= produit.nom %> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <form action="/deleteProduit/<%= produit.id_produit %>?_method=DELETE" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                              </form>
+                                <!-- Card starts -->
+                                <!-- Button trigger modal -->
+                                <button type="button" data-bs-toggle="modal"
+                                  data-bs-target="#delete<%= produit.id_produit %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                  <i class="ri-delete-bin-line"></i>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete<%= produit.id_produit %>ModalCenter" tabindex="-1"
+                                  aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="delete<%= produit.id_produit %>ModalCenterTitle">
+                                          Confirmer
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Voulez-vous vraiment supprimer l'article: <%= produit.nom %> ?</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                          annuler
+                                        </button>
+                                        <form action="/deleteProduit/<%= produit.id_produit %>?_method=DELETE" method="post">
+                                          <div class="col-sm-12">
+                                            <div class="d-flex gap-2 justify-content-end">
+                                              <button type="submit" class="btn btn-danger">Supprimer</button>
                                             </div>
                                           </div>
-                                        <!-- </form> -->
-                                        </div>
+                                        </form>
                                       </div>
-                                  <!-- Card ends -->
-                                
-                                <!-- <a href="edit-doctors.html" class="btn btn-outline-success btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Doctor Details">
-                                  <i class="ri-edit-box-line"></i>
-                                </a> -->
+                                    </div>
+                                  <!-- </form> -->
+                                  </div>
+                                </div>
                                 <!-- ----------------------------------------------------------------------------------- -->
                                 <!-- Card starts -->
                                 <!-- Button trigger modal -->
@@ -171,13 +165,13 @@
                                                 <h6 class="m-0">Details de l'Article</h6>
                                               </div>
                                             </div>
-                                            <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                            <div class="col-xxl-3 col-lg-6 col-sm-12 col-12">
                                               <div class="mb-3">
                                                 <label class="form-label" for="a1">Nom de l'article<span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="a1" value="<%= produit.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
                                               </div>
                                             </div>
-                                            <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                               <div class="mb-3">
                                                 <label class="form-label" for="a2">Categorie<span class="text-danger">*</span></label>
                                                 <select class="form-select" id="dep" name="categ">
@@ -189,7 +183,7 @@
                                                 </select>
                                               </div>
                                             </div>
-                                            <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                               <div class="mb-3">
                                                 <label class="form-label" for="a1">Seuil de rappel<span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="a1" value="<%= produit.seuil %>" placeholder="Entrer le nouveau nom" name="seuil" required>
@@ -201,7 +195,7 @@
                                                   <input type="checkbox" class="form-check-input" value="1" name="rappel" id="a">
                                               </div>
                                             </div>
-                                            <div class="col-sm-12">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                               <div class="mb-3">
                                                 <label class="form-label" for="a8">Description <span class="text-danger">*</span></label>
                                                 <textarea class="form-control" id="a8" rows="2" name="desc"><%= produit.description %></textarea>
@@ -225,11 +219,6 @@
                                   <i class="ri-eye-line"></i>
                                 </a>
                                 <!-- -------------------------------------------------------------------------------------------------- -->
-                                <!-- <a href="doctors-profile.html" class="btn btn-outline-info btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Augmenter le nombre en stock">
-                                  <i class="ri-file-reduce-line"></i>
-                                </a> -->
-                                <!-- Card starts -->
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
                                   data-bs-target="#<%= produit.id_produit %>exampleModalCenter" data-bs-title="Augmenter le nombre en stock">
@@ -248,74 +237,74 @@
                                       </div>
                                       <div class="modal-body">
                                         <!-- Row starts -->
-                                        <% if (produit.quantiter >= 1){ %>
-                                        <form action="/addHSortie/<%= produit.id_produit %>?art=produit" method="post">
-                                          <div class="row gx-3">
-                                            <div class="col-sm-12">
-                                              <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                <h6 class="m-0">Details de la Vente</h6>
+                                        <% if (produit.quantiter >= 1){ if(caisses.length > 0){%>
+                                          <form action="/addHSortie/<%= produit.id_produit %>?art=produit" method="post">
+                                            <div class="row gx-3">
+                                              <div class="col-sm-12">
+                                                <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                                                  <h6 class="m-0">Details de la Vente</h6>
+                                                </div>
                                               </div>
-                                            </div>
-                                            
-                                            <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a1">Quantiter/Nombre a retirer<span class="text-danger">*</span></label>
-                                                <input type="number" min="1"  max="<%= produit.quantiter %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
+                                              
+                                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="mb-3">
+                                                  <label class="form-label" for="a1">Quantiter/Nombre a retirer<span class="text-danger">*</span></label>
+                                                  <input type="number" min="1"  max="<%= produit.quantiter %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
+                                                </div>
                                               </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                                <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="mb-3">
+                                                  <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                                                  <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                                </div>
                                               </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a8">Nom de la caisse destinataire<span class="text-danger">*</span></label>
-                                                <select name="dest" class="form-select" id="">
-                                                  <% if(caisses.length > 0){ caisses.forEach(c => {%>
-                                                    <option value="<%= c.id_lieu %>|<%= c.type_lieu %>|<%= c.id_caisse %>" ><%= c.nom %> (<%= c.type_lieu %>)</option>
-                                                  <% }) }%>
-                                                </select>
+                                              <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                  <label class="form-label" for="a8">Nom de la caisse destinataire<span class="text-danger">*</span></label>
+                                                  <select name="dest" class="form-select" id="" required>
+                                                    <% if(caisses.length > 0){ caisses.forEach(c => {%>
+                                                      <option value="<%= c.id_lieu %>|<%= c.type_lieu %>|<%= c.id_caisse %>" ><%= c.nom %> (<%= c.type_lieu %>)</option>
+                                                    <% })}%>
+                                                  </select>
+                                                </div>
                                               </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
-                                                <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="cmm"></textarea>
+                                              <div class="col-sm-12">
+                                                <div class="mb-3">
+                                                  <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
+                                                  <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="cmm"></textarea>
+                                                </div>
                                               </div>
+                                              <input type="hidden" class="form-control" id="a2" name="type" value="produit">
+                                              <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= produit.id_produit %>">
                                             </div>
-                                            <input type="hidden" class="form-control" id="a2" name="type" value="produit">
-                                            <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= produit.id_produit %>">
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Annuler
+                                              </button>
+                                              <button type="submit" class="btn btn-danger">Confirmer le retrait</button>
+                                            </div>
+                                          </form>
+                                        <% } else { %>
+                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                                            <b>Imposssible </b> de diminuer le stock ! <br>
+                                            Actuellement Aucune caisse n'est enregistrer . <br>
+                                            <a href="/formAddCaisse">Enregistrer une Caisse</a> et réessayer.
                                           </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                              Annuler
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">Confirmer le retrait</button>
+                                        <% } %>
+                                        <% } else { %>
+                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                                            <b>Imposssible </b> de diminuer le stock ! <br>
+                                            Actuellement le stock est a <b>0</b> .
                                           </div>
-                                        </form>
-                                          <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                            Confirmer le retrait
-                                          </button> -->
+                                        <% } %>
+                                        
                                       </div>
-                                      <% } else { %>
-                                        <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                                          <b>Imposssible </b> de diminuer le stock ! <br>
-                                          Actuellement le stock est a <b>0</b> .
-                                        </div>
-                                      <% } %>
                                     </div>
                                   </div>
                                 </div>
                                 <!-- Card ends -->
                               </div>
                                 <!-- -------------------------------------------------------------------------------------------------- -->
-                                <!-- <a href="doctors-profile.html" class="btn btn-outline-info btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reduire le nombre en stock">
-                                  <i class="ri-file-add-line"></i>
-                                </a> -->
-
                                 <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
                                   data-bs-target="#<%= produit.id_produit %>exampleModalCenter<%= produit.id_produit %>" data-bs-title="Di minuer le nombre en stock">
                                   <i class="ri-file-add-line"></i>
@@ -333,49 +322,58 @@
                                       </div>
                                       <div class="modal-body">
                                         <!-- Row starts -->
+                                        <% if(fournisseurs.length > 0){ %>
                                         <form action="/addHEntrer/<%= produit.id_produit %>?art=produit" method="post">
-                                        <div class="row gx-3">
-                                          <div class="col-sm-12">
-                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                              <h6 class="m-0">Details de l'ajout</h6>
+                                          <div class="row gx-3">
+                                            <div class="col-sm-12">
+                                              <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                                                <h6 class="m-0">Details de l'ajout</h6>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
-                                              <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
+                                                <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                              <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                                                <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                              </div>
                                             </div>
+                                            <div class="col-sm-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a8">Choisisez le Fournisseur<span class="text-danger">*</span></label>
+                                                <select name="fournisseur" class="form-select" id="">
+                                                  <% if(fournisseurs.length > 0){ fournisseurs.forEach(f => {%>
+                                                    <option value="<%= f.id_fournisseur %>" ><%= f.nom %> (<%= f.pseudo %>)</option>
+                                                  <% }) }%>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <input type="hidden" class="form-control" id="a2" name="type" value="produit">
+                                            <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= produit.id_produit %>">
                                           </div>
-                                          <input type="hidden" class="form-control" id="a2" name="type" value="produit">
-                                          <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= produit.id_produit %>">
-                                      </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                          Annuler
-                                        </button>
-                                        <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
-                                      </form>
-                                        <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                          Confirmer l'ajout
-                                        </button> -->
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                              Annuler
+                                            </button>
+                                            <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
+                                        </form>
+                                        <% } else { %>
+                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                                            <b>Imposssible </b> de faire l'approvisionnement ! <br>
+                                            Actuellement aucun fournisseur n'est enregistrer. <br>
+                                            <a href="/fournisseur#formAddFournisseur">Enregistrer un Fournisseur</a> et réessayer.
+                                          </div>
+                                        <% } %>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                                 <!-- ----------------------------------------------------------------------------------- -->
-                                <!-- <div class="icons">
-                                  <i class="ri-file-reduce-line"></i>
-                                </div>
-                                <div class="icons">
-                                  <i class="ri-file-add-line"></i>
-                                </div> -->
                               </div>
                             </td>
                           </tr>
@@ -394,34 +392,6 @@
             <!-- Row ends -->
             <!-- ---------------------------------------------------------------- -->
              <br>
-            <div class="">
-              <div class="" style="background-color: rgb(215, 230, 225);">
-                <div class="card-body">
-                  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="false">
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner pb-3" id="pp">
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                      data-bs-slide="prev" >
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    </button>
-                    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleIndicators"
-                      data-bs-slide="next" >
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    </button>
-
-                  </div>
-                </div>
-              </div>
-            </div>
              <!-- ---------------------------------------------------------------- -->
           </div>
           <!-- App body ends -->
@@ -458,195 +428,6 @@
         }
       });
         
-      const text_colore = ['text-primary', 'text-info', 'text-danger', 'text-warning', 'text-success']
-      const class_colore = ['badge bg-primary', 'badge bg-info', 'badge bg-danger', 'badge bg-warning', 'badge bg-success']
-      traduct = (date) => {
-          const dates = new Date(`${date.split('-')[0]}-${date.split('-')[1]}-01`);
-          const shortMonth = dates.toLocaleString('en-US', {month: 'short'});
-          return shortMonth;
-      }
-      
-      const pp = document.getElementById('pp');
-      const anner = []
-      
-
-      const recette = JSON.parse(`<%- JSON.stringify(sumhes) %>`)
-      // console.log('r', recette)
-
-      if(recette.length === 0){
-        recette = [
-          {
-            id_probal: 0,
-            nom: 'Aucun produit',
-            total_recette: 0,
-            mois: new Date().toISOString()
-          }
-        ]
-      }
-
-      recette.forEach(element => {
-        if(!anner.includes(element.mois.split('-')[0])){
-          anner.push(element.mois.split('-')[0])
-        }
-      });
-
-      // console.log(anner)
-
-      // ----------------------------------------------------------------------
-      anner.forEach((anner, ia) => {
-        const nb_bs = []
-        const nom = []
-        const all_total = []
-
-        
-
-        recette.forEach(element => {
-          if(element.mois.split('-')[0] === anner){
-            if(!nb_bs.includes(element.id_probal)){
-              nb_bs.push(element.id_probal)
-            }
-            if(!nom.includes(element.nom)){
-              nom.push(element.nom)
-            }
-          }
-        });
-
-
-        for(let i = 0; i < nb_bs.length; i++){
-          let total = 0
-          recette.forEach((element, index) => {
-            if(nb_bs[i] === element.id_probal && anner === element.mois.split('-')[0]){
-              total = total + element.total_recette
-            }
-          });
-          all_total.push(total);
-        }
-
-        console.log('=>',nb_bs, all_total)
-
-        pp.insertAdjacentHTML('beforeend',`
-          <div class="card-body carousel-item ${ia === 0? 'active' : ''}" id="p${ia}">
-          </div>
-        `)
-
-        const p = document.getElementById(`p${ia}`);
-
-        boole = 0
-        nb_bs.forEach((id, index) => {
-
-          const all_month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",]
-          const recettes = Array(12).fill(0);
-          recette.forEach(element => {
-            if(element.id_probal === id && anner === element.mois.split('-')[0]){
-              for(let j = 0; j < all_month.length; j++){
-                if(all_month[j] === traduct(element.mois)){
-                  //console.log(element.total_recette, typeof element.total_recette)
-                  recettes[j] = element.total_recette
-                }
-              }
-            }
-          })
-          var options = {
-            chart: {
-              height: 300,
-              type: "line",
-              toolbar: {
-                show: true,
-              },
-            },
-            title:{
-              text: `${nom[index]}: ${anner}`,
-              aligne: 'left',
-              style:{
-                color: `red`,
-              }
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              curve: "smooth",
-              width: 3,
-            },
-            series: [
-              {
-                name: "Recette",
-                data: recettes,
-              },
-            ],
-            grid: {
-              borderColor: "rgb(99, 226, 184)",
-              strokeDashArray: 5,
-              xaxis: {
-                lines: {
-                  show: true,
-                },
-              },
-              yaxis: {
-                lines: {
-                  show: true,
-                },
-              },
-              padding: {
-                top: 0,
-                right: 0,
-                bottom: 10,
-                left: 0,
-              },
-            },
-            xaxis: {
-              categories: all_month,
-            },
-            yaxis: {
-              labels: {
-                show: true,
-              },
-            },
-            colors: ["#116aef", "#ce313e", "#436ccf", "#dcad10", "#828382"],
-            markers: {
-              size: 0,
-              opacity: 0.3,
-              colors: ["#116aef", "#ce313e", "#436ccf", "#dcad10", "#828382"],
-              strokeColor: "#ffffff",
-              strokeWidth: 1,
-              hover: {
-                size: 7,
-              },
-            },
-            tooltip: {
-              y: {
-                formatter: function (val) {
-                  return val + "FCFA";
-                },
-              },
-            },
-          };
-
-          exi = document.getElementById(`#income${ia}`);
-          console.log(exi)
-          if(!exi){
-            p.insertAdjacentHTML('beforeend',`
-              <div class="chart-height-lg">
-                  <div id="income${ia}" ></div>
-              </div>
-            `)
-          }
-
-          // console.log(id, anner)
-
-
-          const hot = document.getElementById(`income${ia}`);
-          hot.insertAdjacentHTML('beforeend',`
-            <div class="" id="d${boole}-${anner}">
-            </div>
-          `)
-          
-          var chart = new ApexCharts(document.querySelector(`#d${boole}-${anner}`), options);
-
-          chart.render();
-          boole++
-        })
-      })
     </script>
     <script>
       // const dest_label= document.getElementById("dest_label");

@@ -39,10 +39,10 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
                 <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
-                <a href="index.html">Home</a>
+                <a href="/index">Accueil</a>
               </li>
               <li class="breadcrumb-item text-primary" aria-current="page">
-                Add Staff
+                Collecte de fond
               </li>
             </ol>
             <!-- Breadcrumb ends -->
@@ -105,8 +105,20 @@
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
+                              <label class="form-label" for="a1">Montant Manquant<span class="text-danger">*</span></label>
+                              <input type="number" value="0" min="0" step="0.01" class="form-control" name="manquant" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
                               <label class="form-label" for="a2">Date <span class="text-danger">*</span></label>
                               <input type="date" class="form-control" id="a2" name="date" required>
+                            </div>
+                          </div>
+                          <div class="col-sm-8">
+                            <div class="mb-3">
+                              <label class="form-label" for="a8">commentaire <span class="text-danger">*</span></label>
+                              <textarea class="form-control"  placeholder="ajouter un commentaire" rows="2" name="commentaire"></textarea>
                             </div>
                           </div>
                           <!-- ---------------------------------------------------------------- -->
@@ -156,19 +168,150 @@
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a1">Montant recuperer<span class="text-danger">*</span></label>
-                              <input type="number" min="0" step="0.01" class="form-control" name="montant" required>
+                              <select class="form-select"  name="montant" required>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                                <option value="10500" >10500</option>
+                                <option value="11000" >11000</option>
+                                <option value="11500" >11500</option>
+                                <option value="12000" >12000</option>
+                                <option value="12500" >12500</option>
+                                <option value="13000" >13000</option>
+                                <option value="13500" >13500</option>
+                                <option value="14000" >14000</option>
+                                <option value="14500" >14500</option>
+                                <option value="15000" >15000</option>
+                                <option value="15500" >15500</option>
+                                <option value="16000" >16000</option>
+                                <option value="16500" >16500</option>
+                                <option value="17000" >17000</option>
+                                <option value="17500" >17500</option>
+                                <option value="18000" >18000</option>
+                                <option value="18500" >18500</option>
+                                <option value="19000" >19000</option>
+                                <option value="19500" >19500</option>
+                                <option value="20000" >20000</option>
+                                <option value="20500" >20500</option>
+                                <option value="21000" >21000</option>
+                                <option value="21500" >21500</option>
+                                <option value="22000" >22000</option>
+                                <option value="22500" >22500</option>
+                                <option value="23000" >23000</option>
+                                <option value="23500" >23500</option>
+                                <option value="24000" >24000</option>
+                                <option value="24500" >24500</option>
+                                <option value="25000" >25000</option>
+                                <option value="25500" >25500</option>
+                                <option value="26000" >26000</option>
+                                <option value="26500" >26500</option>
+                                <option value="27000" >27000</option>
+                                <option value="27500" >27500</option>
+                                <option value="28000" >28000</option>
+                                <option value="28500" >28500</option>
+                                <option value="29000" >29000</option>
+                                <option value="29500" >29500</option>
+                                <option value="30000" >30000</option>
+                              </select>
+                              <!-- <input type="number" min="0" step="0.01" class="form-control" name="montant" required> -->
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
-                              <label class="form-label" for="a1">Depenses<span class="text-danger">*</span></label>
-                              <input type="number" min="0" step="0.01" class="form-control" name="depense" required>
+                              <label class="form-label" for="a1">Montant manquant<span class="text-danger">*</span></label>
+                              <select class="form-select"  name="manquant" required>
+                                <option value="0" >0</option>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                                <option value="10500" >10500</option>
+                                <option value="11000" >11000</option>
+                                <option value="11500" >11500</option>
+                                <option value="12000" >12000</option>
+                                <option value="12500" >12500</option>
+                                <option value="13000" >13000</option>
+                                <option value="13500" >13500</option>
+                                <option value="14000" >14000</option>
+                                <option value="14500" >14500</option>
+                                <option value="15000" >15000</option>
+                                <option value="15500" >15500</option>
+                                <option value="16000" >16000</option>
+                                <option value="16500" >16500</option>
+                                <option value="17000" >17000</option>
+                                <option value="17500" >17500</option>
+                                <option value="18000" >18000</option>
+                                <option value="18500" >18500</option>
+                                <option value="19000" >19000</option>
+                                <option value="19500" >19500</option>
+                                <option value="20000" >20000</option>
+                                <option value="20500" >20500</option>
+                                <option value="21000" >21000</option>
+                                <option value="21500" >21500</option>
+                                <option value="22000" >22000</option>
+                                <option value="22500" >22500</option>
+                                <option value="23000" >23000</option>
+                                <option value="23500" >23500</option>
+                                <option value="24000" >24000</option>
+                                <option value="24500" >24500</option>
+                                <option value="25000" >25000</option>
+                                <option value="25500" >25500</option>
+                                <option value="26000" >26000</option>
+                                <option value="26500" >26500</option>
+                                <option value="27000" >27000</option>
+                                <option value="27500" >27500</option>
+                                <option value="28000" >28000</option>
+                                <option value="28500" >28500</option>
+                                <option value="29000" >29000</option>
+                                <option value="29500" >29500</option>
+                                <option value="30000" >30000</option>
+                              </select>
+                              <!-- <input type="number" value="0" min="0" step="0.01" class="form-control" name="manquant"> -->
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a2">Date <span class="text-danger">*</span></label>
                               <input type="date" class="form-control" id="a2" name="date" required>
+                            </div>
+                          </div>
+                          <div class="col-sm-8">
+                            <div class="mb-3">
+                              <label class="form-label" for="a8">commentaire <span class="text-danger">*</span></label>
+                              <textarea class="form-control"  placeholder="ajouter un commentaire" rows="2" name="commentaire"></textarea>
                             </div>
                           </div>
                           </div>
@@ -205,13 +348,151 @@
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a1">Montant recuperer<span class="text-danger">*</span></label>
-                              <input type="number" min="0" step="0.01" class="form-control" name="montant" required>
+                              <select class="form-select"  name="montant" required>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                              </select>
+                              <!-- <input type="number" min="0" step="0.01" class="form-control" name="montant" required> -->
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Montant manquant<span class="text-danger">*</span></label>
+                              <select class="form-select"  name="manquant" required>
+                                <option value="0" >0</option>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                              </select>
+                              <!-- <input type="number" value="0" min="0" step="0.01" class="form-control" name="manquant"> -->
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a2">Date <span class="text-danger">*</span></label>
                               <input type="date" class="form-control" id="a2" name="date" required>
+                            </div>
+                          </div>
+                          <div class="col-sm-8">
+                            <div class="mb-3">
+                              <label class="form-label" for="a8">commentaire <span class="text-danger">*</span></label>
+                              <textarea class="form-control"  placeholder="ajouter un commentaire" rows="2" name="comentaire"></textarea>
+                            </div>
+                          </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="d-flex gap-2 justify-content-end">
+                              <button type="submit" id="btn" class="btn btn-primary">Ajouter</button>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- Row ends -->
+                      </form>
+                    </div>
+                  <% } else if(type === 'salonp') { %>
+                    <div class="card-body">
+                      <form method="post" action="/addSPJournal" id="formesp">
+                        <!-- Row starts -->
+                        <div class="row gx-3"> 
+                          <div class="col-sm-12">
+                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                              <h6 class="m-0">Details de la collecte des Salon Privé</h6>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a2">Salon Privé <span class="text-danger">*</span></label>
+                              <select class="form-select"  name="salonp">
+                                <% if(salons.length > 0){salons.forEach(salon => { %>
+                                    <option value="<%= salon.id_salon %>" ><%= salon.nom %></option>
+                                <% })} else { %>
+                                  <option value="" >Aucune Salon Privé Disponible</option>
+                                <% }%>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Montant recuperer<span class="text-danger">*</span></label>
+                              <select class="form-select"  name="montant" required>
+                                <option value="2000" >2000</option>
+                                <option value="4000" >4000</option>
+                                <option value="6000" >6000</option>
+                                <option value="8000" >8000</option>
+                                <option value="10000" >10000</option>
+                                <option value="12000" >12000</option>
+                                <option value="14000" >14000</option>
+                                <option value="16000" >16000</option>
+                                <option value="18000" >18000</option>
+                                <option value="20000" >20000</option>
+                              </select>
+                              <!-- <input type="number" min="0" step="0.01" class="form-control" name="montant" required> -->
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Montant manquant<span class="text-danger">*</span></label>
+                              <select class="form-select"  name="manquant" required>
+                                <option value="0" >0</option>
+                                <option value="2000" >2000</option>
+                                <option value="4000" >4000</option>
+                                <option value="6000" >6000</option>
+                                <option value="8000" >8000</option>
+                                <option value="10000" >10000</option>
+                                <option value="12000" >12000</option>
+                                <option value="14000" >14000</option>
+                                <option value="16000" >16000</option>
+                                <option value="18000" >18000</option>
+                                <option value="20000" >20000</option>
+                              </select>
+                              <!-- <input type="number" value="0" min="0" step="0.01" class="form-control" name="manquant"> -->
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a2">Date <span class="text-danger">*</span></label>
+                              <input type="date" class="form-control" id="a2" name="date" required>
+                            </div>
+                          </div>
+                          <div class="col-sm-8">
+                            <div class="mb-3">
+                              <label class="form-label" for="a8">commentaire <span class="text-danger">*</span></label>
+                              <textarea class="form-control"  placeholder="ajouter un commentaire" rows="2" name="comentaire"></textarea>
                             </div>
                           </div>
                           </div>
@@ -238,34 +519,105 @@
                             <div class="mb-3">
                               <label class="form-label" for="a2">Maison Close <span class="text-danger">*</span></label>
                               <select class="form-select"  name="mclose1" id="mclose1">
-                                <option value="null" >Aucune maison close</option>
-                                <% mcloses.forEach(mclose => { %>
+                                <option value="" >Choisisez une maison close</option>
+                                <% if(mcloses.length > 0){mcloses.forEach(mclose => { %>
                                     <option value="<%= mclose.id_mclose %>" ><%= mclose.nom %></option>
-                                <% }) %>
+                                <% })} else { %>
+                                  <option value="">Aucune Maiaon Close disponible</option>
+                                  <%} %>
                               </select>
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a2">Chambre <span class="text-danger">*</span></label>
-                              <select class="form-select"  name="chambre2" id="chambre2">
-                              <option value="null" >Aucune chambre</option>
+                              <select class="form-select"  name="chambre2" id="chambre2" required>
                                 <!-- <% chambres.forEach(chambre => { %>
                                     <option value="<%= chambre.id_chambre %>" ><%= chambre.nom %></option>
                                 <% }) %> -->
+                                <option value="">Aucune chambre disponible</option>
                               </select>
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a1">Montant recuperer<span class="text-danger">*</span></label>
-                              <input type="number" min="0" step="0.01" class="form-control" name="montant" required>
+                              <select class="form-select"  name="montant" required>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                              </select>
+                              <!-- <input type="number" min="0" step="0.01" class="form-control" name="montant" required> -->
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Montant manquant(Reste du jour)<span class="text-danger">*</span></label>
+                              <select class="form-select"  name="manquant" required>
+                                <option value="0" >0</option>
+                                <option value="500" >500</option>
+                                <option value="1000" >1000</option>
+                                <option value="1500" >1500</option>
+                                <option value="2000" >2000</option>
+                                <option value="2500" >2500</option>
+                                <option value="3000" >3000</option>
+                                <option value="3500" >3500</option>
+                                <option value="4000" >4000</option>
+                                <option value="4500" >4500</option>
+                                <option value="5000" >5000</option>
+                                <option value="5500" >5500</option>
+                                <option value="6000" >6000</option>
+                                <option value="6500" >6500</option>
+                                <option value="7000" >7000</option>
+                                <option value="7500" >7500</option>
+                                <option value="8000" >8000</option>
+                                <option value="8500" >8500</option>
+                                <option value="9000" >9000</option>
+                                <option value="9500" >9500</option>
+                                <option value="10000" >10000</option>
+                              </select>
+                              <!-- <input type="number" value="0" min="0" step="0.01" class="form-control" name="manquant"> -->
                             </div>
                           </div>
                           <div class="col-xxl-3 col-lg-4 col-sm-6">
                             <div class="mb-3">
                               <label class="form-label" for="a2">Date <span class="text-danger">*</span></label>
                               <input type="date" class="form-control" id="a2" name="date" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Dettes antérieure(Creance)<span class="text-danger">*</span></label>
+                              <input type="number" value="0" min="0" step="0.01" class="form-control" id="dette" readonly disabled>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Dettes antérieure(Calcule systeme)<span class="text-danger">*</span></label>
+                              <input type="number" value="0" min="0" step="0.01" class="form-control" id="dette_systeme" readonly disabled>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label" for="a1">Total a Payer<span class="text-danger">*</span></label>
+                              <input type="number" value="0" min="0" step="0.01" id="total" class="form-control" readonly disabled>
                             </div>
                           </div>
                           <div class="col-sm-12">
@@ -285,6 +637,7 @@
                       </form>
                     </div>
                   <% }%>
+
                 </div>
               </div>
             </div>
@@ -315,6 +668,7 @@
 		************* -->
     <!-- Required jQuery first, then Bootstrap Bundle JS -->
     <%- include('script')%>
+    <script src="/sweetalert2/sweetalert2.all.min.js"></script>
     <script>
       window.addEventListener("pageshow", function (event) {
         var historyTraversal = event.persisted || 
@@ -328,24 +682,44 @@
       const btn = document.getElementById('btn');
       const formbc = document.getElementById('formebc');
       const formap = document.getElementById('formeap');
+      const dette = document.getElementById('dette');
+      const detteS = document.getElementById('dette_systeme');
+      const total = document.getElementById('total');
       const formcui = document.getElementById('formecui');
       const formmc = document.getElementById('formemc');
+      const formsp = document.getElementById('formesp');
       const bc = document.getElementById('bc');
       const mclose = document.getElementById('mclose1');
       const chambre = document.getElementById('chambre2');
       const chambres = JSON.parse('<%- JSON.stringify(chambres || []) %>');
+      // console.log(chambres)
       const appart = document.getElementById('chambre1');
+
+      function errorTraitement(msg){
+        Swal.fire({
+          title: 'Attention',
+          text: `${msg}`,
+          icon: 'warning',
+          confirmButtonColor: '#3085d6', // Tu peux mettre ta couleur de thème ici
+          confirmButtonText: 'OK',
+          background: '#ffffff',
+          showClass: {
+              popup: 'animate__animated animate__fadeInDown' // Animation fluide
+          }
+        });
+      }
 
       if(formbc){
         formbc.addEventListener('submit', (e) => {
         e.preventDefault();
 
-          if (!bc.value || !bc.value.includes(' ')) return alert('Choisissez un bar/club');
+          if (!bc.value || !bc.value.includes(' ')) return errorTraitement('Choisissez un bar/club avant de continuer');
 
           const type = bc.value.split(' ')[1];
           if (type === 'bs') formbc.action = "/addBSJournal";
           if (type === 'bv') formbc.action = "/addBVJournal";
           if (type === 'cc') formbc.action = "/addCCJournal";
+          if (type === 'sp') formbc.action = "/addSPJournal";
 
           formbc.submit();
           return;
@@ -357,12 +731,12 @@
           e.preventDefault();
           if (appart) {
             if (!appart.value || appart.value === "null") {
-              return alert('Choisissez un appartement');
+              return errorTraitement('Choisissez un appartement avant de continuer');
             }
             formap.submit();
             return;
           }
-          return alert('Choisissez un appartement');
+          return errorTraitement('Choisissez un appartement avant de continuer');
         })
       }
 
@@ -372,12 +746,27 @@
           const cuisine = document.querySelector('select[name="cuisine"]');
           if (cuisine) {
             if (!cuisine.value || cuisine.value === "null") {
-              return alert('Choisissez une cuisine');
+              return errorTraitement('Choisissez une cuisine avant de continuer')
             }
             formcui.submit();
             return;
           }
-          return alert('Choisissez une cuisine');
+          return errorTraitement('Choisissez une cuisine avant de continuer');
+        })
+      }
+
+      if(formsp){
+        formcui.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const salon = document.querySelector('select[name="salonp"]');
+          if (salon) {
+            if (!salon.value || salon.value === "null") {
+              return errorTraitement('Choisissez un salon Privé avant de continuer');
+            }
+            formcui.submit();
+            return;
+          }
+          return errorTraitement('Choisissez un salon Privé avant de continuer');
         })
       }
 
@@ -386,23 +775,23 @@
           e.preventDefault();
           if (mclose) {
             if (!mclose.value || mclose.value === "null") {
-              return alert('Choisissez une maison close');
+              return errorTraitement('Choisissez une maison close avant de continuer');
             }
 
             // Vérifie si chambre est sélectionnée
             if (!chambre.value || chambre.value === "null") {
-              return alert('Choisissez une chambre');
+              return errorTraitement('Choisissez une chambre avant de continuer');
             }
 
             formmc.submit();
             return;
           }
-          return alert('Choisissez une maison close');
+          return errorTraitement('Choisissez une maison close avant de continuer');
         })
       }
 
       mclose.addEventListener('change', () => {
-        chambre.innerHTML = '<option value="null">Aucune chambre</option>';
+        chambre.innerHTML = ''; //<option value="null">Aucune chambre</option>
 
         chambres.forEach(ch => {
           if (mclose.value == ch.id_mclose) {
@@ -410,8 +799,19 @@
               'beforeend',
               `<option value="${ch.id_chambre}">${ch.nom}</option>`
             );
+            total.value=ch.total
+            dette.value=ch.dette_manuelle 
+            detteS.value=ch.manquant_total_systeme
           }
         });
+      });
+
+      chambre.addEventListener('change', () => {
+        const elementid = chambre.value
+        const element = chambres.find((ch) => {return ch.id_chambre == elementid})
+        total.value=element.total
+        dette.value=element.dette_manuelle 
+        detteS.value=element.manquant_total_systeme
       });
 
     </script>

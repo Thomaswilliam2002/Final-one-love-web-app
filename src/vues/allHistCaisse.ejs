@@ -76,22 +76,26 @@
                       <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des historiques des caisses" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th>Nom</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
                             <th>Quantiter</th>
-                            <th>Prix unitaire</th>
-                            <th>Type</th>
-                            <th>Nom de la Caisse</th>
-                            <th>Non du caissier</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th class="no-calc">Prix unitaire</th>
+                            <th>Montant</th>
+                            <th class="no-calc">Type</th>
+                            <th class="no-calc">Nom de la Caisse</th>
+                            <th class="no-calc">Non du caissier</th>
+                            <th class="no-calc">Date</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
                             <% hists.forEach(hist => { %>
                                 <tr>
+                                    <td><%= hist.slug_id %></td>
                                     <td><%= hist.nom_article %></td>
                                     <td><%= hist.quantiter %></td>
                                     <td><%= hist.prix_unit %></td>
+                                    <td><%= hist.quantiter * hist.prix_unit %></td>
                                     <td><%= hist.type %></td>
                                     <td><%= hist.nom_caisse %></td>
                                     <td><%= hist.nom_caissier %></td>

@@ -84,16 +84,22 @@
                       <table class="table truncate customButtone m-0 align-middle" data-export-subtitle="Liste des Caisses">
                         <thead class="text-center">
                           <tr>
-                            <th>Nom de la Caisse</th>
-                            <th>Nom et Prenom des comptables</th>
-                            <th>Deppartement</th>
-                            <th>Sous departement(lieu)</th>
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom de la Caisse</th>
+                            <th class="no-calc">Nom et Prenom des comptables</th>
+                            <th class="no-calc">Deppartement</th>
+                            <th class="no-calc">Sous departement(lieu)</th>
+                            <%
+                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                            %>
+                              <th class="no-calc">Actions</th>
+                            <% } %>
                           </tr>
                         </thead>
                         <tbody class="text-center">
                           <% caisses.forEach(caisse => { %>
                                 <tr>
+                                  <td><%= caisse.slug_id %></td>
                                   <td><%= caisse.nom %></td>
                                   <td>
                                     <ul class="list-unstyled">
@@ -104,59 +110,62 @@
                                   </td>
                                   <td><%= caisse.type_lieu %></td>
                                   <td><%= caisse.nom_lieu %></td>
-                                  <td>
-                                    <div class="d-inline-flex gap-3">
-                                      <!-- ----------------------------------------------------------------------------------- -->
-                                      <div class="col-sm-4">
-                                        <!-- Card starts -->
-                                            <!-- Button trigger modal -->
-                                            <button type="button" data-bs-toggle="modal"
-                                              data-bs-target="#<%= caisse.id_caisse %>ModalCenter" class="btn btn-outline-danger btn-sm">
-                                              <i class="ri-delete-bin-line"></i>
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="<%= caisse.id_caisse %>ModalCenter" tabindex="-1"
-                                              aria-labelledby="<%= caisse.id_caisse %>ModalCenterTitle" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                  <div class="modal-header">
-                                                    <h5 class="modal-title" id="<%= caisse.id_caisse %>ModalCenterTitle">
-                                                      Supprimer
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                  </div>
-                                                  <div class="modal-body">
-                                                    <p>Voulez-vous vraiment supprimer la Caisse: <%= caisse.nom %> ?</p>
-                                                    <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente) liés à cette caisse.</p>
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                      annuler
-                                                    </button>
-                                                    <form action="/deleteCaisse/<%= caisse.id_caisse %>?_method=DELETE" method="post">
-                                                      <div class="col-sm-12">
-                                                        <div class="d-flex gap-2 justify-content-end">
-                                                          <button type="submit" class="btn btn-danger">Supprimer</button>
+                                  <%
+                                    if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                  %>
+                                    <td>
+                                      <div class="d-inline-flex gap-3">
+                                        <!-- ----------------------------------------------------------------------------------- -->
+                                        
+                                          <!-- Card starts -->
+                                              <!-- Button trigger modal -->
+                                              <button type="button" data-bs-toggle="modal"
+                                                data-bs-target="#<%= caisse.id_caisse %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                                <i class="ri-delete-bin-line"></i>
+                                              </button>
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="<%= caisse.id_caisse %>ModalCenter" tabindex="-1"
+                                                aria-labelledby="<%= caisse.id_caisse %>ModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title" id="<%= caisse.id_caisse %>ModalCenterTitle">
+                                                        Supprimer
+                                                      </h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <p>Voulez-vous vraiment supprimer la Caisse: <%= caisse.nom %> ?</p>
+                                                      <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente) liés à cette caisse.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                        annuler
+                                                      </button>
+                                                      <form action="/deleteCaisse/<%= caisse.id_caisse %>?_method=DELETE" method="post">
+                                                        <div class="col-sm-12">
+                                                          <div class="d-flex gap-2 justify-content-end">
+                                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                          </div>
                                                         </div>
-                                                      </div>
-                                                    </form>
+                                                      </form>
+                                                    </div>
                                                   </div>
                                                 </div>
                                               </div>
-                                            </div>
-                                        <!-- Card ends -->
+                                          <!-- Card ends -->
+                                        <!-- ----------------------------------------------------------------------------------------- -->
+                                        <a href="/formEditCaisse/<%= caisse.id_caisse %>" class="btn btn-outline-success btn-sm"
+                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Modifier">
+                                          <i class="ri-edit-box-line"></i>
+                                        </a>
+                                        <a href="/allCaisseArticle/<%= caisse.id_caisse %>" class="btn btn-outline-info btn-sm"
+                                          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Voir les Details">
+                                          <i class="ri-eye-line"></i>
+                                        </a>
                                       </div>
-                                      <!-- ----------------------------------------------------------------------------------------- -->
-                                      <a href="/formEditCaisse/<%= caisse.id_caisse %>" class="btn btn-outline-success btn-sm"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Modifier">
-                                        <i class="ri-edit-box-line"></i>
-                                      </a>
-                                      <a href="/allCaisseArticle/<%= caisse.id_caisse %>" class="btn btn-outline-info btn-sm"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Voir les Details">
-                                        <i class="ri-eye-line"></i>
-                                      </a>
-                                    </div>
-                                  </td>
+                                    </td>
+                                  <% }%>
                                 </tr>
                           <% }) %>
                         </tbody>

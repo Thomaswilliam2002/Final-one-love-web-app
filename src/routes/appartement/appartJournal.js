@@ -56,7 +56,7 @@ oneJournal = (app) => {
                 res.json({msg, data: journal})
             })
             .catch(_ => {
-                //console.log('erreure de selection');
+                console.log('erreure de selection');
                 res.redirect('/notFound');
             })
     })
@@ -92,7 +92,7 @@ updateJournal = (app) => {
                 res.json({msg})
             })
             .catch(_ => {
-                //console.log('erreure de modification')
+                console.log('erreure de modification')
                 res.redirect('/notFound');
             })
     })
@@ -118,21 +118,6 @@ deleteFondJournal = (app) => {
             res.redirect('/notFound')
             return
         }
-        // AppartFondJournal.findByPk(req.params.id)
-        //     .then(journal => {
-        //         const appartDel = journal;
-        //         AppartFondJournal.destroy({where: {id_journal: appartDel.id_journal}})
-        //             .then(_ => {
-        //                 // const msg = "Suppression du journal avec succes"
-        //                 // res.json({msg})
-        //                 res.redirect('/appartFondJournal?msg=Journal supprimer avec succès&tc=alert-danger')
-        //             })
-        //             .catch(_ => {
-        //                 //console.log('erreure de suppression', _)
-        //                 res.redirect('/notFound');
-        //                 return
-        //             })
-        //     })
     })
 }
 
@@ -156,17 +141,6 @@ deleteJournal = (app) => {
             res.redirect('/notFound')
             return
         }
-        // AppartJournal.findByPk(req.params.id)
-        //     .then(journal => {
-        //         const appartDel = journal;
-        //         AppartJournal.destroy({where: {id_appart: appartDel.id_appart}})
-        //             .then(_ => {
-        //                 // const msg = "Suppression du journal avec succes"
-        //                 // res.json({msg})
-        //                 res.redirect('/appartJournal?msd=sup&indice=admin')
-        //             })
-        //             .catch(_ => {res.redirect('/notFound');})
-        //     })
     })
 }
 

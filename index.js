@@ -5,10 +5,10 @@ const {sequelize, Occupe, Personnel, Poste, BarSimpleJournal, BarVipJournal, App
     Categorie,AppartJournal,
     Produit,
     Emballage,Presence,
-    Caisse,Depense,
-    CaisseJournal,} = require('./src/db/sequelize');
+    Caisse,Depense, AvanceSalaire, PaiementSalaire, Salaire, 
+    CaisseJournal,SalonPrive} = require('./src/db/sequelize');
 
-// const {stockJob} = require('./src/mail/email')
+const {stockJob} = require('./src/mail/email')
 
 
 const methodOverride = require('method-override');
@@ -50,16 +50,34 @@ const caisseProduit = require('./src/routes/produit/produitCaisse')
 const forgot = require('./src/mail/forgotMail')
 const depenseRoutes = require('./src/routes/depense/depense')
 const categorieDepense = require('./src/routes/depense/categorieDepense')
+const notification = require('./src/routes/notification/notification')
+const fournisseur = require('./src/routes/fournisseur/fournisseur')
+const inventaire = require('./src/routes/rapport/inventaire')
+const rapportJ = require('./src/routes/rapport/rapportJournalier')
+const salonPrive = require('./src/routes/salonPrive/salonPrive')
+const journalSalonPrive = require('./src/routes/salonPrive/journalSalonPrive')
+const collectFondSalonPrive = require('./src/routes/salonPrive/collectFondSalonPrive')
+const creancier = require('./src/routes/creance/creancier')
+const journalCreancier = require('./src/routes/creance/journalCreancie')
+const journalEmprunt = require('./src/routes/creance/journalEmprunt')
+const consommation = require('./src/routes/consommation/consommation')
+const salaire = require('./src/routes/personnel/salaire')
+const paiementSalaire = require('./src/routes/personnel/paiementSalaire')
+const avanceSalaire = require('./src/routes/personnel/avanceSalaire')
+const sejourClient = require('./src/routes/client/sejourClient')
+const paiementSejour = require('./src/routes/client/paiementSejour')
+const rapport = require('./src/routes/rapport/rapportPeriodique')
 
-const {MaisonColse, Chambre, Cuisine} = require('./src/db/sequelize')
+
+const {MaisonColse, Chambre, Cuisine, HistCaisse} = require('./src/db/sequelize')
 const {BarSimple} = require('./src/db/sequelize')
 const {BarVip} = require('./src/db/sequelize')
 const {CrazyClub} = require('./src/db/sequelize')
+const email = require('./src/mail/email');
 
 const express = require('express');
 const { create } = require('domain');
 // const cclubJournal = require('./src/models/cclubJournal');
-const appartFondJournal = require('./src/models/appartFondJournal');
 //const article = require('./src/models/article')
 
 const app = express();
@@ -67,6 +85,9 @@ app.set('trust proxy', 1); // Indispensable pour que le cookie passe sur Render
 
 app.set('view engine', 'ejs');
 app.set('views', 'src/vues')
+// app.use(cors({
+//     origin: "*"
+// }));
 
 const mySessionStore = new SequelizeStore({
     db: sequelize,
@@ -83,10 +104,10 @@ app.use(session({
     store: mySessionStore,
     resave: false,
     saveUninitialized: false,
-    proxy: true, // Ajoute cette ligne aussi
+    // proxy: true, // Ajoute cette ligne aussi
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        secure: process.env.NODE_ENV === 'production' || true,
+        secure: process.env.NODE_ENV === 'production', //|| true,
         httpOnly: true,
         sameSite: 'lax' // Recommandé pour éviter les problèmes de redirection
         // sameSite: 'none',     // Nécessaire si le cookie traverse des domaines
@@ -103,6 +124,7 @@ app.use(methodOverride('_method'));
 app.use('/assets', express.static(path.join(__dirname, 'src/vues/assets')))
 app.use('/sweetalert2', express.static(__dirname + '/node_modules/sweetalert2/dist'));
 app.use('/icons', express.static(__dirname + '/node_modules/bootstrap-icons'));
+app.use(express.json());
 
 app.use(express.urlencoded({extended: false}))
 
@@ -145,6 +167,7 @@ app.get('/fichePaie', (req, res) => {
     res.render('create-invoice')
 })
 
+
 // ------------------------------------------------------------------------------------------
 const getDay = () => {
     const now = new Date()
@@ -163,7 +186,7 @@ const getDay = () => {
 // ------------------------------------------------------------------------------------------
 
 //route recapitulatif des caisses et recette
-app.get('/recap', protrctionRoot, authorise('admin','comptable'), async (req, res) => {
+app.get('/recap', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
 
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -265,7 +288,8 @@ app.get('/index', protrctionRoot, authorise('admin'), async (req, res) => {
         const [
             nb_personnel, nb_appart, nb_barSimple, nb_barVip, nb_crazyClub,
             sum_bs, sum_bv, sum_cc, sum_cui, sum_ap, sum_ch,
-            nb_mc, nb_ch, nb_cu, nb_cat, nb_prod, nb_emb, nb_cai,sum_depense
+            nb_mc, nb_ch, nb_cu, nb_cat, nb_prod, nb_emb, nb_cai,sum_depense,
+            sum_recette_mois
         ] = await Promise.all([
             Personnel.count({ where: { is_active: true } }),
             Appartement.count({ where: { is_active: true } }),
@@ -289,7 +313,21 @@ app.get('/index', protrctionRoot, authorise('admin'), async (req, res) => {
             Produit.count({ where: { is_active: true } }),
             Emballage.count({ where: { is_active: true } }),
             Caisse.count({ where: { is_active: true } }),
-            Depense.sum("montant", { is_active: true ,where: {date: {[Op.gte]: firstDay,[Op.lt]: lastDay } } })
+            Depense.sum("montant", { is_active: true ,where: {date: {[Op.gte]: firstDay,[Op.lt]: lastDay } } }),
+            //somme des recettes du mois via la table histCaisse
+            HistCaisse.findAll({
+                attributes: [
+                  [fn('SUM', literal('"quantiter" * "prix_unit"')), 'total']
+                ],
+                where: {
+                  is_active: true,
+                  created: {
+                    [Op.gte]: firstDay,
+                    [Op.lt]: lastDay
+                  }
+                },
+                raw: true
+              })
         ]);
 
         const data = {
@@ -312,7 +350,8 @@ app.get('/index', protrctionRoot, authorise('admin'), async (req, res) => {
             "recetteCuisine": sum_cui || 0,
             "recetteAppart": sum_ap || 0,
             "recetteChambre": sum_ch || 0,
-            "sum_depense": sum_depense || 0
+            "sum_depense": sum_depense || 0,
+            "sum_recette_mois": sum_recette_mois || 0
         };
 
         res.render('index', { data: data });
@@ -324,11 +363,12 @@ app.get('/index', protrctionRoot, authorise('admin'), async (req, res) => {
 });
 
 // verrifie la liste des produit et emballage en rupture de stock toutte les heure et envoi un mail aux admin
-// stockJob.start();
+stockJob.start();
 
 //route presence
-app.get('/presence', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+app.get('/presence', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) => {
     const presences = await Presence.findAll({
+        where: { is_active: true },
         include:[{model: Personnel, required: false, where: { is_active: true }}],
     })
     const personnels = await Personnel.findAll({where: { is_active: true }});
@@ -448,38 +488,55 @@ app.get('/forgot', (req, res) => { //, protrctionRoot
 
 //route changer le mdp
 app.get('/reset', protrctionRoot, (req, res) => {
-    res.render('reset-password',{msg: req.query.msg})
+    res.render('reset-password',{msg: req.query.msg, tc: req.query.tc})
 })
 
 //route changer le mdp
 app.put('/resetTraitement/:id', protrctionRoot, async (req, res) => {
-    console.log('recu')
-    const {Pwd, newPwd, cnewPwd} = req.body;
-    console.log(req.params.id)
-    const user = await Personnel.findByPk(req.params.id);
-    if(user){
-        const verif = await bcrypt.compare(Pwd, personnel.mdp);
-        if(verif){
-            if(newPwd === cnewPwd){
-                try{
-                    const salt = await bcrypt.genSalt(10);
-                    hash_pass = await bcrypt.hash(newPwd, salt)
-                    await Personnel.update({
-                        mdp: hash_pass,
-                    })
-                    res.redirect('/login')
-                }catch(e){
-                    res.redirect('/notFond')
-                    // console.log(e)
-                }
-            }
-        }else{
-            res.redirect('/reset?msg=mdp')
+    const { Pwd, newPwd, cnewPwd } = req.body;
+
+    try {
+        // 🔍 Récupérer l'utilisateur
+        const user = await Personnel.findByPk(req.params.id);
+
+        if (!user) {
+            // ❌ Utilisateur inexistant
+            return res.redirect('/login');
         }
-    }else{
-        res.redirect('/login')
+
+        // 🔐 Vérifier l'ancien mot de passe
+        const verif = await bcrypt.compare(Pwd, user.mdp); // ⚠️ correction: user.mdp au lieu de personnel.mdp
+
+        if (!verif) {
+            // ❌ Mauvais ancien mot de passe
+            return res.redirect('/reset?msg=L\'encien mot de passe est incorrect&tc=alert-danger');
+        }
+
+        // 🔒 Vérifier que les nouveaux mots de passe correspondent
+        if (newPwd !== cnewPwd) {
+            return res.redirect('/reset?msg=Les nouveaux mots de passe ne correspondent pas Identique&tc=alert-danger'); // message confirmation incorrecte
+        }
+
+        // ⚠️ Vérification basique de sécurité (optionnel mais recommandé)
+        if (!newPwd || newPwd.length < 8) {
+            return res.redirect('/reset?msg=Le nouveau mot de passe est trop faible. Il doit contenir au moins 8 caractères&tc=alert-danger'); // mot de passe trop faible
+        }
+
+        // 🔑 Hasher le nouveau mot de passe
+        const hash_pass = await bcrypt.hash(newPwd, 10);
+
+        // 💾 Mise à jour en base
+        user.mdp = hash_pass;
+        await user.save();
+
+        // ✅ Succès → redirection
+        return res.redirect('/login?msg= Le mot de passe a bien été changé avec succès\nConnectez-vous avec le nouveau mot de passe&tc=alert-success');
+
+    } catch (e) {
+        console.log(e);
+        return res.redirect('/notFond?msg=serveur');
     }
-})
+});
 
 // la route vers la facture proforma
 app.get('/proforma', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
@@ -553,24 +610,118 @@ app.get('/allBarClub', protrctionRoot, authorise('admin', 'comptable'), (req, re
 })
 
 // la route vers la liste des salarier
-app.get('/salarier', protrctionRoot, authorise('admin', 'comptable'), async (req, res) =>{
-    const data = []
+app.get('/salarier', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) =>{
     try{
         const salariers = await Occupe.findAll({
             where: {is_active: true},
             include:[
                 {model: Personnel, required: false, where: {is_active: true}},
-                {model: Poste, required: false, where: {is_active: true}}
+                {model: Poste, required: false, where: {is_active: true}},   
             ],
             order:[['id_occupe', 'DESC']]
         })
         if(salariers){
-            data.push(salariers)
-            const sanction = await Sanction.findAll({where: {is_active: true}})
-            if(sanction){
-                data.push(sanction)
-                res.render('salaries', {datas: data})
-            }
+            //==========================================================================================
+            // const salariersEnrichie = await Promise.all(salariers.map(async (s) => {
+            //     const json = s.toJSON();
+            //     // const av = await AvanceSalaire.findAll()
+            //     // console.log('enc', av)
+            //     //selectionner tout les salaire en cours
+            //     const enCoure = await Salaire.findAll(
+            //         {
+            //             where: {is_active: true, status:'EN COURS', id_occupe: s.id_occupe},
+            //             include:[
+            //                 {
+            //                     model: AvanceSalaire, required: false, where: {is_active: true}
+            //                 },
+            //                 {
+            //                     model: PaiementSalaire, required: false, where: {is_active: true}
+            //                 }
+            //             ]
+            //         },
+                    
+            //     )
+
+            //     // console.log('enc', enCoure)
+
+            //     let totalSalaire = 0
+            //     let sumAvence = 0
+            //     let sumPaiement = 0
+            //     let totalPrime = 0
+            //     let totalDeduction = 0
+            //     //parcourire les salaire en coure
+            //     const calc = enCoure.map((ec) => {
+                    
+            //         sumAvence += ec.AvanceSalaires.reduce(
+            //             (somme,j)=> somme + Number(j.montant || 0),
+            //             0
+            //         );
+            //         sumPaiement += ec.PaiementSalaires.reduce(
+            //             (somme,j)=> somme + Number(j.montant || 0),
+            //             0
+            //         );
+
+            //         totalSalaire += ec.montant_net
+            //         totalPrime += ec.primes
+            //         totalDeduction += ec.deductions
+
+            //         // return {sumAvence: sumAvence, sumPaiement: sumPaiement, totalSalaire: totalSalaire}
+            //     })
+
+            //     json.sumAvence = sumAvence
+            //     json.sumPaiement = sumPaiement
+            //     json.totalSalaire = totalSalaire
+            //     json.reste = (Number(totalSalaire || 0 ) + Number(totalPrime || 0)) - (Number(sumAvence || 0) + Number(sumPaiement || 0) + Number(totalDeduction || 0))
+
+            //     return json;
+            // })
+            // )
+            const salariersEnrichie = await Promise.all(salariers.map(async (s) => {
+                const json = s.toJSON();
+                
+                const enCoure = await Salaire.findAll({
+                    where: { is_active: true, status: 'EN COURS', id_occupe: s.id_occupe },
+                    include: [
+                        { model: AvanceSalaire, required: false, where: { is_active: true } },
+                        { model: PaiementSalaire, required: false, where: { is_active: true } }
+                    ]
+                });
+            
+                let totalSalaire = 0;
+                let sumAvance = 0; // Attention à l'orthographe "Avance"
+                let sumPaiement = 0;
+                let totalPrime = 0;
+                let totalDeduction = 0;
+            
+                // On utilise forEach car on veut juste accumuler des valeurs, pas créer un nouveau tableau
+                enCoure.forEach((ec) => {
+                    // Correction : Vérifier si l'association existe ET utiliser le bon nom (souvent pluriel)
+                    // Vérifie bien dans tes modèles si c'est "AvanceSalaires" ou "AvanceSalaires"
+                    const avances = ec.AvanceSalaires || []; 
+                    const paiements = ec.PaiementSalaires || [];
+            
+                    sumAvance += avances.reduce((somme, j) => somme + Number(j.montant || 0), 0);
+                    sumPaiement += paiements.reduce((somme, j) => somme + Number(j.montant || 0), 0);
+            
+                    totalSalaire += Number(ec.montant_net || 0);
+                    totalPrime += Number(ec.primes || 0);
+                    totalDeduction += Number(ec.deductions || 0);
+                });
+            
+                // On assigne les variables locales directement au JSON
+                json.sumAvence = sumAvance;
+                json.sumPaiement = sumPaiement;
+                json.totalSalaire = totalSalaire;
+                json.totalPrime = totalPrime;
+                json.totalDeduction = totalDeduction;
+                
+                // Calcul du reste
+                json.reste = (totalSalaire + totalPrime) - (sumAvance + sumPaiement + totalDeduction);
+            
+                return json;
+            }));
+            //========================================================================================
+            res.render('salaries', {salariersEnrichie})
         }else{
             res.redirect('/notFound')
         }
@@ -578,59 +729,92 @@ app.get('/salarier', protrctionRoot, authorise('admin', 'comptable'), async (req
         console.log(e)
         res.redirect('/notFound')
     }
-    // Personnel.findAll()
-        // .then(salariers =>{
-        //     //res.json(salariers)
-        //     res.render('salaries', {salariers: salariers})
-        // })
-        // .catch(err => console.log(err))
 })
 
 // la route vers le formulaire ajout des font des bars et club
 app.get('/formFondBarClub', protrctionRoot, authorise('admin','comptable','caissier', 'caissier central'), async (req, res) =>{
     let chambres = null;
-    if(req.query.type === 'bc'){
-        BarSimple.findAll({where: {is_active: true}})
-        .then(barss =>{
-            BarVip.findAll({where: {is_active: true}})
-                .then(barvs =>{
-                    CrazyClub.findAll({where: {is_active: true}})
-                        .then(crazys =>{
-                            Caisse.findAll({where: {is_active: true}})
-                                .then(caisses => {
-                                    res.render('fondBarClub', {barss: barss, chambres: chambres, barvs: barvs, crazys: crazys, caisses: caisses, msg: req.query.msg, type: req.query.type})
-                                })
-                                .catch(err => console.log(err))
-                        })
-                        .catch(err => console.log(err))
-                })
-                .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err))
-    }else if(req.query.type === 'cuisine'){
-        Cuisine.findAll({where: {is_active: true}})
-            .then(cuisines => {
-                res.render('fondBarClub', {cuisines: cuisines, chambres: chambres, msg: req.query.msg, type: req.query.type})
+    try{
+        if(req.query.type === 'bc'){
+            BarSimple.findAll({where: {is_active: true}})
+            .then(barss =>{
+                BarVip.findAll({where: {is_active: true}})
+                    .then(barvs =>{
+                        CrazyClub.findAll({where: {is_active: true}})
+                            .then(crazys =>{
+                                Caisse.findAll({where: {is_active: true}})
+                                    .then(caisses => {
+                                        res.render('fondBarClub', {barss: barss, chambres: chambres, barvs: barvs, crazys: crazys, caisses: caisses, msg: req.query.msg, type: req.query.type})
+                                    })
+                                    .catch(err => console.log(err))
+                            })
+                            .catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
             })
-            .catch(_ => console.log('erreure de selection all' + _))
-    }else if(req.query.type === 'mclose') {
-        const mcloses = await MaisonColse.findAll({where: {is_active: true}})
-        if(mcloses){
-            const chambre = await Chambre.findAll({where: {is_active: true}})
-            if(chambre){
-                res.render('fondBarClub', {mcloses: mcloses, chambres: chambre, msg: req.query.msg, type: req.query.type})
+            .catch(err => console.log(err))
+        }else if(req.query.type === 'cuisine'){
+            Cuisine.findAll({where: {is_active: true}})
+                .then(cuisines => {
+                    res.render('fondBarClub', {cuisines: cuisines, chambres: chambres, msg: req.query.msg, type: req.query.type})
+                })
+                .catch(_ => console.log('erreure de selection all' + _))
+        }else if(req.query.type === 'mclose') {
+            const mcloses = await MaisonColse.findAll({where: {is_active: true}})
+            if(mcloses){
+                const chambre = await Chambre.findAll({where: {is_active: true}})
+                const chambreEnrichie = await Promise.all(chambre.map(async (c) => {
+                        const json = c.toJSON();
+                        const chJ = await ChambreJournal.findAll({where: {is_active: true, id_chambre:c.id_chambre, id_mclose:c.id_mclose}})
+                        // console.log(`len ch ${c.nom}`, chJ.length) 
+                        const nbjour = chJ.length
+
+                        const montant_total = chJ.reduce(
+                            (somme,j)=> somme + Number(j.loyer || 0),
+                            0
+                        );
+
+                        const manquant_total = chJ.reduce(
+                            (somme,j)=> somme + Number(j.manquant || 0),
+                            0
+                        );
+
+                        json.dette_manuelle = manquant_total
+                        const ms = (nbjour * Number(c.loyer || 0)) - montant_total //Math.abs() => valeur absolu
+                        json.manquant_total_systeme = ms < 0 ? 0 : ms
+
+                        const histToday = await ChambreJournal.findAll({where: {is_active: true, id_chambre:c.id_chambre, date: new Date().toISOString().split('T')[0]}})
+                        // console.log('len', histToday.length) 
+                        if(histToday.length > 0){
+                            json.total = json.dette_manuelle
+                        }else{
+                            json.total = Math.max(Number(json.dette_manuelle || 0), Number(json.manquant_total_systeme || 0)) + Number(c.loyer || 0)
+                        }
+                        return json;
+                    })
+                )
+                // console.log('chambreEnrichie', chambreEnrichie)
+                if(chambre){
+                    res.render('fondBarClub', {mcloses: mcloses, chambres: chambreEnrichie, msg: req.query.msg, type: req.query.type})
+                }
             }
+        }else if(req.query.type === 'appart') {
+            const apparts = await Appartement.findAll({where: {is_active: true}})
+            if(apparts && apparts !== null){
+                res.render('fondBarClub', {apparts:apparts,chambres: chambres, msg: req.query.msg, type: req.query.type})
+            }
+        }else if(req.query.type === 'salonp'){
+            const salons = await SalonPrive.findAll({where: {is_active: true}})
+            res.render('fondBarClub', {msg: req.query.msg, type: req.query.type, salons,chambres: chambres})
         }
-    }else if(req.query.type === 'appart') {
-        const apparts = await Appartement.findAll({where: {is_active: true}})
-        if(apparts && apparts !== null){
-            res.render('fondBarClub', {apparts:apparts,chambres: chambres, msg: req.query.msg, type: req.query.type})
-        }
+    } catch (e) {
+        console.error(e);
+        res.redirect('/notFound');
     }
 })
 
 // route pour la caisse general one love
-app.get('/caisseOnelove', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+app.get('/caisseOnelove', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
     try {
         // Définition de l'expression de date pour Postgres
         const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
@@ -714,6 +898,7 @@ client.allClient(app);
 client.formAddClient(app);
 client.addClient(app);
 client.deleteClient(app);
+client.histOpClient(app);
 
 barSimple.allBarS(app);
 barSimple.oneBarS(app);
@@ -846,6 +1031,8 @@ histSortie.allHSortie(app);
 histSortie.addHSortie(app);
 histSortie.deleteHSortie(app);
 histSortie.updateHSortie(app);
+histSortie.allHAproCaisse(app);
+histSortie.allHAproGeneral(app);
 
 histEntrer.allHEntrer(app);
 histEntrer.addHEntrer(app);
@@ -881,6 +1068,9 @@ occupent.deleteOccupent(app);
 
 forgot.forgotPassword(app);
 forgot.resetPassword(app);
+forgot.resetPasswordForm(app);
+
+email.stockDown(app);
 
 depenseRoutes.addDepense(app);
 depenseRoutes.allDepense(app);
@@ -895,6 +1085,76 @@ categorieDepense.formAddCategorieDepense(app);
 categorieDepense.updateCategorieDepense(app);
 categorieDepense.deleteCategorieDepense(app);
 
+notification.allNotifNonLu(app);
+notification.marquerLu(app);
+notification.marquerNonLu(app);
+
+fournisseur.allFournisseur(app);
+fournisseur.addFournisseur(app);
+fournisseur.updateFournisseur(app);
+fournisseur.deleteFournisseur(app);
+
+inventaire.inventaire(app);
+inventaire.mackeInventaire(app);
+
+rapportJ.rapportJournalier(app);
+
+salonPrive.addSalon(app);
+salonPrive.allSalon(app);
+salonPrive.oneSalon(app);
+salonPrive.updateSalon(app);
+salonPrive.deleteSalon(app);
+
+journalSalonPrive.addSalonJournal(app);
+journalSalonPrive.deleteSalonJournal(app);
+
+creancier.addCreancier(app);
+creancier.allCreancier(app);
+creancier.oneCreancier(app);
+creancier.updateCreancier(app);
+creancier.deleteCreancier(app);
+
+journalCreancier.addCreanceJournal(app);
+journalCreancier.deleteCreanceJournal(app);
+journalCreancier.allCreanceJournal(app);
+
+journalEmprunt.addNewEmprunt(app);
+journalEmprunt.deleteEmpruntJournal(app);
+
+consommation.addConsommation(app);
+consommation.allConsommation(app);
+consommation.deleteConsommation(app);
+consommation.updateConsommation(app);
+
+collectFondSalonPrive.addSPJournal(app);
+collectFondSalonPrive.deleteSPJournal(app);
+collectFondSalonPrive.allSPJournal(app);
+
+salaire.addSalaire(app);
+salaire.allSalaire(app);
+salaire.deleteSalaire(app);
+salaire.formSalaireAndPaiement(app);
+salaire.updateSalaire(app);
+salaire.formOpSalaire(app);
+
+paiementSalaire.addPSalaire(app);
+paiementSalaire.deletePSalaire(app);
+
+avanceSalaire.addASalaire(app);
+avanceSalaire.deleteASalaire(app);
+
+sejourClient.addSejour(app);
+sejourClient.allSejour(app);
+sejourClient.updateSejour(app);
+sejourClient.deleteSejour(app);
+
+paiementSejour.addPaiementSejour(app);
+paiementSejour.allPaiementSejour(app);
+paiementSejour.deletePaiementSejour(app);
+
+rapport.rapportPeriodique(app);
+
+// const port = 8000;
 // app.listen(port, () => console.log('serveur en cour sur http://localhost:' + port));
 
 app.listen(port, () => {

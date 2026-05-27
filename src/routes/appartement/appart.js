@@ -10,12 +10,11 @@ allAppart = (app) => {
         })
             .then(appartements => {
                 const msg = "Liste recuperer avec succes"
-                //res.json({msg, data: appartements})
-                //console.log(appartements);
+
                 res.status(200).render('appart-list', {appartements: appartements, msg: req.query.msg, tc: req.query.tc});
             })
             .catch(_ => {
-                // console.log('erreure de selection all')
+                console.log('erreure de selection all')
                 res.redirect('/notFound');
             })
     })
@@ -31,12 +30,12 @@ oneAppart = (app) => {
             }
 
             // Définition de l'expression de mois pour réutilisation dans attributes et group
-            const moisExpr = fn('TO_CHAR', col('date_debut'), 'YYYY-MM');
+            const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM'); //date_debut
 
-            const all_appart_font = await AppartJournal.findAll({
+            const all_appart_font = await AppartFondJournal.findAll({
                 attributes: [ 
                     [moisExpr, "mois"], 
-                    [fn('SUM', col('loyer')), 'total_recette'],
+                    [fn('SUM', col('recette')), 'total_recette'], //loyer
                     // [col("Appartement.nom_appart"), "NomAppart"]
                 ],
                 where: { id_appart: req.params.id },
@@ -51,11 +50,6 @@ oneAppart = (app) => {
                 order: [[moisExpr, 'ASC']],
                 raw: true // Correction : 'raw' au lieu de 'row'
             });
-
-            // const history = await AppartFondJournal.findAll({
-            //     where: { id_appart: req.params.id },
-            //     order: [['date', 'DESC']] // Optionnel : trier l'historique
-            // });
 
             res.status(200).render('appart-detail', {
                 appartement: appartement, 
@@ -85,7 +79,6 @@ addAppart = (app) => {
             return res.redirect('/formAddAppart?msg=Un appartement portant ce nom existe deja.Pour eviter toute confusion, veuillez choisir un autre nom&tc=alert-warning');
         }
 
-        console.log(req.body);
         Appartement.create({
             nom_appart: nom,
             prix_appart: prix,
@@ -98,11 +91,10 @@ addAppart = (app) => {
             description: description
         })
             .then(appartement => {
-                console.log("Appartement " + req.body.nom + "a ete ajouter avec succes")
-                res.redirect('/allAppart?msg=ajout');
+                res.redirect(`/allAppart?msg=Appartement ${req.body.nom} a ete ajouter avec succes`);
             })
             .catch(_ => {
-                // console.log('erreure de ajout')
+                console.log('erreure de ajout')
                 res.redirect('/notFound');
             })
     })
@@ -120,8 +112,8 @@ formEditAppart = (app) =>{
                 res.status(200).render('edit-appart', {appartement: appartement})
             })
             .catch(_ => {
-                //console.log('erreure de selection');
-                 res.redirect('/notFound');})
+                console.log('erreure de selection');
+                res.redirect('/notFound');})
     })
 }
 
@@ -139,11 +131,10 @@ updateAppart = (app) => {
             where: {id_appart: req.params.id}
         })
             .then(_ => {
-                console.log("Modification de l'Appartement avec succes")
-                res.redirect('/allAppart?msg=modif');
+                res.redirect('/allAppart?msg=Modification de l\'Appartement avec succes&tc=alert-success');
             })
             .catch(_ => {
-                //console.log('erreure de modification' , _);
+                console.log('erreure de modification' , _);
                  res.redirect('/notFound');})
     })
 }
@@ -186,20 +177,6 @@ deleteAppart = (app) => {
             res.redirect('/notFound');
             return;
         }
-        // Appartement.findByPk(req.params.id)
-        //     .then(appartement => {
-        //         const appartDel = appartement;
-        //         Appartement.destroy({where: {id_appart: appartDel.id_appart}})
-        //             .then(_ => {
-        //                 const msg = "Suppression de l'Appartement avec succes"
-        //                 //res.json({msg})
-        //                 res.redirect('/allAppart?msg=sup');
-        //             })
-        //             .catch(_ => {
-        //                 //console.log('erreure de suppression')
-        //                 res.redirect('/notFound');
-        //             })
-        //     })
     })
 }
 

@@ -224,10 +224,10 @@
         pp.insertAdjacentHTML('beforeend',`
           <div class="card-body carousel-item ${index === 0? 'active' : ''}" id="p${index}">
             <div class="table-responsive">
-              <table id="" class="table m-0 randomTableColors customButtone align-middle">
+              <table id="" class="table m-0 text-center align-middle customButtone randomTableColors align-middle" data-export-subtitle="Tableau des recette des Deppartements de ONE LOVE">
                 <thead>
                   <tr>
-                    <th>Department</th>
+                    <th class="no-calc">Department</th>
                     <th class="mois">Jan</th>
                     <th class="mois">Feb</th>
                     <th class="mois">Mar</th>
@@ -271,7 +271,7 @@
           //console.log(exi)
           p.insertAdjacentHTML('beforeend',`
             <tr>
-              <td><span class="${class_colore[i]}">${dep[i]} ${anner}</span></td>
+              <td><span class="${class_colore[i % class_colore.length]}">${dep[i]} ${anner}</span></td>
               <td>${ref[0]}</td>
               <td>${ref[1]}</td>
               <td>${ref[2]}</td>
@@ -289,6 +289,29 @@
           `)
         }
       })
+
+            
+      setTimeout(() => {
+
+        const selector = ".customButtone";
+
+        $(selector).each(function () {
+
+            if ($.fn.DataTable.isDataTable(this)) {
+
+                $(this).DataTable().destroy();
+
+                // Nettoyage classes/styles DataTable
+                $(this).removeClass('dataTable');
+                $(this).css('width', '');
+
+            }
+
+        });
+
+        customButtone(selector);
+
+      }, 100);
     </script>
     <%- include('script')%>
   </body>

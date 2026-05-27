@@ -77,18 +77,18 @@
                       <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste du Personnels" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th aria-controls="basicExample">ID</th>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Poste occuper</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th aria-controls="basicExample" class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prenom</th>
+                            <th class="no-calc">Poste occuper</th>
+                            <th class="no-calc">Status</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                          <% i = 1; personnels.forEach(personnel => { %>
+                          <% personnels.forEach(personnel => { %>
                           <tr>
-                            <td><%= i %></td>
+                            <td><%= personnel.Personnel.slug_id %></td>
                             <td>
                                 <%= personnel.Personnel.nom %>
                             </td>
@@ -172,7 +172,7 @@
                                 </div>
                             </td>
                           </tr>
-                          <% i++ }) %>
+                          <%}) %>
                         </tbody>
                       </table>
                     </div>

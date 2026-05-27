@@ -1,5 +1,6 @@
-const {HistSortie} = require('../../db/sequelize')
-const {Produit, Emballage, sequelize} = require('../../db/sequelize')
+const { Op } = require('sequelize');
+const {HistSortie, HistEntrer} = require('../../db/sequelize')
+const {Produit, Emballage, sequelize, Caisse, Personnel, Fournisseur} = require('../../db/sequelize')
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 allHSortie = (app) => {
     app.get('/allHSortie', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
@@ -14,6 +15,131 @@ allHSortie = (app) => {
                 res.redirect('/notFound');
                 return; // On stoppe tout ici !
             })
+    })
+}
+
+allHAproCaisse = (app) => {
+    app.get('/allHAproCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier'), async (req, res) => {
+        try{
+            const id = req.params.id
+            //toute les caisse ou le caissier est asigner
+            const caisses = await Caisse.findAll({
+                include: [{
+                    model: Personnel,
+                    required: true,
+                    where: { is_active: true },
+                    through: { attributes: ['id_personnel', 'id_caisse'], where: { is_active: true, id_personnel: id }  } 
+                }],
+                where: { is_active: true },
+                order: [['id_caisse', 'DESC']]
+            });
+
+            const allCaisseId = caisses.map(caisse => caisse.id_caisse)
+
+            const allHists = await HistSortie.findAll({
+                where: { is_active: true, id_caisse:{[Op.in]: allCaisseId} },
+            })
+
+            //enrichisssement
+
+            const apros = await Promise.all(allHists.map(async (a) => {
+                const json = a.toJSON();
+                
+                let article
+
+                if(a.type === 'produit'){
+                    article = await Produit.findOne({
+                        where: { is_active: true, id_produit: a.id_probal }
+                    });
+                }else{
+                    article = await Emballage.findOne({
+                        where: { is_active: true, id_emballage: a.id_probal }
+                    });
+                }
+                
+                json.article = article
+            
+                return json;
+            }));
+
+            res.status(200).render('histApro' , {msg: req.query.msg, tc: req.query.tc, apros})
+
+        } catch (err) {
+            console.error("Erreur dans l'envois des historique d'approvisionnement de la caisse:", err);
+            res.redirect('/notFound');
+        }
+    })
+}
+
+allHAproGeneral = (app) => {
+    app.get('/allHAproGeneral', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
+        try{
+            const allHistSs = await HistSortie.findAll({
+                where: { is_active: true},
+            })
+
+            const allHistEs = await HistEntrer.findAll({
+                where: { is_active: true},
+            })
+
+            //enrichisssement
+
+            const aprosS = await Promise.all(allHistSs.map(async (a) => {
+                const json = a.toJSON();
+                
+                let article
+
+                if(a.type === 'produit'){
+                    article = await Produit.findOne({
+                        where: { is_active: true, id_produit: a.id_probal }
+                    });
+                }else{
+                    article = await Emballage.findOne({
+                        where: { is_active: true, id_emballage: a.id_probal }
+                    });
+                }
+
+                const caisse = await Caisse.findOne({
+                    where: { is_active: true }
+                });
+                
+                json.article = article
+                json.caisse = caisse
+            
+                return json;
+            }));
+
+            const aprosE = await Promise.all(allHistEs.map(async (a) => {
+                const json = a.toJSON();
+                
+                let article
+
+                if(a.type === 'produit'){
+                    article = await Produit.findOne({
+                        where: { is_active: true, id_produit: a.id_probal }
+                    });
+                }else{
+                    article = await Emballage.findOne({
+                        where: { is_active: true, id_emballage: a.id_probal }
+                    });
+                }
+
+                const fournisseur = await Fournisseur.findOne({
+                    where: { is_active: true, id_fournisseur: a.id_fournisseur }
+                });
+                
+                json.article = article
+                json.fournisseur = fournisseur
+            
+                return json;
+            }));
+
+            res.status(200).render('histAproGeneral' , {msg: req.query.msg, tc: req.query.tc, aprosS, aprosE})
+
+        } catch (err) {
+            console.error("Erreur dans l'envois des historique d'approvisionnement de la caisse:", err);
+            res.redirect('/notFound');
+        }
     })
 }
 
@@ -195,5 +321,7 @@ module.exports = {
     allHSortie,
     addHSortie,
     deleteHSortie,
-    updateHSortie
+    updateHSortie,
+    allHAproCaisse,
+    allHAproGeneral
 }

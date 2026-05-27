@@ -77,19 +77,19 @@
                       <table class="table customButtone truncate m-0 align-middle" data-export-subtitle="Liste des emballages">
                         <thead>
                           <tr class="text-center">
-                            <th>ID</th>
-                            <th>Nom de l'emballage</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom de l'emballage</th>
                             <th>Quantiter</th>
-                            <th>seuil de rappel</th>
-                            <th>Categorie</th>
-                            <th>Description</th>
-                            <th>Actions</th>
+                            <th class="no-calc">seuil de rappel</th>
+                            <th class="no-calc">Categorie</th>
+                            <th class="no-calc">Description</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <% emballages.forEach((emballage, index) => {const matricule = String(index + 1).padStart(4, "0"); %> 
+                          <% emballages.forEach((emballage, index) => { %> 
                           <tr class="text-center">
-                            <td><%= matricule %></td>
+                            <td><%= emballage.slug_id %></td>
                             <td>
                               <%= emballage.nom %>
                             </td>
@@ -139,11 +139,6 @@
                                         </div>
                                       </div>
                                   <!-- Card ends -->
-                                
-                                <!-- <a href="edit-doctors.html" class="btn btn-outline-success btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Doctor Details">
-                                  <i class="ri-edit-box-line"></i>
-                                </a> -->
                                 <!-- ----------------------------------------------------------------------------------- -->
                                 <!-- Card starts -->
                                 <!-- Button trigger modal -->
@@ -170,13 +165,13 @@
                                               <h6 class="m-0">Details d'emballage</h6>
                                             </div>
                                           </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                             <div class="mb-3">
                                               <label class="form-label" for="a1">Nom de l'emballage<span class="text-danger">*</span></label>
                                               <input type="text" class="form-control" id="a1" value="<%= emballage.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
                                             </div>
                                           </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                             <div class="mb-3">
                                               <label class="form-label" for="a2">Categorie<span class="text-danger">*</span></label>
                                               <select class="form-select" id="dep" name="categ">
@@ -188,13 +183,13 @@
                                               </select>
                                             </div>
                                           </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                             <div class="mb-3">
                                               <label class="form-label" for="a1">Seuil de rappel<span class="text-danger">*</span></label>
                                               <input type="text" class="form-control" id="a1" value="<%= emballage.seuil %>" placeholder="Entrer le nouveau nom" name="seuil" required>
                                             </div>
                                           </div>
-                                          <div class="col-sm-12">
+                                          <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                             <div class="mb-3">
                                               <label class="form-label" for="a8">Description <span class="text-danger">*</span></label>
                                               <textarea class="form-control" id="a8" rows="2" name="desc"><%= emballage.description %></textarea>
@@ -211,7 +206,7 @@
                                       </div>
                                     </div>
                                   <!-- </form> -->
-                                  </div>
+                                </div>
                                 </div>
                                   <!-- Card ends -->
                                 <!-- ----------------------------------------------------------------------------------- -->
@@ -220,10 +215,6 @@
                                   <i class="ri-eye-line"></i>
                                 </a>
                                 <!-- -------------------------------------------------------------------------------------------------- -->
-                                <!-- <a href="doctors-profile.html" class="btn btn-outline-info btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Augmenter le nombre en stock">
-                                  <i class="ri-file-reduce-line"></i>
-                                </a> -->
                                 <!-- Card starts -->
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
@@ -243,7 +234,7 @@
                                       </div>
                                       <div class="modal-body">
                                         <!-- Row starts -->
-                                        <% if (emballage.quantiter >= 1){ %>
+                                        <% if (emballage.quantiter >= 1){ if(caisses.length > 0){%>
                                         <form action="/addHSortie/<%= emballage.id_emballage %>?art=emballage" method="post">
                                         <div class="row gx-3">
                                           <div class="col-sm-12">
@@ -252,13 +243,13 @@
                                             </div>
                                           </div>
                                           
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
+                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                             <div class="mb-3">
                                               <label class="form-label" for="a1">Quantiter/Nombre a retirer<span class="text-danger">*</span></label>
                                               <input type="number" min="1"  max="<%= emballage.quantiter %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
                                             </div>
                                           </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6"> 
+                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> 
                                             <div class="mb-3">
                                               <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
                                               <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
@@ -289,28 +280,27 @@
                                             Annuler
                                           </button>
                                           <button type="submit" class="btn btn-danger">Confirmer le retrait</button>
-                                          </form>
-                                          <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                            Confirmer le retrait
-                                          </button> -->
-                                        </div>
+                                        </form>
+                                        <% } else { %>
+                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                                            <b>Imposssible </b> de diminuer le stock ! <br>
+                                            Actuellement Aucune caisse n'est enregistrer . <br>
+                                            <a href="/formAddCaisse">Enregistrer une Caisse</a> et réessayer.
+                                          </div>
+                                        <% } %>
                                         <% } else { %>
                                           <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
                                             <b>Imposssible </b> de diminuer le stock ! <br>
                                             Actuellement le stock est a <b>0</b> .
                                           </div>
                                         <% } %>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                                 <!-- Card ends -->
                               </div>
                                 <!-- -------------------------------------------------------------------------------------------------- -->
-                                <!-- <a href="doctors-profile.html" class="btn btn-outline-info btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reduire le nombre en stock">
-                                  <i class="ri-file-add-line"></i>
-                                </a> -->
-
                                 <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
                                   data-bs-target="#<%= emballage.id_emballage %>exampleModalCenter<%= emballage.id_emballage %>" data-bs-title="Di minuer le nombre en stock">
                                   <i class="ri-file-add-line"></i>
@@ -328,55 +318,65 @@
                                       </div>
                                       <div class="modal-body">
                                         <!-- Row starts -->
-                                        <form action="/addHEntrer/<%= emballage.id_emballage %>?art=emballage" method="post">
-                                        <div class="row gx-3">
-                                          <div class="col-sm-12">
-                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                              <h6 class="m-0">Details de l'ajout</h6>
+                                        <% if(fournisseurs.length > 0){ %>
+                                          <form action="/addHEntrer/<%= emballage.id_emballage %>?art=emballage" method="post">
+                                          <div class="row gx-3">
+                                            <div class="col-sm-12">
+                                              <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                                                <h6 class="m-0">Details de l'ajout</h6>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
-                                              <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
+                                                <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                              <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                                                <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div class="col-sm-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a8">Nom de l'émetteur<span class="text-danger">*</span></label>
-                                              <textarea class="form-control" id="a8" placeholder="Ajouter le nom l'entité ou de la personne et qui ou d'où vien l'emballage " rows="2" name="dest" required></textarea>
+                                            <!-- <div class="col-sm-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a8">Nom de l'émetteur<span class="text-danger">*</span></label>
+                                                <textarea class="form-control" id="a8" placeholder="Ajouter le nom l'entité ou de la personne et qui ou d'où vien l'emballage " rows="2" name="dest" required></textarea>
+                                              </div>
+                                            </div> -->
+                                            <div class="col-sm-12">
+                                              <div class="mb-3">
+                                                <label class="form-label" for="a8">Choisisez le Fournisseur<span class="text-danger">*</span></label>
+                                                <select name="fournisseur" class="form-select" id="">
+                                                  <option disabled value="" selected>choisir un Fournisseur</option>
+                                                  <% if(fournisseurs.length > 0){ fournisseurs.forEach(f => {%>
+                                                    <option value="<%= f.id_fournisseur %>" ><%= f.nom %> (<%= f.pseudo %>)</option>
+                                                  <% }) }%>
+                                                </select>
+                                              </div>
                                             </div>
+                                            <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
+                                            <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
                                           </div>
-                                          <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
-                                          <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
-                                      </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                          Annuler
-                                        </button>
-                                        <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
-                                      </form>
-                                        <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                          Confirmer l'ajout
-                                        </button> -->
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                              Annuler
+                                            </button>
+                                            <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
+                                          </form>
+                                        <% } else { %>
+                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                                            <b>Imposssible </b> de faire l'approvisionnement ! <br>
+                                            Actuellement aucun fournisseur n'est enregistrer. <br>
+                                            <a href="/fournisseur#formAddFournisseur">Enregistrer un Fournisseur</a> et réessayer.
+                                          </div>
+                                        <% } %>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                                 <!-- ----------------------------------------------------------------------------------- -->
-                                <!-- <div class="icons">
-                                  <i class="ri-file-reduce-line"></i>
-                                </div>
-                                <div class="icons">
-                                  <i class="ri-file-add-line"></i>
-                                </div> -->
                               </div>
                             </td>
                           </tr>

@@ -22,8 +22,12 @@ allSanction = (app) => {
 
 formAddSamction = (app) =>{
     app.get('/formAddSamction/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) =>{
-        console.log(req.params.id)
-        res.status(200).render('add-sanction', {id: req.params.id})
+        try{
+            res.status(200).render('add-sanction', {id: req.params.id})
+        } catch (error) {
+            console.error(error);
+            res.redirect('/notFound');
+        }
     })
 }
 
@@ -53,7 +57,6 @@ addSanction = (app) => {
                     where:{id_personnel: personnel.id_personnel}
                 })
                     .then(occupe => {
-                        console.log(occupe)
                         Sanction.create({
                             motif: motif,
                             description: desc,

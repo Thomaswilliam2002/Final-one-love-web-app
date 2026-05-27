@@ -1,351 +1,317 @@
-<!-- Sidebar wrapper starts -->
 <nav id="sidebar" class="sidebar-wrapper">
 
-  <!-- Sidebar profile starts -->
+  <style>
+    .menu-section {
+      padding: 14px 18px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .sidebar-menu i {
+      margin-right: 10px;
+      font-size: 18px;
+      min-width: 20px;
+    }
+  </style>
+
   <div class="sidebar-profile">
     <div class="m-0">
       <h5 class="mb-1 profile-name text-nowrap text-truncate"><%= user.Personnel.nom %></h5>
       <p class="m-0 small profile-name text-nowrap text-truncate"><%= user.Personnel.prenom %></p>
     </div>
   </div>
-  <!-- Sidebar profile ends -->
-
-  <!-- Sidebar menu starts -->
   <div class="sidebarMenuScroll">
     <ul class="sidebar-menu">
+
+      <li class="menu-section">Dashboard & Analyses</li>
+
       <li class="items">
         <a href="/index">
-          <i class="ri-home-6-line"></i>
+          <i class="ri-dashboard-3-line" style="color:#4F46E5"></i>
           <span class="menu-text">Dashboard</span>
         </a>
       </li>
-      <li class="items">
-        <a href="/recap">
-          <i class="ri-file-list-3-line"></i>
-          <span class="menu-text">Récapitulatifs journalié</span>
-        </a>
-      </li>
-      <!-- -------------------------------------------------------------------- -->
+
       <li class="items">
         <a href="/stats/recette">
-          <i class="bi bi-bar-chart-line"></i>
-          <span class="menu-text">recette-dashboard</span>
+          <i class="ri-line-chart-line" style="color:#2563EB"></i>
+          <span class="menu-text">Recette Dashboard</span>
         </a>
       </li>
-      <!---------------------------------------------------------------------->
+
       <li class="treeview items">
-        <a href="#!">
-          <i class="ri-home-5-line"></i>
-          <span class="menu-text">Appartement</span>
+        <a href="#">
+          <i class="ri-file-chart-line" style="color:#0EA5E9"></i>
+          <span class="menu-text">Rapport & Inventaire</span>
         </a>
         <ul class="treeview-menu">
-          <!--<li>
-            <a href="doctor-dashboard.html">Doctors Dashboard</a>
-          </li>-->
-          <li>
-            <a href="/allAppart">Liste des Appartement</a>
-          </li>
-          <li>
-            <a href="/formAddAppart">Ajouter un Appartement</a>
-          </li>
-          <li>
-            <a href="/allClient">Liste des Client</a>
-          </li>
-          <li>
-            <a href="/formAddClient">Ajouter un Client</a>
-          </li>
+          <!-- <li><a href="/rapportPeriodique">Rapport</a></li> -->
+          <li><a href="/inventaire">Inventaire</a></li>
         </ul>
       </li>
-      <!---------------------------------------------------------------------->
-      <li class="items">
-        <a href="/allBarClub">
-          <i class="bi bi-fire" style = "color: red"></i>
-          <span class="menu-text">Bars/Crazy Club</span>
-        </a>
-      </li>
-      <li class="items">
-        <a href="/allMClose">
-          <i class="ri-home-smile-2-line"></i>
-          <span class="menu-text">Maison Close</span>
-        </a>
-      </li>
-      <!---------------------------------------------------------------------->
-      <li class="treeview items">
-        <a href="#!">
-          <i class="ri-nurse-line"></i>
-          <span class="menu-text">Personnels One Love</span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="/allPersonnel?allType=pas_admin">Liste du personnels</a>
-          </li>
-          <li>
-            <a href="/formAddPersonnel?indice=admin">Ajouter un Personnel</a>
-          </li>
-          <li>
-            <a href="/formAddAdmin">Ajouter un admin</a>
-          </li>
-        </ul>
-      </li>
-      <!---------------------------------------------------------------------->
-      <!-- <li class="treeview items">
-        <a href="#!">
-          <i class="ri-nurse-line"></i>
-          <span class="menu-text">Admins One Love</span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="/allPersonnel?allType=admin">Liste des admins</a>
-          </li>
-          <li>
-            <a href="/formAddAdmin">Ajouter un admin</a>
-          </li>
-        </ul>
-      </li> -->
-      <!---------------------------------------------------------------------->
-      <li class="treeview items">
-        <a href="#!">
-          <i class="ri-coins-line"></i>
-          <span class="menu-text">Caisse/Comptabilités</span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="/caisseOnelove">Caisse One Love</a>
-          </li>
-          <li>
-            <a href="/caisseBareSimple">Caisse Bar Simple</a>
-          </li>
-          <li>
-            <a href="/caisseBareVip">Caisse Bar Vip</a>
-          </li>
-          <li>
-            <a href="/caisseCClub">Caisse Crazy Club</a>
-          </li>
-          <li>
-            <a href="/caisseAppart">Caisse Appartement</a>
-          </li>
-          <li>
-            <a href="/caisseMClose">Caisse Maison close</a>
-          </li>
-          <li>
-            <a href="/caisseCuisine">Caisse Cuisine</a>
-          </li>
-          <li>
-            <a href="/allCaisse">Listes des Caisses</a>
-          </li>
-          <li>
-            <a href="/formAddCaisse">Ajouter une Caisse</a>
-          </li>
-        </ul>
-      </li>
-      <!-- -------------------------------------------------------------------- -->
+
       <li class="items">
         <a href="/allCaisseContent">
-          <i class="ri-file-list-3-line"></i>
+          <i class="ri-archive-drawer-line" style="color:#0891B2"></i>
           <span class="menu-text">Inventaire des Caisses</span>
         </a>
       </li>
-      <!---------------------------------------------------------------------->
+
       <li class="treeview items">
-        <a href="#!">
-          <i class="ri-coins-line"></i>
-          <span class="menu-text">Dépense one Love</span>
+        <a href="#">
+          <i class="ri-history-line" style="color:#0284C7"></i>
+          <span class="menu-text">Historique des Collectes</span>
         </a>
         <ul class="treeview-menu">
-          <li>
-            <a href="/allDepense">Liste et Ajouter de dépense</a>
-          </li>
-          <li>
-            <a href="/allCategorieDepense">Liste et ajout de Catégorie de dépense</a>
-          </li>
+          <li><a href="/allBSJournal?indice=admin">Bar Simple</a></li>
+          <li><a href="/allBVJournal?indice=admin">Bar Vip</a></li>
+          <li><a href="/allCCJournal?indice=admin">Club</a></li>
+          <li><a href="/appartFondJournal?indice=admin">Appartement</a></li>
+          <li><a href="/allChJournal?indice=admin">Maison close</a></li>
+          <li><a href="/allCuJournal?indice=admin">Cuisine</a></li>
+          <li><a href="/allSPJournal?indice=admin">Salon Privé</a></li>
         </ul>
       </li>
-      <!---------------------------------------------------------------------->
-      <!---------------------------------------------------------------------->
-      <li class="treeview items">
-        <a href="#!">
-          <i class="ri-file-list-3-line"></i>
-          <span class="menu-text">Historique des Collecte</span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="/allBSJournal?indice=admin">Bar Simple</a>
-          </li>
-          <li>
-            <a href="/allBVJournal?indice=admin">Bar Vip</a>
-          </li>
-          <li>
-            <a href="/allCCJournal?indice=admin">Club</a>
-          </li>
-          <li>
-            <a href="/appartFondJournal?indice=admin">Appartement</a>
-          </li>
-          <li>
-            <a href="/allChJournal?indice=admin">Maison close</a>
-          </li>
-          <li>
-            <a href="/allCuJournal?indice=admin">Cuisine</a>
-          </li>
-        </ul>
-      </li>
-      <!---------------------------------------------------------------------->
+
       <li class="items">
-        <a href="/presence">
-          <i class="bi bi-person-exclamation"></i>
-          <span class="menu-text">Presence(pointage)</span>
-        </a>
-      </li>
-      <!---------------------------------------------------------------------->
-      <!---------------------------------------------------------------------->
-      <li class="items">
-        <!-- ns : non staff -->
         <a href="/allHistCaisse">
-          <i class="ri-file-list-3-line"></i>
-          <span class="menu-text">Historique des Produits/Emballages vendue</span>
+          <i class="ri-bar-chart-box-line" style="color:#0369A1"></i>
+          <span class="menu-text">Historique Produits vendus</span>
         </a>
       </li>
-      <!---------------------------------------------------------------------->
-      <!-- <li class="items">
-        <a href="/allPresence">
-          <i class="ri-home-6-line"></i>
-          <span class="menu-text">Historique de presence</span>
-        </a>
-      </li> -->
-      <!---------------------------------------------------------------------->
-      <!-- <li class="items">
-        <a href="/allAbsence">
-          <i class="ri-home-6-line"></i>
-          <span class="menu-text">Historique des Absence</span>
-        </a>
-      </li> -->
-      <!---------------------------------------------------------------------->
-      <!-- <li class="treeview items">
-        <a href="#!">
-          <i class="ri-secure-payment-line"></i>
-          <span class="menu-text">Accounts</span>
+
+
+      <li class="menu-section">Exploitation & Activités</li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-hand-coin-line" style="color:#14B8A6"></i>
+          <span class="menu-text">Collecte des Fonds</span>
         </a>
         <ul class="treeview-menu">
-          <li>
-            <a href="income.html">Income</a>
-          </li>
-          <li>
-            <a href="create-invoice.html">Create Invoice</a>
-          </li>
+          <li><a href="/formFondBarClub?type=bc">Bar/Club</a></li>
+          <li><a href="/formFondBarClub?type=cuisine">Cuisine</a></li>
+          <li><a href="/formFondBarClub?type=appart">Appartement</a></li>
+          <li><a href="/formFondBarClub?type=mclose">Maison close</a></li>
+          <li><a href="/formFondBarClub?type=salonp">Salon Privé</a></li>
         </ul>
-      </li> -->
-      <!---------------------------------------------------------------------->
+      </li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-building-2-line" style="color:#10B981"></i>
+          <span class="menu-text">Appartement</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/allAppart">Liste des Appartement</a></li>
+          <li><a href="/formAddAppart">Ajouter un Appartement</a></li>
+          <li><a href="/allClient">Liste des Client</a></li>
+          <li><a href="/formAddClient">Ajouter un Client & séjour & Paiement</a></li>
+          <li><a href="/histOpClient">Historique des transactioon</a>
+        </ul>
+      </li>
+
       <li class="items">
-        <a href="/salarier">
-          <i class="ri-money-dollar-circle-line"></i>
-          <span class="menu-text">Liste des salarier</span>
+        <a href="/allBarClub">
+          <i class="ri-goblet-line" style="color:#EF4444"></i>
+          <span class="menu-text">Bars/Crazy Club</span>
         </a>
       </li>
-      <!-- <li class="treeview items">
-        <a href="#!">
-          <i class="ri-money-dollar-circle-line"></i>
-          <span class="menu-text">Salaries</span>
+
+      <li class="items">
+        <a href="/allSalon">
+          <i class="ri-vip-crown-2-line" style="color:#8B5CF6"></i>
+          <span class="menu-text">Salon Privé</span>
         </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="/salarier">Liste des salarier</a>
-          </li>
-          <li>
-            <a href="payslip.html">Payslip</a>
-          </li>
-        </ul>
-      </li> -->
-      <!---------------------------------------------------------------------->
-      <li class="treeview">
-        <a href="#!">
-          <i class="ri-restaurant-line"></i>
+      </li>
+
+      <li class="items">
+        <a href="/allMClose">
+          <i class="ri-hotel-bed-line" style="color:#F97316"></i>
+          <span class="menu-text">Maison Close</span>
+        </a>
+      </li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-restaurant-2-line" style="color:#F59E0B"></i>
           <span class="menu-text">Cuisine</span>
         </a>
         <ul class="treeview-menu">
-          <li>
-            <a href="/allCuisine">List des Cuisine</a>
-          </li>
-          <li>
-            <a href="/formAddCuisine">Ajouter une Cuisine</a>
-          </li>
+          <li><a href="/allCuisine">Liste des Cuisine</a></li>
+          <li><a href="/formAddCuisine">Ajouter une Cuisine</a></li>
         </ul>
       </li>
-      <!---------------------------------------------------------------------->
+
+
+      <li class="menu-section">Finance & Comptabilité</li>
+
       <li class="treeview items">
-        <a href="#!">
-          <i class="ri-stock-line"></i>
-          <span class="menu-text">Stock/Magasin</span>
+        <a href="#">
+          <i class="ri-wallet-3-line" style="color:#D97706"></i>
+          <span class="menu-text">Caisse / Comptabilités</span>
         </a>
         <ul class="treeview-menu">
-          <li>
-            <a href="/allProduit">List des Produits</a>
-          </li>
-          <li>
-            <a href="/allEmballage">List des Emballage</a>
-          </li>
-          <li>
-            <a href="/formAddProduit">Ajouter un Produit</a>
-          </li>
-          <li>
-            <a href="/formAddEmballage">Ajouter un Emballage</a>
-          </li>
-          <li>
-            <a href="/allCateg">Categorie d'article</a>
-          </li>
+          <li><a href="/caisseOnelove">Caisse One Love</a></li>
+          <li><a href="/caisseBareSimple">Caisse Bar Simple</a></li>
+          <li><a href="/caisseBareVip">Caisse Bar Vip</a></li>
+          <li><a href="/caisseCClub">Caisse Crazy Club</a></li>
+          <li><a href="/caisseAppart">Caisse Appartement</a></li>
+          <li><a href="/caisseMClose">Caisse Maison close</a></li>
+          <li><a href="/caisseCuisine">Caisse Cuisine</a></li>
+          <li><a href="/allCaisse">Liste des Caisses</a></li>
+          <li><a href="/formAddCaisse">Ajouter une Caisse</a></li>
         </ul>
       </li>
-      <!---------------------------------------------------------------------->
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-money-dollar-circle-line" style="color:#16A34A"></i>
+          <span class="menu-text">Dépenses One Love</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/allDepense">Liste et Ajouter de dépense</a></li>
+          <li><a href="/allCategorieDepense">Catégorie de dépense</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-safe-2-line" style="color:#DC2626"></i>
+          <span class="menu-text">Epargne One Love (Tontine)</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/allCreancier">Liste et Ajouter de Créancier</a></li>
+          <li><a href="/allCreanceJournal">Transaction de Créance</a></li>
+        </ul>
+      </li>
+<!-- ri-disc-line -->
       <li class="items">
-        <a href="/allPoste">
-          <i class="ri-user-add-line"></i>
-          <span class="menu-text">Poste</span>
+        <a href="/allConsommation">
+          <i class="ri-shopping-cart-2-line" style="color:#F97316"></i>
+          <span class="menu-text">Consommation</span>
         </a>
       </li>
+<!-- 
+      <li class="items">
+        <a href="/salarier">
+          <i class="ri-bank-card-line" style="color:#15803D"></i>
+          <span class="menu-text">Liste des Salariés</span>
+        </a>
+      </li> -->
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-bank-card-line" style="color:#15803D"></i>
+          <span class="menu-text">Gestion des Salaires</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/salarier">Liste des Salariés</a></li>
+          <li><a href="/formSalaireAndPaiement">Salaires & Paiement & Avance</a></li>
+          <li><a href="/allSalaire">Historique des transaction salariales</a></li>
+        </ul>
+      </li>
+
       <li class="items">
         <a href="/proforma">
-          <i class="ri-draft-line"></i>
+          <i class="ri-file-paper-2-line" style="color:#CA8A04"></i>
           <span class="menu-text">Facture Proforma</span>
         </a>
       </li>
+
       <li class="items">
         <a href="/fichePaie">
-          <i class="ri-draft-line"></i>
+          <i class="ri-receipt-line" style="color:#A16207"></i>
           <span class="menu-text">Fiche de paie</span>
         </a>
       </li>
-      <li class="items">
-        <a href="/Add">
-          <i class="ri-add-fill"></i>
-          <span class="menu-text">Autre Ajout</span>
-        </a>
-      </li>
-      <!---------------------------------------------------------------------->
+
+
+      <li class="menu-section">Ressources Humaines</li>
+
       <li class="treeview items">
-        <a href="#!">
-          <i class="ri-settings-5-line"></i>
-          <span class="menu-text">Parametre</span>
+        <a href="#">
+          <i class="ri-team-line" style="color:#8B5CF6"></i>
+          <span class="menu-text">Personnels One Love</span>
         </a>
         <ul class="treeview-menu">
-          <!-- <li>
-            <a href="/login">Connexion</a>
-          </li>
-          <li>
-            <a href="/inscription">Inscription</a>
-          </li> -->
-          <li> 
-            <a href="/deconnexion">Deconnexion</a>
-          </li>
-          <li>
-            <a href="/forgot">Mot de pass oublier</a>
-          </li>
-          <li>
-            <a href="/reset">réinitialiser le mot de pass</a>
-          </li>
+          <li><a href="/allPersonnel?allType=pas_admin">Liste du personnels</a></li>
+          <li><a href="/formAddPersonnel?indice=admin">Ajouter un Personnel</a></li>
+          <li><a href="/formAddAdmin">Ajouter un admin</a></li>
         </ul>
       </li>
-      <!---------------------------------------------------------------------->
+
+      <li class="items">
+        <a href="/presence">
+          <i class="ri-user-follow-line" style="color:#A855F7"></i>
+          <span class="menu-text">Présence (Pointage)</span>
+        </a>
+      </li>
+
+      <li class="items">
+        <a href="/allPoste">
+          <i class="ri-briefcase-line" style="color:#7C3AED"></i>
+          <span class="menu-text">Postes</span>
+        </a>
+      </li>
+
+
+      <li class="menu-section">Stock & Fournisseurs</li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-store-2-line" style="color:#0F766E"></i>
+          <span class="menu-text">Stock / Magasin</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/allProduit">Liste des Produits</a></li>
+          <li><a href="/allEmballage">Liste des Emballages</a></li>
+          <li><a href="/formAddProduit">Ajouter un Produit</a></li>
+          <li><a href="/formAddEmballage">Ajouter un Emballage</a></li>
+          <li><a href="/allCateg">Catégorie d'article</a></li>
+        </ul>
+      </li>
+
+      <li class="items">
+        <a href="/allHAproGeneral">
+          <i class="ri-file-list-3-line" style="color:#0EA5E9"></i>
+          <span class="menu-text">Historique des Aprovisionnements</span>
+        </a>
+      </li>
+
+      <li class="items">
+        <a href="/allFournisseur">
+          <i class="ri-truck-line" style="color:#0D9488"></i>
+          <span class="menu-text">Fournisseurs</span>
+        </a>
+      </li>
+
+      <li class="items">
+        <a href="/Add">
+          <i class="ri-add-circle-line" style="color:#14B8A6"></i>
+          <span class="menu-text">Autres Ajouts</span>
+        </a>
+      </li>
+
+
+      <li class="menu-section">Paramètres</li>
+
+      <li class="treeview items">
+        <a href="#">
+          <i class="ri-settings-4-line" style="color:#64748B"></i>
+          <span class="menu-text">Paramètres</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/deconnexion">Déconnexion</a></li>
+          <li><a href="/forgot">Mot de passe oublié</a></li>
+          <li><a href="/reset">Réinitialiser mot de passe</a></li>
+        </ul>
+      </li>
+
+    </ul>
   </div>
-  
 
 </nav>
-<!-- Sidebar wrapper ends -->
-

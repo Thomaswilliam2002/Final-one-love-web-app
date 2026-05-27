@@ -39,7 +39,12 @@
           <!-- =---------------------------------------------------------------------- -->
           <!-- App body starts -->
           <div class="app-body">
-
+            <% if(msg) {%>
+              <div class="alert border alert-dismissible fade show <%= tc %>" role="alert">
+                <%= msg %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% }%>
             <!-- Row starts -->
             <div class="row gx-3">
               <div class="col-sm-12">
@@ -76,7 +81,53 @@
                       </div>
                       <div class="col-xxl-3 col-lg-4 col-sm-6">
                         <div class="mb-3">
-                          <label class="form-label" for="a1">Loyer <span class="text-danger">*</span></label>
+                          <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
+                          <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter le Client</button>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <br>
+
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Ajouter un nouveau séjour a un Client</h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addSejour" method="post" id="" name=""> 
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details du Séjour</h6>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <label class="form-label fw-bold">Client <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select name="id_client" class="form-select" required>
+                                <% if(allClients && allClients.length > 0){ allClients.forEach(p => { %>
+                                    <option value="<%= p.id_client %>"><%= p.nom_client %> <%= p.prenom_client %></option>
+                                <% })} else { %>
+                                    <option value="" disabled selected>Aucun Client disponible</option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Prix nuitée <span class="text-danger">*</span></label>
                           <input type="number" min="0" step="0.01" class="form-control" id="a1" name="loyer" placeholder="Entrer le montant" required>
                         </div>
                       </div>
@@ -101,8 +152,72 @@
                       </div>
                       <div class="col-xxl-3 col-lg-4 col-sm-6">
                         <div class="mb-3">
+                          <label class="form-label" for="a2">Date arrivée <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" name="date_debut" placeholder="Entrer la date" required>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">Date départ prévu <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" name="date_fin_prevue" placeholder="Entrer la date" required>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">Date départ réel <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" name="date_fin_reel" placeholder="Entrer la date" >
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
                           <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" id="a2" name="commentaire" placeholder="Entrer un commentaire" >
+                          <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter le Séjour</button>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <br>
+
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Procédé au paiement du séjour d'un client</h5>
+                  </div>
+                  <div class="card-body">
+                    <form action="/addPaiementSejour" method="post" id="" name=""> 
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details du Paiement</h6>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <label class="form-label fw-bold">Client <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select name="id_journal" class="form-select" required>
+                                <% if(allSejours && allSejours.length > 0){ allSejours.forEach(p => { %>
+                                    <option value="<%= p.id_journal %>">Séjour du <%= p.date_debut %> au <%= p?.date_fin_reel ? p?.date_fin_reel : p?.date_fin  %> du client <%= p.Client.nom_client %> <%= p.Client.prenom_client %></option>
+                                <% })} else { %>
+                                    <option value="" disabled selected>Aucun séjour disponible</option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Montant <span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" class="form-control" id="a1" name="montant" placeholder="Entrer le montant" required>
                         </div>
                       </div>
                       <div class="col-xxl-3 col-lg-4 col-sm-6">
@@ -111,9 +226,21 @@
                           <input type="date" class="form-control" name="date" placeholder="Entrer la date" required>
                         </div>
                       </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">Mode de Paiement <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="modePaiment" placeholder="Entrer le mode de paiement" required>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
+                          <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"></textarea>
+                        </div>
+                      </div>
                       <div class="col-sm-12">
                         <div class="d-flex gap-2 justify-content-end">
-                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter</button>
+                          <button id="btnbar" type="submit" class="btn btn-primary">Ajouter le Séjour</button>
                       </div>
                     </div>
                     <!-- Row ends -->

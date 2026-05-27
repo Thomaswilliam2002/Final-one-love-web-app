@@ -78,18 +78,17 @@
                       <table id="" class="table m-0 customButtone align-middle" data-export-subtitle="Liste des Appartements">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Nom</th>
-                            <th>Prix</th>
-                            <th>Disponibilite</th> 
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Nom</th>
+                            <th class="no-calc">Prix</th>
+                            <th class="no-calc">Disponibilite</th> 
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
                           <tr>
-                            <% i = 1 %>
                             <% appartements.forEach(appartement => { %> 
-                            <td><%= i %></td>
+                            <td><%= appartement.slug_id %></td>
                             <td>
                               <%= appartement.nom_appart %>
                             </td>
@@ -157,7 +156,7 @@
                               </div>
                             </td>
                           </tr>
-                          <% i++ }) %>
+                          <%}) %>
                         </tbody>
                       </table>
                     </div>

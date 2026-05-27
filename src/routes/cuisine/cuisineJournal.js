@@ -11,7 +11,7 @@ allCuJournal = (app) => {
             order:[['id_cuisine', 'DESC']]
         })
             .then(jcuisines => {
-                res.status(200).render('cuisineJournal', {jcuisines: jcuisines, msg: req.query.msg, indice: req.query.indice})
+                res.status(200).render('cuisineJournal', {jcuisines: jcuisines, msg: req.query.msg, indice: req.query.indice, tc:req.query.tc})
             })
             .catch(_ => {
                 console.error(_);
@@ -38,16 +38,17 @@ oneCuJournal = (app) => {
 
 addCuJournal = (app) => {
     app.post('/addCuJournal', (req, res) => {
-        const {cuisine, montant, date} = req.body
+        const {cuisine, montant, date, comentaire, manquant} = req.body
         CuisineJournal.create({
             montant_verser: montant,
             date: date,
-            comentaire: '',
-            id_cuisine: cuisine
+            comentaire: comentaire,
+            id_cuisine: cuisine,
+            manquant: manquant
         })
             .then(journal => {
                 msg = 'Journal ajouter avec succes'
-                res.redirect('/formFondBarClub?type=cuisine&msg=' + msg)
+                res.redirect(`/formFondBarClub?type=cuisine&msg=${msg}&tc=alert-success`)
             })
             .catch(_ => {
                 console.error(_);

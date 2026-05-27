@@ -83,6 +83,7 @@
                     <table id="basicExample" class="table truncate m-0 align-middle">
                       <thead class="text-center">
                         <tr>
+                          <th>ID</th>
                           <th>Nom et Prenom de la fille</th>
                           <th>Telephone</th>
                           <th>Commentaire</th>
@@ -93,6 +94,7 @@
                         <% if(occupent.length > 0){ %>
                           <% occupent.forEach(occup => { %>
                             <tr>
+                              <td><%= occup.slug_id %></td>
                               <td><%= occup.nom_prenom %></td>
                               <td><%= occup.numero %></td>
                               <td><%= occup.commentaire %></td>
@@ -162,20 +164,22 @@
                           <table class="table truncate customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des historiques de paie de la chambre <%= chambre.nom %>" aria-describedby="basicExample_filter">
                             <thead class="text-center">
                               <tr>
-                                <th>#</th>
-                                <th>Montant recuperer</th>
-                                <th>Description</th>
-                                <th>Date de la paie</th>
-                                <th>Actions</th>
+                                <th class="no-calc">ID</th>
+                                <th >Montant recuperer</th>
+                                <th >Manquant du jour</th>
+                                <th class="no-calc">Description</th>
+                                <th class="no-calc">Date de la paie</th>
+                                <th class="no-calc">Actions</th>
                               </tr>
                             </thead>
                             <tbody class="text-center" id="tbody">
-                              <% i = 1; chambreJournals.forEach(journal => { %>
+                              <% chambreJournals.forEach(journal => { %>
                               <tr>
-                                <td><%= i %></td>
-                                <td class="calcule">
+                                <td><%= journal.slug_id %></td>
+                                <td>
                                     <%= journal.loyer %>
                                 </td>
+                                <td><%= journal.manquant %></td>
                                 <td><%= journal.description %></td>
                                 <td>
                                   <%= journal.date %>
@@ -233,16 +237,8 @@
                                   </div>
                                 </td>
                               </tr>
-                              <% i++ }) %>
+                              <% }) %>
                             </tbody>
-                          </table>
-                          <table id="" class="table truncate m-0 align-middle dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Somme des loyer: </th>
-                                <th id="resulta"></th>
-                              </tr>
-                            </thead>
                           </table>
                         </div>
                       </div>
@@ -286,24 +282,6 @@
             window.location.reload();
         }
       });
-      const resulta = document.getElementById('resulta')
-      const observer= new MutationObserver((mutations, observer) => {
-        mutations.forEach((mutation) => {
-          let allCase = document.querySelectorAll('.calcule')
-          let sum = 0
-          console.log(allCase.length)
-          if(allCase.length > 0){
-            allCase.forEach((td, index) => {
-              //console.log(td)
-              sum += parseFloat(td.innerText)
-              resulta.innerText = sum
-            })
-          }else{
-            resulta.innerText = 0
-          }
-          console.log('change', mutation)
-        })
-      })
 
       observer.observe(document.getElementById('tbody'), {
         childList: true,

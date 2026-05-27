@@ -72,13 +72,14 @@
                       <table id="" class="customButtone table truncate m-0 align-middle dataTable" data-export-subtitle="Liste des Historiques des maisons closes" aria-describedby="basicExample_filter">
                         <thead class="text-center">
                           <tr>
-                            <th>ID</th>
-                            <th>Maison close</th>
-                            <th>Chambre</th>
-                            <th>Montant</th>
-                            <th>Date</th>
-                            <th>Commentaire</th>
-                            <th>Actions</th>
+                            <th class="no-calc">ID</th>
+                            <th class="no-calc">Maison close</th>
+                            <th class="no-calc">Chambre</th>
+                            <th >Montant</th>
+                            <th>Manquant</th>
+                            <th class="no-calc">Date</th>
+                            <th class="no-calc">Commentaire</th>
+                            <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
@@ -88,6 +89,7 @@
                                     <td><%= journal.MaisonClose.nom %></td>
                                     <td><%= journal.Chambre.nom %></td>
                                     <td class="calcule"><%= journal.loyer %></td>
+                                    <td><%= journal.manquant %></td>
                                     <td><%= journal.date %></td>
                                     <td><%= journal.description %></td>
                                     <td>

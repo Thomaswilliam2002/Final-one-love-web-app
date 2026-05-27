@@ -4,6 +4,7 @@ const {Personnel, sequelize} = require('../../db/sequelize')
 const {Occupe} = require('../../db/sequelize')
 const {fn, col, literal, Op, where} = require('sequelize');
 const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
+const caissePersonnel = require('../../models/caissePersonnel');
 
 //route qui affiche le formulaire pour cree une caisse
 formAddCaisse = (app) =>{
@@ -171,13 +172,11 @@ addCaisse = (app) => {
                 id_lieu: idLieu,
                 nom_lieu: nom_lieu
             });
-
             // 4. Liaison avec le Caissier (Table Pivot)
             await CaissePersonnel.create({
                 id_caisse: nouvelleCaisse.id_caisse,
                 id_personnel: id_personnel
             });
-
             // Réponse finale
             return res.redirect('/formAddCaisse?msg=Caisse créée avec succès&tc=alert-success');
 
@@ -193,7 +192,7 @@ addCaisse = (app) => {
 
 // --- Liste des caisses ---
 allCaisse = (app) => {
-    app.get('/allCaisse', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/allCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             // Récupération des caisses avec leurs caissiers
             const caisses = await Caisse.findAll({
@@ -222,7 +221,7 @@ allCaisse = (app) => {
 
 // --- Caisse Bar Simple ---
 caisseBareSimple = (app) => {
-    app.get('/caisseBareSimple', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseBareSimple', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await BarSimpleJournal.findAll({
@@ -251,7 +250,7 @@ caisseBareSimple = (app) => {
 
 // --- Caisse Bar VIP ---
 caisseBareVip = (app) => {
-    app.get('/caisseBareVip', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseBareVip', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await BarVipJournal.findAll({
@@ -280,7 +279,7 @@ caisseBareVip = (app) => {
 
 // --- Caisse Crazy Club ---
 caisseCClub = (app) => {
-    app.get('/caisseCClub', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseCClub', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await CrazyClubJournal.findAll({
@@ -309,14 +308,14 @@ caisseCClub = (app) => {
 
 // --- Caisse Appartement ---
 caisseAppart = (app) => {
-    app.get('/caisseAppart', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseAppart', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
-            const moisExpr = fn('TO_CHAR', col('date_debut'), 'YYYY-MM');
+            const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await AppartFondJournal.findAll({
                 where: { is_active: true },
                 attributes: [
                     [moisExpr, "mois"],
-                    [fn('SUM', col('loyer')), 'total_recette'],
+                    [fn('SUM', col('recette')), 'total_recette'],
                 ],
                 group: [moisExpr],
                 raw: true
@@ -331,7 +330,7 @@ caisseAppart = (app) => {
 
 // --- Caisse Cuisine ---
 caisseCuisine = (app) => {
-    app.get('/caisseCuisine', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseCuisine', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await CuisineJournal.findAll({
@@ -353,7 +352,7 @@ caisseCuisine = (app) => {
 
 // --- Caisse Maison Close ---
 caisseMClose = (app) => {
-    app.get('/caisseMClose', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/caisseMClose', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
             const moisExpr = fn('TO_CHAR', col('date'), 'YYYY-MM');
             const all_bs_casse = await ChambreJournal.findAll({
@@ -386,7 +385,7 @@ formEditCaisse = (app) =>{
                     model: Personnel,
                     required: true,
                     where: { is_active: true },
-                    through: { attributes: [] } 
+                    through: { attributes: [],  where: { is_active: true } } 
                 }],
                 where: { is_active: true }
             });
@@ -416,8 +415,7 @@ updateCaisse = (app) => {
 
         try {
 
-            const { nom, new_caissier, old_caissier, id_caisse } = req.body;
-            console.log()
+            const { nom, id_caisse } = req.body;
             // Vérifier si le nom existe déjà (sauf cette caisse)
             const caisseExistante = await Caisse.findOne({
                 where: {
@@ -437,35 +435,8 @@ updateCaisse = (app) => {
                 return res.redirect('/allCaisse/' + req.params.id + '?msg=Une caisse portant ce nom existe deja&tc=alert-warning');
             }
 
-            // Vérifier que le caissier existe
-            const personnelExiste = await Personnel.findByPk(new_caissier, { transaction: t });
-
-            if (!personnelExiste) {
-                await t.rollback();
-                return res.redirect('/allCaisse?msg=Le caissier n\'existe pas&tc=alert-danger');
-            }
-
-            // Vérifier si le lien existe déjà
-            const existeDeja = await CaissePersonnel.findOne({
-                where: { id_caisse, id_personnel: new_caissier, is_active: true },
-                transaction: t
-            });
-
-            if (existeDeja) {
-                await t.rollback();
-                return res.redirect('/allCaisse/?msg=Ce caissier est déjà lié à cette caisse&tc=alert-warning');
-            }
-
-            // Mise à jour du caissier
-            await CaissePersonnel.update(
-                { id_personnel: new_caissier },
-                {
-                    where: { id_caisse, id_personnel: old_caissier },
-                    transaction: t
-                }
-            );
-
-            // Mise à jour du nom de la caiss
+            
+            /// Mise à jour du nom de la caisse
             const caisse = await Caisse.findByPk(req.params.id);
 
             if (!caisse) {
@@ -492,10 +463,11 @@ updateCaisse = (app) => {
     });
 }
 
+
 deleteCaisse = (app) => {
     app.delete('/deleteCaisse/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
         // On récupère l'instance de sequelize pour la transaction
-        const t = await sequelize.transaction();
+        const t = await sequelize.transaction(); 
 
         try {
             const caisseId = req.params.id;
@@ -505,26 +477,6 @@ deleteCaisse = (app) => {
                 await t.rollback();
                 return res.redirect('/notFound');
             }
-
-            // 1. Récupérer l'historique de la caisse pour restaurer les stocks
-            // const allHist = await HistCaisse.findAll({ where: { id_caisse: caisseId }, transaction: t });
-
-            // if (allHist.length > 0) {
-            //     for (const hist of allHist) {
-            //         const qte = hist.quantiter;
-            //         if (hist.type === 'emballage') {
-            //             await Emballage.update(
-            //                 { quantiter: literal(`quantiter + ${qte}`) },
-            //                 { where: { id_emballage: hist.id_probal }, transaction: t }
-            //             );
-            //         } else if (hist.type === 'produit') {
-            //             await Produit.update(
-            //                 { quantiter: literal(`quantiter + ${qte}`) },
-            //                 { where: { id_produit: hist.id_probal }, transaction: t }
-            //             );
-            //         }
-            //     }
-            // }
 
             // 2. Supprimer l'historique lié (pour éviter les données orphelines)
             await HistCaisse.destroy({ where: { id_caisse: caisseId }, transaction: t });
@@ -547,7 +499,7 @@ deleteCaisse = (app) => {
 
 // Ajoute la fonction si elle manque
 oneCaisse = (app) => {
-    app.get('/oneCaisse/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/oneCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         Caisse.findByPk(req.params.id)
             .then(caisse => {
                 if(!caisse) return res.redirect('/notFound');

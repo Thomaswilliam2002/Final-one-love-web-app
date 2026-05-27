@@ -10,9 +10,6 @@ allCCJournal = (app) => {
             order:[['id_journal', 'DESC']]
         })
             .then(ccJournals => {
-                console.log("ccJournals",ccJournals)
-                // const msg = "Liste recuperer avec succes"
-                // res.json({msg, data: barVipJournals})
                 res.status(200).render('allJournal', {Journals: ccJournals, type: 'cc', msg: req.query.msg, indice: req.query.indice})
             })
             .catch(_ => {
@@ -41,10 +38,13 @@ oneCCJournal = (app) => {
 addCCJournal = (app) => {
     app.post('/addCCJournal', async(req, res) => {
         try{
+            const {montant, manquant, date, commentaire, barClub} = req.body
             const ccJournal = CrazyClubJournal.create({
                 recette: montant,
                 date: date,
-                id_barVip: parseInt(barClub.split(' ')[0])
+                id_cclub: parseInt(barClub.split(' ')[0]),
+                manquant: manquant,
+                commentaire: commentaire
             })
             res.redirect('/formFondBarClub?msg=Journal ajouter avec succes&type=bc&tc=alert-success' )
         }catch(e){

@@ -8,7 +8,10 @@ const {sequelize, Occupe, Personnel, Poste, BarSimpleJournal, BarVipJournal, App
     Caisse,Depense, AvanceSalaire, PaiementSalaire, Salaire, 
     CaisseJournal,SalonPrive} = require('./src/db/sequelize');
 
+const cors = require('cors');
+
 const {stockJob} = require('./src/mail/email')
+
 
 
 const methodOverride = require('method-override');

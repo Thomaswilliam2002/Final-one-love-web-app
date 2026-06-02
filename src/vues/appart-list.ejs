@@ -86,76 +86,76 @@
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                          <tr>
-                            <% appartements.forEach(appartement => { %> 
-                            <td><%= appartement.slug_id %></td>
-                            <td>
-                              <%= appartement.nom_appart %>
-                            </td>
-                            <td><%= appartement.prix_appart %></td>
-                            <td><%= appartement.dispo_appart %></td>
-                            <td>
-                              <div class="d-inline-flex gap-1">
-                                <!-- ----------------------------------------------------------------------------------- -->
-                                <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
-                                  <!-- Card starts appartement.id_appart-->
-                                      <!-- Button trigger modal -->
-                                      <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#<%= appartement.id_appart %>ModalCenter" class="btn btn-outline-danger btn-sm">
-                                        <i class="ri-delete-bin-line"></i>
-                                      </button>
-                                      <!-- Modal -->
-                                      <div class="modal fade" id="<%= appartement.id_appart %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="<%= appartement.id_appart %>ModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="<%= appartement.id_appart %>ModalCenterTitle">
-                                                Supprimer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer l'Appartement <%= appartement.nom_appart %> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                Supprimer
-                                              </button> -->
-                                              <form action="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                                
-                                                <!-- <a href="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" class="btn btn-danger"
-                                                  data-bs-title="Supprimer">
+                          <% appartements.forEach(appartement => { %> 
+                            <tr>
+                              <td><%= appartement.slug_id %></td>
+                              <td>
+                                <%= appartement.nom_appart %>
+                              </td>
+                              <td><%= appartement.prix_appart %></td>
+                              <td><%= appartement.dispo_appart %></td>
+                              <td>
+                                <div class="d-inline-flex gap-1">
+                                  <!-- ----------------------------------------------------------------------------------- -->
+                                  <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
+                                    <!-- Card starts appartement.id_appart-->
+                                        <!-- Button trigger modal -->
+                                        <button type="button" data-bs-toggle="modal"
+                                          data-bs-target="#<%= appartement.id_appart %>ModalCenter" class="btn btn-outline-danger btn-sm">
+                                          <i class="ri-delete-bin-line"></i>
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="<%= appartement.id_appart %>ModalCenter" tabindex="-1"
+                                          aria-labelledby="<%= appartement.id_appart %>ModalCenterTitle" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="<%= appartement.id_appart %>ModalCenterTitle">
                                                   Supprimer
-                                                </a> -->
-                                            </form>
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <p>Voulez-vous vraiment supprimer l'Appartement <%= appartement.nom_appart %> ?</p>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                  annuler
+                                                </button>
+                                                <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                  Supprimer
+                                                </button> -->
+                                                <form action="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" method="post">
+                                                  <div class="col-sm-12">
+                                                    <div class="d-flex gap-2 justify-content-end">
+                                                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                    </div>
+                                                  </div>
+                                                  
+                                                  <!-- <a href="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" class="btn btn-danger"
+                                                    data-bs-title="Supprimer">
+                                                    Supprimer
+                                                  </a> -->
+                                              </form>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </div>
-                                  <!-- Card ends -->
-                                
-                                <!-- ----------------------------------------------------------------------------------------- -->
-                                <a href="/formEditAppart/<%= appartement.id_appart %>" class="btn btn-outline-success btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Modifier">
-                                  <i class="ri-edit-box-line"></i>
-                                </a>
-                              <%}%>
-                                <a href="/oneAppart/<%= appartement.id_appart %>" class="btn btn-outline-info btn-sm"
-                                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Voir les Details">
-                                  <i class="ri-eye-line"></i>
-                                </a>
-                              </div>
-                            </td>
-                          </tr>
+                                    <!-- Card ends -->
+                                  
+                                  <!-- ----------------------------------------------------------------------------------------- -->
+                                  <a href="/formEditAppart/<%= appartement.id_appart %>" class="btn btn-outline-success btn-sm"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Modifier">
+                                    <i class="ri-edit-box-line"></i>
+                                  </a>
+                                <%}%>
+                                  <a href="/oneAppart/<%= appartement.id_appart %>" class="btn btn-outline-info btn-sm"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Voir les Details">
+                                    <i class="ri-eye-line"></i>
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
                           <%}) %>
                         </tbody>
                       </table>

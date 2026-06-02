@@ -80,17 +80,14 @@ allProduit = (app) => {
 };
 
 formAddProduit = (app) => {
-    app.get('/formAddProduit', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
-        Categorie.findAll()
-            .then(categories => {
-                //const msg = "Liste recuperer avec succes"
-                res.status(200).render('add-produit', {categories: categories});
-            })
-            .catch(_ => {
-                console.error(_);
-                res.redirect('/notFound');
-                return; // On stoppe tout ici !
-            })
+    app.get('/formAddProduit', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
+        try{  
+            const allCateg = await Categorie.findAll({where: {is_active: true}});
+            res.status(200).render('add-produit', {categories: allCateg});
+        } catch (err) {
+            console.error(err);
+            res.redirect('/notFound');
+        }
     })
 }
 

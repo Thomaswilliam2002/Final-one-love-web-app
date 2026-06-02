@@ -89,6 +89,12 @@ app.set('views', 'src/vues')
 //     origin: "*"
 // }));
 
+app.use(cors({
+    // origin: process.env.FRONTEND_URL,
+    origin: true,
+    credentials: true
+}));
+
 const mySessionStore = new SequelizeStore({
     db: sequelize,
     tableName: 'Sessions', // Nom de la table qui sera créée automatiquement
@@ -104,13 +110,13 @@ app.use(session({
     store: mySessionStore,
     resave: false,
     saveUninitialized: false,
-    // proxy: true, // Ajoute cette ligne aussi
+    proxy: true, // Ajoute cette ligne aussi
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        secure: process.env.NODE_ENV === 'production', //|| true,
+        secure:  true, //process.env.NODE_ENV === 'production'||
         httpOnly: true,
-        sameSite: 'lax' // Recommandé pour éviter les problèmes de redirection
-        // sameSite: 'none',     // Nécessaire si le cookie traverse des domaines
+        // sameSite: 'lax', // Recommandé pour éviter les problèmes de redirection
+        sameSite: 'none',     // Nécessaire si le cookie traverse des domaines
         //Note importante sur sameSite: 'none' : > Si ton application (le frontend) et ton serveur (le backend) sont sur le même nom de domaine (ce qui semble être le cas sur Render), il vaut mieux utiliser sameSite: 'lax'.
     }
 }));

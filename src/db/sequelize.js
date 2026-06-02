@@ -55,22 +55,22 @@ const { on } = require('nodemailer/lib/xoauth2');
 
 
 // On utilise l'URL de Render (DATABASE_URL)
-// const sequelize = new Sequelize(process.env.DATABASE_URL, {
-//     dialect: 'postgres',
-//     dialectOptions: {
-//       ssl: {
-//         require: true,
-//         rejectUnauthorized: false // Indispensable pour que Render accepte la connexion
-//       }
-//     }
-// });
-
-const sequelize = new Sequelize('onelove', 'postgres', '1234', {
-    host: '127.0.0.1',
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    port: 5432,
-    logging: true, // Pour ne pas polluer la console avec les requêtes SQL
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false // Indispensable pour que Render accepte la connexion
+      }
+    }
 });
+
+// const sequelize = new Sequelize('onelove', 'postgres', '1234', {
+//     host: '127.0.0.1',
+//     dialect: 'postgres',
+//     port: 5432,
+//     logging: true, // Pour ne pas polluer la console avec les requêtes SQL
+// });
 
 const Appartement = Appartement_m(sequelize, DataTypes);
 const AppartJournal = AppartJournal_m(sequelize, DataTypes);

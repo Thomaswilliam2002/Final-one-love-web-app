@@ -85,9 +85,9 @@
                             </tr>
                           </thead>
                           <tbody class="text-center">
-                            <% i = 1; categories.forEach(categorie => { %>
+                            <%categories.forEach(categorie => { %>
                                 <tr>
-                                    <td><%= i%></td>
+                                    <td><%= categorie.slug_id%></td>
                                   <td><%= categorie.nom %></td>
                                   <td>
                                       <%= categorie.description %>
@@ -143,7 +143,7 @@
                                     </div>
                                   </td>
                                 </tr>
-                            <% i++}) %>
+                            <%}) %>
                           </tbody>
                         </table>
                       </div>

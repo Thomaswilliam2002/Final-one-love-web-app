@@ -80,11 +80,12 @@
                             <th class="no-calc">ID</th>
                             <th class="no-calc">Nom & Prenom du client</th>
                             <th class="no-calc">Appart attribué</th>
+                            <th class="no-calc">Heure</th>
                             <th class="no-calc">Date de début</th>
                             <th class="no-calc">Date de fin prévu</th>
                             <th class="no-calc">Date de fin réel</th>
                             <th>Montant a payer</th>
-                            <th>Déjà a payer</th>
+                            <th>Déjà payer</th>
                             <th>Reste a payer</th>
                             <th class="no-calc">Status</th>
                             <th class="no-calc">Commentaire</th>
@@ -97,6 +98,7 @@
                                     <td><%= journal.slug_id%></td>
                                     <td><%= journal.Client.nom_client%> <%= journal.Client.prenom_client%></td>
                                     <td><%= journal.Appartement.nom_appart %></td>
+                                    <td><%= journal.nuiter %></td>
                                     <td><%= journal.date_debut%></td>
                                     <td><%= journal.date_fin%></td>
                                     <td><%= journal.date_fin_reel%></td>

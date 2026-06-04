@@ -93,8 +93,8 @@ addAppart = (app) => {
             .then(appartement => {
                 res.redirect(`/allAppart?msg=Appartement ${req.body.nom} a ete ajouter avec succes`);
             })
-            .catch(_ => {
-                console.log('erreure de ajout')
+            .catch(err => {
+                console.error("Erreur création appartement :", err);
                 res.redirect('/notFound');
             })
     })

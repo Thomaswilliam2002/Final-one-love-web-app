@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
             const randomStr = crypto.randomBytes(5).toString('hex').toUpperCase();
             newId = `APP-${year}-${randomStr}`;
 
-            const exists = await Notification.findOne({ where: { slug_id: newId } });
+            const exists = await Appartement.findOne({ where: { slug_id: newId } });
             if (!exists) created = true;
         }
 

@@ -128,7 +128,7 @@
                                                     <tbody class="text-center">
                                                         <% caisse?.inventaire?.produits?.forEach((produit, i) => { %>
                                                             <tr>
-                                                                <td><%= i + 1 %></td>
+                                                                <td><%= produit.slug_id %></td>
                                                                 <td><%= produit.nom %></td>
                                                                 <td><%= produit.prix_unitaire %></td>
                                                                 <td><%= produit.quantite_disponible %></td>

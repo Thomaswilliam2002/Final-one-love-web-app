@@ -56,6 +56,11 @@ allHAproCaisse = (app) => {
                         where: { is_active: true, id_emballage: a.id_probal }
                     });
                 }
+
+                const c = await Caisse.findOne({
+                    where: { is_active: true, id_caisse: a.id_caisse }
+                });
+                json.caisse = c
                 
                 json.article = article
             

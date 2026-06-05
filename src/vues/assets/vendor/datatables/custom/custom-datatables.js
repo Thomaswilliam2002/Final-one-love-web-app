@@ -256,6 +256,7 @@ function customButtone(selector = ".customButtone") {
 
       tableElement.DataTable({
         destroy: true,
+        ordering: false,
         searchBuilder: true,
 
         // =================================================

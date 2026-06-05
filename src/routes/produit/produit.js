@@ -22,7 +22,9 @@ allProduit = (app) => {
                     where: {
                         is_active: true
                     },
-                    order: [['id_produit', 'DESC']]
+                    order: [
+                        [fn('LOWER', col('nom')), 'ASC']
+                    ]
                 }),
 
                 Categorie.findAll({

@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  
+<style>
+  .caisse-link{
+    border-radius:15px;
+    transition:all .3s ease;
+    cursor:pointer;
+    min-width:180px;
+    background:linear-gradient(135deg,#ffffff,#f8fafc);
+  }
+
+  .caisse-link:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 25px rgba(37,99,235,.20) !important;
+      background:linear-gradient(135deg,#2563eb,#3b82f6);
+  }
+
+  .caisse-link:hover .fw-bold{
+      color:white !important;
+  }
+</style>
 <!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/add-staff.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 May 2025 12:16:13 GMT -->
 <%- include('head')%>
 <body style="background-color: rgb(56, 100, 158);">
@@ -33,12 +51,42 @@
               <h4>Aucune caisse n'est associée à votre compte pour le moment.</h4>
             </div>
           <% } else { %>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+              <% caisses.forEach(caisse => { %>
+                  <a href="#<%= caisse.slug_id %>"
+                     class="text-decoration-none">
+          
+                      <div class="card border-0 shadow-sm caisse-link">
+                          <div class="card-body py-2 px-4 text-center">
+          
+                              <div class="fw-bold text-primary">
+                                  <i class="bi bi-wallet2 me-2"></i>
+                                  <%= caisse.nom_caisse %>
+                              </div>
+          
+                          </div>
+                      </div>
+          
+                  </a>
+              <% }) %>
+          </div>
             <% caisses.forEach(caisse => { %>
-              <div class="card mb-5 shadow-sm">
-                <div class="card-header d-flex justify-content-around align-items-center" style="background: #2b3a4a; color: white;">
-                  <h4 class="m-0">Caisse : <%= caisse.nom_caisse %></h4>
-                  <span class="badge bg-info text-dark">Département : <%= caisse.departement %></span>
-                  <span class="badge bg-info text-dark">Sous Département : <%= caisse.sous_departement %></span>
+              <div class="card mb-5 shadow-sm" id="<%= caisse.slug_id %>">
+                <div class="card-header d-flex flex-column flex-md-row justify-content-around align-items-center gap-2"
+                    style="background: #2b3a4a; color: white;">
+
+                    <h4 class="m-0 text-center">
+                        Caisse : <%= caisse.nom_caisse %>
+                    </h4>
+
+                    <span class="badge bg-info text-dark">
+                        Département : <%= caisse.departement %>
+                    </span>
+
+                    <span class="badge bg-info text-dark">
+                        Sous Département : <%= caisse.sous_departement %>
+                    </span>
+
                 </div>
                 
                 <div class="card-body">

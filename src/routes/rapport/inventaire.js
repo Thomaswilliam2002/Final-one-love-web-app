@@ -206,14 +206,14 @@ mackeInventaire = (app) => {
         // --- C. PRIX ET STOCK FINAL ---
         // On récupère le dernier prix unitaire pratiqué dans les sorties vers cette caisse
         const lastPrice = await HistSortie.findOne({
-            where: { id_probal: id, id_caisse: caisse, type: cyble },
+            where: { id_probal: id, id_caisse: caisse, type: cyble, is_active: true },
             order: [['created', 'DESC']],
             attributes: ['prix_unit']
         });
 
         //on récupère le dernier prix unitaire pratiqué dans les entree pour ce produit
         const lastPrixAchat = await HistEntrer.findOne({
-            where: { id_probal: id, type: cyble },
+            where: { id_probal: id, type: cyble, is_active: true },
             order: [['created', 'DESC']],
             attributes: ['prix_unit']
         });

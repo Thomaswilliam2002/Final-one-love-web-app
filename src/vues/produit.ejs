@@ -262,6 +262,7 @@
                                                 <div class="mb-3">
                                                   <label class="form-label" for="a8">Nom de la caisse destinataire<span class="text-danger">*</span></label>
                                                   <select name="dest" class="form-select" id="" required>
+                                                    <option value="" selected disabled></option>
                                                     <% if(caisses.length > 0){ caisses.forEach(c => {%>
                                                       <option value="<%= c.id_lieu %>|<%= c.type_lieu %>|<%= c.id_caisse %>" ><%= c.nom %> (<%= c.type_lieu %>)</option>
                                                     <% })}%>

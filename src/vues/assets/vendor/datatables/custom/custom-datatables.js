@@ -630,6 +630,17 @@ function initCustomTable(selector = ".newCustomButtone") {
     // INITIALISATION DATATABLE
     // ============================
     tableElement.DataTable({
+      destroy: true,
+      ordering: true,
+      order: [],
+      columnDefs: [
+        {
+            targets: '_all',
+            className: 'text-center align-middle',
+
+        }
+      ],
+      searchBuilder: true,
 
       footerCallback: function () {
 

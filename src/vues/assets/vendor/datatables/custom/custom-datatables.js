@@ -257,6 +257,12 @@ function customButtone(selector = ".customButtone") {
       tableElement.DataTable({
         destroy: true,
         ordering: false,
+        columnDefs: [
+          {
+              targets: '_all',
+              className: 'text-center align-middle'
+          }
+        ],
         searchBuilder: true,
 
         // =================================================
@@ -422,26 +428,58 @@ function customButtone(selector = ".customButtone") {
         // =================================================
         // FOOTER CALCULATION
         // =================================================
+        // footerCallback: function () {
+        //   let api = this.api();
+        //   let nombreColonnes = api.columns().count();
+
+        //   for (let i = 0; i < nombreColonnes; i++) {
+        //     let header = $(api.column(i).header());
+        //     if (i === 0 || header.hasClass('no-calc')) continue;
+
+        //     let total = 0;
+        //     api.column(i, { search: 'applied' }).data().each(function (value) {
+        //       let nombre = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+        //       if (!isNaN(nombre)) {
+        //         total += nombre;
+        //       }
+        //     });
+
+        //     let footerCell = api.column(i).footer();
+        //     if (footerCell) {
+        //       $(footerCell).html(total || 0);
+        //     }
+        //   }
+        // },
+
         footerCallback: function () {
           let api = this.api();
           let nombreColonnes = api.columns().count();
-
+      
           for (let i = 0; i < nombreColonnes; i++) {
-            let header = $(api.column(i).header());
-            if (i === 0 || header.hasClass('no-calc')) continue;
-
-            let total = 0;
-            api.column(i, { search: 'applied' }).data().each(function (value) {
-              let nombre = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
-              if (!isNaN(nombre)) {
-                total += nombre;
+      
+              let footerCell = api.column(i).footer();
+      
+              if (footerCell) {
+                  $(footerCell)
+                      .addClass('text-center align-middle fw-bold');
               }
-            });
-
-            let footerCell = api.column(i).footer();
-            if (footerCell) {
-              $(footerCell).html(total || 0);
-            }
+      
+              let header = $(api.column(i).header());
+      
+              if (i === 0 || header.hasClass('no-calc')) continue;
+      
+              let total = 0;
+      
+              api.column(i, { search: 'applied' }).data().each(function (value) {
+                  let nombre = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+                  if (!isNaN(nombre)) {
+                      total += nombre;
+                  }
+              });
+      
+              if (footerCell) {
+                  $(footerCell).html(total || 0);
+              }
           }
         },
 

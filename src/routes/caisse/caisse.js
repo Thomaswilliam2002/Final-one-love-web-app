@@ -22,7 +22,7 @@ formAddCaisse = (app) =>{
                         required: true,
                         where: {
                             nom_poste: {
-                                [Op.in]: ['Caissier']
+                                [Op.in]: ['Caissier', 'caissier']
                             },
                             is_active: true
                         }

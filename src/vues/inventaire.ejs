@@ -248,6 +248,10 @@
             return h * 60 + m;
         }
       //======================================================================
+      function formatNumber(num) {
+        return new Intl.NumberFormat('fr-FR').format(num);
+      }
+
       const form = document.querySelector('form');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -349,19 +353,19 @@
                 const inventaires = data.inventaire;
                 let body = '';
                 //=================calcule des totaul===============================
-                const totalStockInitial = inventaires.reduce((s,i)=>s+(i.stock_initial||0),0);
-                const totalEntree       = inventaires.reduce((s,i)=>s+(i.entree||0),0);
-                const totalDisponible   = inventaires.reduce(
+                const totalStockInitial = formatNumber(inventaires.reduce((s,i)=>s+(i.stock_initial||0),0));
+                const totalEntree       = formatNumber(inventaires.reduce((s,i)=>s+(i.entree||0),0));
+                const totalDisponible   = formatNumber(inventaires.reduce(
                 (s,i)=>s+((i.stock_initial||0)+(i.entree||0)),0
-                );
+                ));
 
-                const totalVente        = inventaires.reduce((s,i)=>s+(i.vente||0),0);
+                const totalVente        = formatNumber(inventaires.reduce((s,i)=>s+(i.vente||0),0));
 
-                const totalMontant      = inventaires.reduce(
+                const totalMontant      = formatNumber(inventaires.reduce(
                 (s,i)=>s+((i.vente||0)*(i.prix_unitaire||0)),0
-                );
+                ));
 
-                const totalStockFinal   = inventaires.reduce((s,i)=>s+(i.stock_final||0),0);
+                const totalStockFinal   = formatNumber(inventaires.reduce((s,i)=>s+(i.stock_final||0),0));
 
                 //=================calcule des totaul===============================
 

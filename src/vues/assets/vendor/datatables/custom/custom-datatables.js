@@ -209,6 +209,9 @@ $(function () {
 //   // });
 // });
 function customButtone(selector = ".customButtone") {
+  function formatNumber(num) {
+    return new Intl.NumberFormat('fr-FR').format(num);
+  }
   $(selector).each(function () {
 
     var dynamicSubtitle = $(this).data("export-subtitle") || "";
@@ -256,11 +259,13 @@ function customButtone(selector = ".customButtone") {
 
       tableElement.DataTable({
         destroy: true,
-        ordering: false,
+        ordering: true,
+        order: [],
         columnDefs: [
           {
               targets: '_all',
-              className: 'text-center align-middle'
+              className: 'text-center align-middle',
+
           }
         ],
         searchBuilder: true,
@@ -478,7 +483,8 @@ function customButtone(selector = ".customButtone") {
               });
       
               if (footerCell) {
-                  $(footerCell).html(total || 0);
+                $(footerCell).html(formatNumber(total) || 0);
+                  // $(footerCell).html(total || 0);
               }
           }
         },

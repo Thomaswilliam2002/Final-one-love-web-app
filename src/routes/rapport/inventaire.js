@@ -243,7 +243,7 @@ mackeInventaire = (app) => {
             description: prod.description || "",
             observations: stock_final <= (prod.seuil || 0)
               ? "⚠️ Seuil atteint"
-              : "ghbejhrgbjerht htbhj terhtbw tewtt wtwywtwy"
+              : ""
           };
         }));
 

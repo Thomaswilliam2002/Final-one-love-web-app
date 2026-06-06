@@ -80,9 +80,11 @@
                             <th aria-controls="basicExample" class="no-calc">ID</th>
                             <th class="no-calc">Nom</th>
                             <th class="no-calc">Prenom</th>
+                            <th class="no-calc">Telephone</th>
                             <th class="no-calc">Poste occuper</th>
-                            <th >Salaire</th>
+                            <th>Salaire</th>
                             <th class="no-calc">Status</th>
+                            <th class="no-calc">Age</th>
                             <th class="no-calc">Actions</th>
                           </tr>
                         </thead>
@@ -96,9 +98,11 @@
                             <td>
                               <%= personnel.Personnel.prenom %>
                             </td>
+                            <td><%= personnel.Personnel.numero %></td>
                             <td><%= personnel.Poste.nom_poste %></td>
                             <td><%= personnel.Poste.salaire %></td>
                             <td><%= personnel.Personnel.type_personnel %></td>
+                            <td><%= personnel?.Personnel?.age ? personnel?.Personnel?.age !== 0 ? personnel.Personnel.age : '-' : '-' %></td>
                             <td>
                               <div class="d-inline-flex gap-1">
                                 <!-- ----------------------------------------------------------------------------------- -->

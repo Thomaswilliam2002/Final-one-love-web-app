@@ -53,7 +53,7 @@
           <% } else { %>
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
               <% caisses.forEach(caisse => { %>
-                  <a href="#<%= caisse.slug_id %>"
+                  <a href="#caisse<%= caisse.id_caisse %>"
                      class="text-decoration-none">
           
                       <div class="card border-0 shadow-sm caisse-link">
@@ -71,7 +71,7 @@
               <% }) %>
           </div>
             <% caisses.forEach(caisse => { %>
-              <div class="card mb-5 shadow-sm" id="<%= caisse.slug_id %>">
+              <div class="card mb-5 shadow-sm" id="caisse<%= caisse.id_caisse %>">
                 <div class="card-header d-flex flex-column flex-md-row justify-content-around align-items-center gap-2"
                     style="background: #2b3a4a; color: white;">
 

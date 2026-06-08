@@ -823,6 +823,7 @@ addHistCaisse = (app) => {
                 caissier,
                 date
             });
+            const ajoutHist = await HistCaisse.create(req.body);
             // const ajoutHist = await HistCaisse.create({
             //     quantiter: qte,
             //     prix_unit: prix,

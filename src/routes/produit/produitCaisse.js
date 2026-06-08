@@ -829,7 +829,7 @@ addHistCaisse = (app) => {
                 id_probal: idpro,
                 id_caisse: caisse,
                 id_caissier: caissier,
-                date: date
+                date: '2022-01-01',
             })
             if(req.query.src && req.query.src === 'caissier'){
                 res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);

@@ -22,6 +22,10 @@
             <label class="form-label">Quantité (Max: <%= item.quantite_disponible %>)</label>
             <input type="number" name="qte" class="form-control" min="1" max="<%= item.quantite_disponible %>" required>
           </div>
+          <div class="mb-3">
+            <label class="form-label" for="a1">Date de la vente<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" id="a1" name="date" placeholder="Entrer la date de la vente" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

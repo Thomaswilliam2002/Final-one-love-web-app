@@ -811,7 +811,7 @@ allCaisseContent = (app) => {
 
 addHistCaisse = (app) => {
     app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) =>{
-        const {qte, prix, type, idpro, caisse, caissier, nom} = req.body;
+        const {qte, prix, type, idpro, caisse, caissier, nom, date} = req.body;
         try{
             const ajoutHist = await HistCaisse.create({
                 quantiter: qte,
@@ -819,7 +819,8 @@ addHistCaisse = (app) => {
                 type: type,
                 id_probal: idpro,
                 id_caisse: caisse,
-                id_caissier: caissier
+                id_caissier: caissier,
+                date: date
             })
             if(req.query.src && req.query.src === 'caissier'){
                 res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);

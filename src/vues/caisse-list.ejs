@@ -110,15 +110,16 @@
                                   </td>
                                   <td><%= caisse.type_lieu %></td>
                                   <td><%= caisse.nom_lieu %></td>
-                                  <%
-                                    if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
-                                  %>
+                                  
                                     <td>
                                       <div class="d-inline-flex gap-3">
                                         <!-- ----------------------------------------------------------------------------------- -->
                                         
                                           <!-- Card starts -->
                                               <!-- Button trigger modal -->
+                                              <%
+                                              if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+                                              %>
                                               <button type="button" data-bs-toggle="modal"
                                                 data-bs-target="#<%= caisse.id_caisse %>ModalCenter" class="btn btn-outline-danger btn-sm">
                                                 <i class="ri-delete-bin-line"></i>
@@ -153,6 +154,7 @@
                                                   </div>
                                                 </div>
                                               </div>
+                                              <% }%>
                                           <!-- Card ends -->
                                         <!-- ----------------------------------------------------------------------------------------- -->
                                         <a href="/formEditCaisse/<%= caisse.id_caisse %>" class="btn btn-outline-success btn-sm"
@@ -165,7 +167,7 @@
                                         </a>
                                       </div>
                                     </td>
-                                  <% }%>
+                                  
                                 </tr>
                           <% }) %>
                         </tbody>

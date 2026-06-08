@@ -378,7 +378,7 @@ caisseMClose = (app) => {
 
 // --- Actions CRUD Classiques ---
 formEditCaisse = (app) =>{
-    app.get('/formEditCaisse/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/formEditCaisse/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const caisses = await Caisse.findByPk(req.params.id, {
                 include: [{

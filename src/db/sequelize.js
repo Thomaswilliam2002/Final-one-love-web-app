@@ -436,7 +436,7 @@ Fournisseur.hasMany(HistEntrer, {
 
 (async () => {
     try {
-        await sequelize.sync({ alter: true }); //{ alter: true }
+        await sequelize.sync(); //{ alter: true }
         console.log('Base synchronisée');
 
         const count = await Poste.count({

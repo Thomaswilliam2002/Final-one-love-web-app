@@ -636,7 +636,7 @@ allCaisseContent = (app) => {
         protrctionRoot,
         authorise('admin', 'comptable', 'caissier central'),
         async (req, res) => {
-
+            console.log('=== ROUTE ALL CAISSE CONTENT APPELEE X1===');
             try {
 
                 // ================================

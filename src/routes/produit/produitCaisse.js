@@ -811,7 +811,8 @@ allCaisseContent = (app) => {
 
 addHistCaisse = (app) => {
     app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) =>{
-        const {qte, prix, type, idpro, caisse, caissier, nom, date} = req.body;
+        const {qte, prix, type, idpro, caisse, caissier, date} = req.body;
+        console.log(req.body)
         try{
             const ajoutHist = await HistCaisse.create({
                 quantiter: qte,

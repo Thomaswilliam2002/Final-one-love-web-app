@@ -636,7 +636,6 @@ allCaisseContent = (app) => {
         protrctionRoot,
         authorise('admin', 'comptable', 'caissier central'),
         async (req, res) => {
-            console.log('=== ROUTE ALL CAISSE CONTENT APPELEE X1===');
             try {
 
                 // ================================
@@ -823,20 +822,21 @@ addHistCaisse = (app) => {
             date
         });
         try{
-            const ajoutHist = await HistCaisse.create({
-                quantiter: qte,
-                prix_unit: prix,
-                type: type,
-                id_probal: idpro,
-                id_caisse: caisse,
-                id_caissier: caissier,
-                date: date
-            })
-            if(req.query.src && req.query.src === 'caissier'){
-                res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            }else{
-                res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            }
+            // const ajoutHist = await HistCaisse.create({
+            //     quantiter: qte,
+            //     prix_unit: prix,
+            //     type: type,
+            //     id_probal: idpro,
+            //     id_caisse: caisse,
+            //     id_caissier: caissier,
+            //     date: date
+            // })
+            // if(req.query.src && req.query.src === 'caissier'){
+            //     res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            // }else{
+            //     res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            // }
+            res.json({success: true});
         }catch (e){
             console.error(e);
             res.redirect('/notFound');

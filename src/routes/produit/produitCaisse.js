@@ -822,21 +822,20 @@ addHistCaisse = (app) => {
             date
         });
         try{
-            // const ajoutHist = await HistCaisse.create({
-            //     quantiter: qte,
-            //     prix_unit: prix,
-            //     type: type,
-            //     id_probal: idpro,
-            //     id_caisse: caisse,
-            //     id_caissier: caissier,
-            //     date: date
-            // })
-            // if(req.query.src && req.query.src === 'caissier'){
-            //     res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            // }else{
-            //     res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            // }
-            res.json({success: true});
+            const ajoutHist = await HistCaisse.create({
+                quantiter: qte,
+                prix_unit: prix,
+                type: type,
+                id_probal: idpro,
+                id_caisse: caisse,
+                id_caissier: caissier,
+                date: date
+            })
+            if(req.query.src && req.query.src === 'caissier'){
+                res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            }else{
+                res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            }
         }catch (e){
             console.error(e);
             res.redirect('/notFound');

@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         date: {
             type: DataTypes.DATEONLY,
             allowNull: false,
+            defaultValue: sequelize.literal('CURRENT_DATE')
         },
         is_active: {
             type: DataTypes.BOOLEAN,

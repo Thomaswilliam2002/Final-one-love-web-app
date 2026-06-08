@@ -636,6 +636,7 @@ allCaisseContent = (app) => {
         protrctionRoot,
         authorise('admin', 'comptable', 'caissier central'),
         async (req, res) => {
+
             try {
 
                 // ================================
@@ -810,9 +811,7 @@ allCaisseContent = (app) => {
 
 addHistCaisse = (app) => {
     app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) =>{
-        console.log('=== ROUTE ADD HIST CAISSE APPELEE ===');
         const {qte, prix, type, idpro, caisse, caissier, date} = req.body;
-        
         try{
             const ajoutHist = await HistCaisse.create({
                 quantiter: qte,
@@ -821,13 +820,11 @@ addHistCaisse = (app) => {
                 id_probal: idpro,
                 id_caisse: caisse,
                 id_caissier: caissier,
-                date: req.body.date,
+                date: date
             })
-            console.log('date: ', req.body.date);
             if(req.query.src && req.query.src === 'caissier'){
                 res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
             }else{
-                console.log('date: ', req.body.date);
                 res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
             }
         }catch (e){

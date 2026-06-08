@@ -99,10 +99,7 @@
                                     <td><%= hist.type %></td>
                                     <td><%= hist.nom_caisse %></td>
                                     <td><%= hist.nom_caissier %></td>
-                                    <td><%= new Date(hist.created).getDate() < 10 ? `0${new Date(hist.created).getDate()}` : 
-                                        new Date(hist.created).getDate()  %>-<%= new Date(hist.created).getMonth() + 1 < 10 ? 
-                                        `0${new Date(hist.created).getMonth() + 1}` : new Date(hist.created).getMonth() + 1 %>-
-                                        <%= new Date(hist.created).getFullYear()%></td>
+                                    <td><%= hist.date %></td>
                                     <td>
                                         <div class="d-inline-flex gap-1">
                                             <!-- ----------------------------------------------------------------------------------- -->

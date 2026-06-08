@@ -812,30 +812,32 @@ addHistCaisse = (app) => {
     app.post('/addHistCaisse', protrctionRoot, authorise('admin', 'comptable', 'caissier', 'caissier central'), async (req, res) =>{
         console.log('=== ROUTE ADD HIST CAISSE APPELEE ===');
         const {qte, prix, type, idpro, caisse, caissier, date} = req.body;
-        console.log({
-            qte,
-            prix,
-            type,
-            idpro,
-            caisse,
-            caissier,
-            date
-        });
+        
         try{
-            const ajoutHist = await HistCaisse.create({
-                quantiter: qte,
-                prix_unit: prix,
-                type: type,
-                id_probal: idpro,
-                id_caisse: caisse,
-                id_caissier: caissier,
-                date: '2022-01-01',
-            })
-            if(req.query.src && req.query.src === 'caissier'){
-                res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            }else{
-                res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
-            }
+            console.log({
+                qte,
+                prix,
+                type,
+                idpro,
+                caisse,
+                caissier,
+                date
+            });
+            // const ajoutHist = await HistCaisse.create({
+            //     quantiter: qte,
+            //     prix_unit: prix,
+            //     type: type,
+            //     id_probal: idpro,
+            //     id_caisse: caisse,
+            //     id_caissier: caissier,
+            //     date: '2022-01-01',
+            // })
+            // if(req.query.src && req.query.src === 'caissier'){
+            //     res.redirect(`/allProduitCaisse/${caissier}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            // }else{
+            //     res.redirect(`/allCaisseArticle/${caisse}?msg=Nouvelle vente ajoutée !&tc=alert-success`);
+            // }
+            res.json({success: true, body: req.body});
         }catch (e){
             console.error(e);
             res.redirect('/notFound');

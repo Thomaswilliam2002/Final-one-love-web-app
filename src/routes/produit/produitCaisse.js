@@ -928,7 +928,7 @@ deleteHistCaisse = (app) => {
             // Le calcul dynamique dans 'allProduitCaisse' affichera 
             // désormais la quantité correcte automatiquement.
             if(req.query.ns && req.query.ns === 'ns'){
-                return res.redirect(`/allHistCaisse?msg=Vente annulée, le stock de la caisse n'a pas éte mis à jour.&tc=alert-warning`);
+                return res.redirect(`/allHistCaisse?msg=Vente annulée, le stock de la caisse a éte mis à jour.&tc=alert-warning`);
             }
             else if(req.query.is){
                 return res.redirect(`/allHistCaisse/${req.query.is}?msg=Vente annulée, le stock de la caisse a été mis à jour.&tc=alert-warning`);

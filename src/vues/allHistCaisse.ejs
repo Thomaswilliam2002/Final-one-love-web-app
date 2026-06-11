@@ -199,6 +199,15 @@
         }
       });
     </script>
+    <script>
+      document.addEventListener('show.bs.modal', function () {
+          document.querySelector('.app-body')?.style.setProperty('overflow', 'hidden', 'important');
+      });
+      
+      document.addEventListener('hidden.bs.modal', function () {
+          document.querySelector('.app-body')?.style.removeProperty('overflow');
+      });
+      </script>
   </body>
 
 

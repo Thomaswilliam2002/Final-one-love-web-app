@@ -740,7 +740,8 @@ allCaisseContent = (app) => {
                                         nom: infoArticle ? (infoArticle.nom || infoArticle.nom_produit) : "Inconnu",
                                         quantite_disponible: stockReel,
                                         prix_unitaire: dernierPrix ? dernierPrix.prix_unit : 0,
-                                        type: modelType
+                                        type: modelType,
+                                        slug_id: infoArticle ? infoArticle.slug_id : null
                                     };
 
                                 })

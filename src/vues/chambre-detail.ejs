@@ -109,35 +109,7 @@
                                       <i class="ri-delete-bin-line"></i>
                                     </button>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="<%= occup.id_occup %>ModalCenter" tabindex="-1"
-                                      aria-labelledby="<%= occup.id_occup %>ModalCenterTitle" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="<%= occup.id_occup %>ModalCenterTitle">
-                                              Confirmer
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          </div>
-                                          <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                            <p>Voulez-vous vraiment supprimer <%= occup.nom_prenom %> ?</p>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                              annuler
-                                            </button>
-                                            <form action="/deleteOccupent/<%= occup.id_occup %>/<%= maisonColse.id_mclose %>/<%= chambre.id_chambre %>?_method=DELETE" method="post">
-                                              <div class="col-sm-12">
-                                                <div class="d-flex gap-2 justify-content-end">
-                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                </div>
-                                              </div>
-                                            </form>
-                                          </div>
-                                        </div>
-                                      <!-- </form> -->
-                                      </div>
-                                    </div>
+                                    
                                     <!-- Card ends -->
                                     </div>
                                 </div>
@@ -195,34 +167,7 @@
                                             <i class="ri-delete-bin-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="h<%= journal.id_journal %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="h<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="h<%= journal.id_journal %>ModalCenterTitle">
-                                                    Confirmer
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <p>Voulez-vous vraiment supprimer cette ligne ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                  </button>
-                                                  <form action="/deleteChJournal/<%= journal.id_journal %>/<%= journal.id_chambre %>/<%= journal.id_mclose %>?_method=DELETE&sender=profil" method="post">
-                                                    <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                      </div>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                     <!-- </div> -->
                                     <!-- ----------------------------------------------------------------------------------------- -->
@@ -266,6 +211,75 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% if(occupent.length > 0){ %>
+      <% occupent.forEach(occup => { %>
+        <div class="modal fade" id="<%= occup.id_occup %>ModalCenter" tabindex="-1"
+          aria-labelledby="<%= occup.id_occup %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= occup.id_occup %>ModalCenterTitle">
+                  Confirmer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                <p>Voulez-vous vraiment supprimer <%= occup.nom_prenom %> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <form action="/deleteOccupent/<%= occup.id_occup %>/<%= maisonColse.id_mclose %>/<%= chambre.id_chambre %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          <!-- </form> -->
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <% chambreJournals.forEach(journal => { %>
+      <div class="modal fade" id="h<%= journal.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="h<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="h<%= journal.id_journal %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cette ligne ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteChJournal/<%= journal.id_journal %>/<%= journal.id_chambre %>/<%= journal.id_mclose %>?_method=DELETE&sender=profil" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

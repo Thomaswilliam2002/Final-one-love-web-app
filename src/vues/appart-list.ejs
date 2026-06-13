@@ -105,42 +105,7 @@
                                           <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= appartement.id_appart %>ModalCenter" tabindex="-1"
-                                          aria-labelledby="<%= appartement.id_appart %>ModalCenterTitle" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= appartement.id_appart %>ModalCenterTitle">
-                                                  Supprimer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <p>Voulez-vous vraiment supprimer l'Appartement <%= appartement.nom_appart %> ?</p>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                  annuler
-                                                </button>
-                                                <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                  Supprimer
-                                                </button> -->
-                                                <form action="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" method="post">
-                                                  <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                      <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                  </div>
-                                                  
-                                                  <!-- <a href="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" class="btn btn-danger"
-                                                    data-bs-title="Supprimer">
-                                                    Supprimer
-                                                  </a> -->
-                                              </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                   
                                   <!-- ----------------------------------------------------------------------------------------- -->
@@ -187,6 +152,51 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% appartements.forEach(appartement => { %>
+      <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
+        <div class="modal fade" id="<%= appartement.id_appart %>ModalCenter" tabindex="-1"
+          aria-labelledby="<%= appartement.id_appart %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= appartement.id_appart %>ModalCenterTitle">
+                  Supprimer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer l'Appartement <%= appartement.nom_appart %> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                  Supprimer
+                </button> -->
+                <form action="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+                  
+                  <!-- <a href="/deleteAppart/<%= appartement.id_appart %>?_method=DELETE" class="btn btn-danger"
+                    data-bs-title="Supprimer">
+                    Supprimer
+                  </a> -->
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <%}%>
+    <%}) %>
 
     <!-- *************
 			************ JavaScript Files *************

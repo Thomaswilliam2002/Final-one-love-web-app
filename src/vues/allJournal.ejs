@@ -224,9 +224,10 @@
 
     </div>
     <!-- Page wrapper ends -->
-     <!-- ========================= -->
-<!-- 🔥 MODALS (SORTIS ICI) -->
-<!-- ========================= -->
+     
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
 
 <% if(type === 'simple'){ %>
   <% Journals.forEach(Journal => { %>
@@ -240,8 +241,8 @@
         <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
-      <div class="modal-body text-start">
-        <p>Voulez-vous vraiment supprimer cet historique ?</p>
+      <div class="modal-body text-start" >
+        <p>Voulez-vous vraiment supprimer l'historique <%= Journal.slug_id %> ?</p>
       </div>
 
       <div class="modal-footer">
@@ -271,7 +272,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            <p>Voulez-vous vraiment supprimer l'historique <%= Journal.slug_id %> ?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -304,7 +305,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            <p>Voulez-vous vraiment supprimer l'historique <%= Journal.slug_id %> ?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -337,7 +338,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            <p>Voulez-vous vraiment supprimer l'historique <%= Journal.slug_id %> ?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -370,7 +371,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            <p>Voulez-vous vraiment supprimer l'historique <%= Journal.slug_id %> ?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

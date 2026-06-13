@@ -103,34 +103,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                       </button>
                                       <!-- Modal -->
-                                      <div class="modal fade" id="<%= cuisine.id_cuisine %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="<%= cuisine.id_cuisine %>ModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="<%= cuisine.id_cuisine %>ModalCenterTitle">
-                                                Confirmer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer <%= cuisine.nom_locataire %> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <form action="/deleteCuisine/<%= cuisine.id_cuisine %>?_method=DELETE" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      
                                   <!-- Card ends -->
                                 <!-- </div> -->
                                 <!-- ----------------------------------------------------------------------------------------- -->
@@ -179,6 +152,41 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+     
+    <% cuisines.forEach(cuisine => { %>
+      <div class="modal fade" id="<%= cuisine.id_cuisine %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= cuisine.id_cuisine %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= cuisine.id_cuisine %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer <%= cuisine.nom_locataire %> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteCuisine/<%= cuisine.id_cuisine %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

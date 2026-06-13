@@ -62,24 +62,10 @@
                   </div>
                   <div class="card-body">
                     <% if(msg) {%>
-                      <% if(msg === 'ajout') {%>
-                        <div class="alert bg-white border alert-dismissible fade show text-success" role="alert">
-                          <b>Elément </b> supprimer avec succes !
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                      <% }%>
-                      <% if(msg === 'modif') {%>
-                        <div class="alert bg-white border alert-dismissible fade show text-info" role="alert">
-                          <b>Elément </b> modifier avec succes !
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                      <% }%>
-                      <% if(msg === 'sup') {%>
-                        <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                          <b>Elément </b> supprimer avec succes !
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                      <% }%>
+                      <div class="alert bg-white border alert-dismissible fade show <%= tc%>" role="alert">
+                      <b><%= msg%></b>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
                     <% }%>
                     <!-- Table starts -->
                     <div class="table-responsive">
@@ -116,38 +102,7 @@
                                                     <i class="ri-delete-bin-line"></i> 
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="<%= Journaux.id_journal %>ModalCenter" tabindex="-1"
-                                                    aria-labelledby="<%= Journaux.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h5 class="modal-title" id="<%= Journaux.id_journal %>ModalCenterTitle">
-                                                            Confirmer
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form action="/deleteCuJournal/<%= Journaux.id_journal %>?_method=DELETE&indice=staff" method="post">
-                                                          <div class="modal-body">
-                                                            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
-                                                            <div class="d-flex justify-content-end">
-                                                              <div class="gap-2">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                                  annuler
-                                                                </button>
-                                                              </div>
-                                                              <div class="gap-2">
-                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                              </div>
-                                                            </div>
-                                                            
-                                                          </div>
-                                                        </form>
-                                                        <div class="modal-footer">
-                                                          
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                </div>
+                                                
                                             <!-- Card ends -->
                                             </div>
                                         </div>
@@ -193,6 +148,47 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% jcuisines.forEach(jcuisine => { %>
+      <%jcuisine.CuisineJournals.forEach(Journaux => { %>
+        <div class="modal fade" id="<%= Journaux.id_journal %>ModalCenter" tabindex="-1"
+          aria-labelledby="<%= Journaux.id_journal %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="<%= Journaux.id_journal %>ModalCenterTitle">
+                  Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/deleteCuJournal/<%= Journaux.id_journal %>?_method=DELETE&indice=staff" method="post">
+                <div class="modal-body">
+                  <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+                  <div class="d-flex justify-content-end">
+                    <div class="gap-2">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        annuler
+                      </button>
+                    </div>
+                    <div class="gap-2">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </form>
+              <div class="modal-footer">
+                
+              </div>
+            </div>
+          </div>
+      </div>
+      <%}) %>
+    <%}) %>
 
     <!-- *************
 			************ JavaScript Files *************

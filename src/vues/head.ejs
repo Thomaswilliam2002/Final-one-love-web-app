@@ -50,6 +50,15 @@
           text-align: center !important;
           vertical-align: middle !important;
       }
+
+      /* Cible le corps de toutes les modales et TOUS les éléments à l'intérieur (comme le <p>) */
+      .modal-body, 
+      .modal-body *,
+      .modal-header,
+      .modal-header * {
+          white-space: normal !important;
+          overflow-wrap: break-word !important; /* Version propre et moderne */
+      }
     </style>
 
   </head>

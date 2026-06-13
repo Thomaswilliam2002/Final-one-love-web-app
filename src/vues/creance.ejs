@@ -91,184 +91,23 @@
                                         <i class="ri-edit-box-line"></i>
                                     </button>
                                 </div>
-                                <!-- ----------------------------------suppression-------------------------------------- -->
-                                <div class="modal fade" id="del<%= creancier.id_creancier %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Confirmer la suppression</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p>Voulez-vous supprimer le Créancier <strong><%= creancier.nom %></strong> ?</p>
-                                        <p>La suppression du Créancier est irréversible entrainera la suppression de toutes les informations qui y sont liés </p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <form action="/deleteCreancier/<%= creancier.id_creancier %>?_method=DELETE" method="post">
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- ----------------------------------modification-------------------------------------- -->
-                                <div class="modal fade" id="edit<%= creancier.id_creancier %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Modification</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="/updateCreancier/<%= creancier.id_creancier %>?_method=PUT" method="post">
-                                        <div class="modal-body text-start">
-                                          <div class="row gx-3">
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Nom du Créancier</label>
-                                                <input type="text" class="form-control" value="<%= creancier.nom%>" name="nom" required>
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Tel 1</label>
-                                                <input type="text" class="form-control" value="<%= creancier.tel1%>" name="tel1">
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Tel 2</label>
-                                                <input type="text" class="form-control" value="<%= creancier.tel2%>" name="tel2">
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" value="<%= creancier.tel1%>" name="email">
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Adresse</label>
-                                                <textarea class="form-control" rows="3" name="adresse"><%= creancier.adresse%></textarea>
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Commentaire</label>
-                                                <textarea class="form-control" rows="3" name="commentaire"><%= creancier.commentaire%></textarea>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- ----------------------------------Ajoute new creance journal-------------------------------------- -->
+                                
                                  <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal"
-                                  data-bs-target="#<%= creancier.id_creancier %>exampleModalCenter" data-bs-title="Augmenter le nombre en stock">
+                                  data-bs-target="#<%= creancier.id_creancier %>exampleModalCenter" data-bs-title="Rembourcement">
                                   <i class="ri-arrow-left-down-line" style="color:#16A34A"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="<%= creancier.id_creancier %>exampleModalCenter" tabindex="-1"
-                                  aria-labelledby="<%= creancier.id_creancier %>exampleModalCenterTitle" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="<%= creancier.id_creancier %>exampleModalCenterTitle">
-                                          Rembourser une partie de la Dette(Créance)
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <!-- Row starts -->
-                                        <% if (creancier.solde >= 1){%>
-                                          <form action="/addCreanceJournal %>" method="post">
-                                            <div class="row gx-3">
-                                              <div class="col-sm-12">
-                                                <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                  <h6 class="m-0">Details du Remboursement</h6>
-                                                </div>
-                                              </div>
-                                              
-                                              <div class="col-sm-12">
-                                                <div class="mb-3">
-                                                  <label class="form-label" for="a1">Montant a retirer<span class="text-danger">*</span></label>
-                                                  <input type="number" min="1"  max="<%= creancier.solde %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le montant" name="montant" required>
-                                                </div>
-                                              </div>
-                                              <div class="col-sm-12">
-                                                <div class="mb-3">
-                                                  <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
-                                                  <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="commentaire"></textarea>
-                                                </div>
-                                              </div>
-                                              <input type="hidden" class="form-control" id="a2" name="id_creancier" value="<%= creancier.id_creancier %>">
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Annuler
-                                              </button>
-                                              <button type="submit" class="btn btn-danger">Confirmer la transaction</button>
-                                            </div>
-                                          </form>
-                                        <% } else { %>
-                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                                            <b>Imposssible </b> d'effectuer cette opération ! <br>
-                                              Actuellement vous ne devez plus rien a ce créancier.
-                                          </div>
-                                        <% } %>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                                 <!-- Card ends -->
                                 <!-- ----------------------------------Rembourcer creance-------------------------------------- -->
                                   <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
-                                  data-bs-target="#je<%= creancier.id_creancier %>exampleModalCenter" data-bs-title="journa d'emprunt">
+                                  data-bs-target="#je<%= creancier.id_creancier %>exampleModalCenter" data-bs-title="journal d'emprunt">
                                   <i class="ri-arrow-right-up-line" style="color:#2563EB"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="je<%= creancier.id_creancier %>exampleModalCenter" tabindex="-1"
-                                  aria-labelledby="je<%= creancier.id_creancier %>exampleModalCenterTitle" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="je<%= creancier.id_creancier %>exampleModalCenterTitle">
-                                          Ajouter un Emprunt(Dette)
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <!-- Row starts -->
-                                        <form action="/addNewEmprunt %>" method="post">
-                                          <div class="row gx-3">
-                                            <div class="col-sm-12">
-                                              <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                <h6 class="m-0">Details de l'Emprunt</h6>
-                                              </div>
-                                            </div>
-                                            
-                                            <div class="col-xxl-12 col-lg-12 col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a1">Montant a ajouter<span class="text-danger">*</span></label>
-                                                <input type="number" min="1"  max="100000000" step="0.01" class="form-control" id="a1" placeholder="Entrer le montant" name="montant" required>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
-                                                <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="commentaire"></textarea>
-                                              </div>
-                                            </div>
-                                            <input type="hidden" class="form-control" id="a2" name="id_creancier" value="<%= creancier.id_creancier %>">
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                              Annuler
-                                            </button>
-                                            <button type="submit" class="btn btn-danger">Confirmer la transaction</button>
-                                          </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                                 <!-- Card ends -->
                               </td>
                             </tr>
@@ -331,6 +170,179 @@
         </div>
         </div>
       </div>
+
+      <!-- ========================= -->
+      <!-- 🔥 MODALS (SORTIS ICI) -->
+      <!-- ========================= -->
+
+      <% creanciers.forEach(creancier => { %>
+        <!-- ----------------------------------suppression-------------------------------------- -->
+        <div class="modal fade" id="del<%= creancier.id_creancier %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous supprimer le Créancier <strong><%= creancier.nom %></strong> ?</p>
+                <p>La suppression du Créancier est irréversible entrainera la suppression de toutes les informations qui y sont liés </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="/deleteCreancier/<%= creancier.id_creancier %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ----------------------------------modification-------------------------------------- -->
+        <div class="modal fade" id="edit<%= creancier.id_creancier %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/updateCreancier/<%= creancier.id_creancier %>?_method=PUT" method="post">
+                <div class="modal-body text-start">
+                  <div class="row gx-3">
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Nom du Créancier</label>
+                        <input type="text" class="form-control" value="<%= creancier.nom%>" name="nom" required>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Tel 1</label>
+                        <input type="text" class="form-control" value="<%= creancier.tel1%>" name="tel1">
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Tel 2</label>
+                        <input type="text" class="form-control" value="<%= creancier.tel2%>" name="tel2">
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="<%= creancier.tel1%>" name="email">
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Adresse</label>
+                        <textarea class="form-control" rows="3" name="adresse"><%= creancier.adresse%></textarea>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Commentaire</label>
+                        <textarea class="form-control" rows="3" name="commentaire"><%= creancier.commentaire%></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- ----------------------------------Ajoute new creance journal-------------------------------------- -->
+        <div class="modal fade" id="<%= creancier.id_creancier %>exampleModalCenter" tabindex="-1"
+          aria-labelledby="<%= creancier.id_creancier %>exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= creancier.id_creancier %>exampleModalCenterTitle">
+                  Rembourser une partie de la Dette(Créance)
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Row starts -->
+                <% if (creancier.solde >= 1){%>
+                  <form action="/addCreanceJournal %>" method="post">
+                    <div class="row gx-3">
+                      <div class="col-sm-12">
+                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                          <h6 class="m-0">Details du Remboursement</h6>
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-12">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Montant a retirer<span class="text-danger">*</span></label>
+                          <input type="number" min="1"  max="<%= creancier.solde %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le montant" name="montant" required>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="mb-3">
+                          <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
+                          <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="commentaire"></textarea>
+                        </div>
+                      </div>
+                      <input type="hidden" class="form-control" id="a2" name="id_creancier" value="<%= creancier.id_creancier %>">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Annuler
+                      </button>
+                      <button type="submit" class="btn btn-danger">Confirmer la transaction</button>
+                    </div>
+                  </form>
+                <% } else { %>
+                  <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                    <b>Imposssible </b> d'effectuer cette opération ! <br>
+                      Actuellement vous ne devez plus rien a ce créancier.
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="je<%= creancier.id_creancier %>exampleModalCenter" tabindex="-1"
+          aria-labelledby="je<%= creancier.id_creancier %>exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="je<%= creancier.id_creancier %>exampleModalCenterTitle">
+                  Ajouter un Emprunt(Dette)
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Row starts -->
+                <form action="/addNewEmprunt %>" method="post">
+                  <div class="row gx-3">
+                    <div class="col-sm-12">
+                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                        <h6 class="m-0">Details de l'Emprunt</h6>
+                      </div>
+                    </div>
+                    
+                    <div class="col-xxl-12 col-lg-12 col-sm-12">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Montant a ajouter<span class="text-danger">*</span></label>
+                        <input type="number" min="1"  max="100000000" step="0.01" class="form-control" id="a1" placeholder="Entrer le montant" name="montant" required>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="mb-3">
+                        <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="commentaire"></textarea>
+                      </div>
+                    </div>
+                    <input type="hidden" class="form-control" id="a2" name="id_creancier" value="<%= creancier.id_creancier %>">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Annuler
+                    </button>
+                    <button type="submit" class="btn btn-danger">Confirmer la transaction</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+      
+
     <%- include('script')%>
     
     <script>

@@ -78,54 +78,7 @@
                                     </button>
                                 </div>
 
-                                <div class="modal fade" id="del<%= categorie.id_categ %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Confirmer la suppression</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p>Voulez-vous supprimer la catégorie <strong><%= categorie.nom %></strong> ?</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <form action="/deleteCategorieDepense/<%= categorie.id_categ %>?_method=DELETE" method="post">
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="modal fade" id="edit<%= categorie.id_categ %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Modification</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="/updateCategorieDepense/<%= categorie.id_categ %>?_method=PUT" method="post">
-                                        <div class="modal-body text-start">
-                                          <div class="row gx-3">
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Nom de la catégorie</label>
-                                                <input type="text" class="form-control" value="<%= categorie.nom%>" name="nom" required>
-                                            </div>
-                                            <div class="col-sm-12 mb-3">
-                                                <label class="form-label">Description</label>
-                                                <textarea class="form-control" rows="3" name="desc"><%= categorie.description%></textarea>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                               </td>
                             </tr>
                           <% }) %>
@@ -171,6 +124,62 @@
         </div>
         </div>
       </div>
+
+      <!-- ========================= -->
+      <!-- 🔥 MODALS (SORTIS ICI) -->
+      <!-- ========================= -->
+
+      <% categories.forEach(categorie => { %>
+        <div class="modal fade" id="del<%= categorie.id_categ %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous supprimer la catégorie <strong><%= categorie.nom %></strong> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="/deleteCategorieDepense/<%= categorie.id_categ %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="edit<%= categorie.id_categ %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/updateCategorieDepense/<%= categorie.id_categ %>?_method=PUT" method="post">
+                <div class="modal-body text-start">
+                  <div class="row gx-3">
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Nom de la catégorie</label>
+                        <input type="text" class="form-control" value="<%= categorie.nom%>" name="nom" required>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="3" name="desc"><%= categorie.description%></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+
     <%- include('script')%>
     
     <script>

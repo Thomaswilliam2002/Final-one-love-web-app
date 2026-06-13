@@ -124,38 +124,6 @@
                     <!-- Table ends -->
 
                     <!-- Modal Delete Row -->
-                    <% hists.forEach(hist => { %>
-                      <div class="modal fade" id="<%= hist.id_hist %>ModalCenter" tabindex="-1"
-                        aria-labelledby="<%= hist.id_hist %>ModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="<%= hist.id_hist %>ModalCenterTitle">
-                                Confirmer
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                            <p>Voulez-vous vraiment supprimer cet Historique ? .</p>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                annuler
-                            </button>
-                            <!-- ns: non staff; is: is staff -->
-                            <form action="/deleteHistCaisse/<%= hist.id_hist %>?_method=DELETE<%= ['comptable', 'admin'].includes(user.Personnel.type_personnel) ? '&ns=ns' : '&is='+ user.Personnel.id_personnel %>" method="post">
-                                <div class="col-sm-12">
-                                <div class="d-flex gap-2 justify-content-end">
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                </div>
-                                </div>
-                            </form>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <% }) %>
-
                   </div>
                 </div>
               </div>
@@ -182,6 +150,42 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% hists.forEach(hist => { %>
+      <div class="modal fade" id="<%= hist.id_hist %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= hist.id_hist %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="<%= hist.id_hist %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer l'historique <%= hist.slug_id %> ? .</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <!-- ns: non staff; is: is staff -->
+            <form action="/deleteHistCaisse/<%= hist.id_hist %>?_method=DELETE<%= ['comptable', 'admin', 'caissier central'].includes(user.Personnel.type_personnel) ? '&ns=ns' : '&is='+ user.Personnel.id_personnel %>" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

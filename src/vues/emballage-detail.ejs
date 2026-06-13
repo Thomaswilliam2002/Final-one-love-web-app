@@ -119,34 +119,7 @@
                                             <i class="ri-delete-bin-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="<%= hachat.id_hist %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="<%= hachat.id_hist %>ModalCenterTitle">
-                                                    Confirmer
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <p>Voulez-vous vraiment supprimer cet Historique ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                  </button>
-                                                  <form action="/deleteHEntrer/<%= hachat.id_hist %>?_method=DELETE&id=<%= emballage.id_emballage %>" method="post">
-                                                    <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                      </div>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                       <% if (index === 0) { %>
                                         <!-- ----------------------------------------------------------------------------------------- -->
@@ -155,52 +128,6 @@
                                           <i class="ri-edit-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= hachat.id_hist %>exampleModalCenter" tabindex="-1"
-                                          aria-labelledby="<%= hachat.id_hist %>exampleModalCenterTitle" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= hachat.id_hist %>exampleModalCenterTitle">
-                                                  Modiffication de l'historique du stock Entrer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <!-- Row starts -->
-                                                <form action="/updateHEntrer/<%= hachat.id_hist %>?_method=PUT" method="post">
-                                                  <div class="row gx-3">
-                                                    <div class="col-sm-12">
-                                                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                        <h6 class="m-0">Details de l'historique</h6>
-                                                      </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                      <div class="mb-3">
-                                                        <label class="form-label" for="a1">Quantiter<span class="text-danger">*</span></label>
-                                                        <input type="number" value="<%= hachat.quantiter %>" min="1"  max="100000" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                      <div class="mb-3">
-                                                        <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                                        <input type="number" value="<%= hachat.prix_unit %>" min="0" step="0.01" class="form-control" id="a2" name="prix" required>
-                                                      </div>
-                                                    </div>
-                                                    <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
-                                                    <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                      Annuler
-                                                    </button>
-                                                    <button type="submit" class="btn btn-danger">Confirmer la modification</button>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
                                       <!-- Card ends -->
                                      <% } %>
                                   </div>
@@ -297,74 +224,7 @@
                                           data-bs-target="#<%= hvente.id_hist %>exampleModalCenter" data-bs-title="Modifier">
                                           <i class="ri-edit-line"></i>
                                         </button>
-                                        
-                                        <div class="modal fade" id="<%= hvente.id_hist %>exampleModalCenter" tabindex="-1" aria-labelledby="<%= hvente.id_hist %>exampleModalCenterTitle" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title">Modification de l'historique de sortie (<%= hvente.caisse.nom %>)</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <form action="/updateHSortie/<%= hvente.id_hist %>?_method=PUT" method="post">
-                                                  <div class="row gx-3">
-                                                    <div class="col-sm-12">
-                                                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                        <h6 class="m-0">Details de l'historique</h6>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-6 col-lg-6 col-sm-6">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Quantité<span class="text-danger">*</span></label>
-                                                        <input type="number" min="1" max="100000" value="<%= hvente.quantiter %>" step="0.01" class="form-control" name="nbr" required>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-6 col-lg-6 col-sm-6">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Prix à l'unité <span class="text-danger">*</span></label>
-                                                        <input type="number" value="<%= hvente.prix_unit %>" min="0" step="0.01" class="form-control" name="prix" required>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Commentaire</label>
-                                                        <textarea class="form-control" placeholder="un commentaire ?" rows="2" name="cmm"><%= hvente.commantaire %></textarea>
-                                                      </div>
-                                                    </div>
-                                                    <input type="hidden" name="type" value="produit">
-                                                    <input type="hidden" name="idpro" value="<%= emballage.id_emballage %>">
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-danger">Confirmer la modification</button>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
                                       <% } %>
-                              
-                                      <div class="modal fade" id="<%= hvente.id_hist %>ModalCenter" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title">Confirmer la suppression</h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer cette vente pour <strong><%= hvente.caisse.nom %></strong> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                              <form action="/deleteHSortie/<%= hvente.id_hist %>?_method=DELETE&id=<%= emballage.id_emballage %>" method="post">
-                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                              
                                     </div>
                                   </td>
                                 </tr>
@@ -447,6 +307,167 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% hachats.forEach((hachat, index) => {%>
+      <div class="modal fade" id="<%= hachat.id_hist %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= hachat.id_hist %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteHEntrer/<%= hachat.id_hist %>?_method=DELETE&id=<%= emballage.id_emballage %>" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if (index === 0) { %>
+        <div class="modal fade" id="<%= hachat.id_hist %>exampleModalCenter" tabindex="-1"
+          aria-labelledby="<%= hachat.id_hist %>exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= hachat.id_hist %>exampleModalCenterTitle">
+                  Modiffication de l'historique du stock Entrer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Row starts -->
+                <form action="/updateHEntrer/<%= hachat.id_hist %>?_method=PUT" method="post">
+                  <div class="row gx-3">
+                    <div class="col-sm-12">
+                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                        <h6 class="m-0">Details de l'historique</h6>
+                      </div>
+                    </div>
+                    
+                    <div class="col-xxl-3 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Quantiter<span class="text-danger">*</span></label>
+                        <input type="number" value="<%= hachat.quantiter %>" min="1"  max="100000" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                        <input type="number" value="<%= hachat.prix_unit %>" min="0" step="0.01" class="form-control" id="a2" name="prix" required>
+                      </div>
+                    </div>
+                    <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
+                    <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Annuler
+                    </button>
+                    <button type="submit" class="btn btn-danger">Confirmer la modification</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+
+    <%}) %>
+
+    <% hventes.forEach((hvente, index) => { %>
+      <% 
+        // Logique : Si l'ID de la caisse n'est pas encore dans le Set, 
+        // c'est que c'est l'historique le plus récent pour cette caisse précise.
+        if (!caissesTraitees.has(hvente.caisse.id_caisse)) { 
+          caissesTraitees.add(hvente.caisse.id_caisse); 
+      %>
+        <div class="modal fade" id="<%= hvente.id_hist %>exampleModalCenter" tabindex="-1" aria-labelledby="<%= hvente.id_hist %>exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification de l'historique de sortie (<%= hvente.caisse.nom %>)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="/updateHSortie/<%= hvente.id_hist %>?_method=PUT" method="post">
+                  <div class="row gx-3">
+                    <div class="col-sm-12">
+                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                        <h6 class="m-0">Details de l'historique</h6>
+                      </div>
+                    </div>
+                    <div class="col-xxl-6 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Quantité<span class="text-danger">*</span></label>
+                        <input type="number" min="1" max="100000" value="<%= hvente.quantiter %>" step="0.01" class="form-control" name="nbr" required>
+                      </div>
+                    </div>
+                    <div class="col-xxl-6 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Prix à l'unité <span class="text-danger">*</span></label>
+                        <input type="number" value="<%= hvente.prix_unit %>" min="0" step="0.01" class="form-control" name="prix" required>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="mb-3">
+                        <label class="form-label">Commentaire</label>
+                        <textarea class="form-control" placeholder="un commentaire ?" rows="2" name="cmm"><%= hvente.commantaire %></textarea>
+                      </div>
+                    </div>
+                    <input type="hidden" name="type" value="produit">
+                    <input type="hidden" name="idpro" value="<%= emballage.id_emballage %>">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Confirmer la modification</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+      <div class="modal fade" id="<%= hvente.id_hist %>ModalCenter" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmer la suppression</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cette vente pour <strong><%= hvente.caisse.nom %></strong> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <form action="/deleteHSortie/<%= hvente.id_hist %>?_method=DELETE&id=<%= emballage.id_emballage %>" method="post">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
+
 
     <!-- *************
 			************ JavaScript Files *************

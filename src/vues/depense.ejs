@@ -109,34 +109,7 @@
                                             <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= depense.id_depense %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="<%= depense.id_depense %>ModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= depense.id_depense %>ModalCenterTitle">
-                                                    Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <p>Voulez-vous vraiment supprimer la dépense <%= depense.nom %> ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                </button>
-                                                <form action="/deleteDepense/<%= depense.id_depense %>?_method=DELETE" method="post">
-                                                    <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                    </div>
-                                                </form>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                     <!-- ----------------------------------------------------------------------------------------- -->
                                     
@@ -149,85 +122,7 @@
                                             <i class="ri-edit-box-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="<%= depense.id_depense %>ModalCenter<%= depense.id_depense %>" tabindex="-1"
-                                            aria-labelledby="<%= depense.id_depense %>ModalCenterTitle<%= depense.id_depense %>" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="<%= depense.id_depense %>ModalCenterTitle<%= depense.id_depense %>">
-                                                    Modiffication
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <form action="/updateDepense/<%= depense.id_depense %>?_method=PUT" method="post">
-                                                  <div class="modal-body">
-                                                    
-                                                      <!-- Row starts -->
-                                                      <div class="row gx-3">
-                                                        <div class="col-sm-12">
-                                                          <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                            <h6 class="m-0">Details de la Dépense</h6>
-                                                          </div>
-                                                        </div>
-                                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                          <div class="mb-3">
-                                                            <label class="form-label" for="a1">Nom de le dépense<span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" id="a1" placeholder="Entrer le nom" value="<%= depense.nom%>" name="nom" required>
-                                                          </div>
-                                                        </div>
-                                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Montant<span class="text-danger">*</span></label>
-                                                              <input type="number" min="1" step="0.01" max="999999999" class="form-control" value="<%= depense.montant%>" name="montant" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Date <span class="text-danger">*</span></label>
-                                                              <input type="date" class="form-control" placeholder="Date" value="<%= depense.date %>" name="date" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a5">Catégorie <span class="text-danger">*</span></label>
-                                                              <!-- <input type="text" class="form-control" id="a5" placeholder="Entrer le post occuper" name="poste" required> -->
-                                                              <select class="form-select" id="categorie" name="categ">
-                                                                <% if(categories.length !== 0){ categories.forEach(categorie => { %>
-                                                                      <option value="<%= categorie.id_categ %>"><%= categorie.nom %></option>
-                                                                <% }) }else{ %>
-                                                                  <option value="null">Aucune categorie disponinble</option>
-                                                                <% } %>
-                                                              </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                          <div class="mb-3">
-                                                            <label class="form-label" for="a2">Description <span class="text-danger">*</span></label>
-                                                            <textarea class="form-control" id="a8" placeholder="Enter une description"  rows="2" name="desc"><%= depense.description%></textarea>
-                                                          </div>
-                                                        </div>
-                                                      <!-- Row ends -->
-                                                      
-                                                    
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                          annuler
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary" <% categories.length !== 0 ? '' : 'desabled' %> >Appliquer les modification</button>
-                                                      </div>
-                                                    </div>
-                                                    <!-- <a href="/updatePoste/<%= depense.id_depense %>" class="btn btn-danger"
-                                                      data-bs-title="Modifier">
-                                                      Appliquer les modification
-                                                    </a> -->
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                   </div>
                                 </td>
@@ -434,6 +329,121 @@
     </div>
     <!-- Page wrapper ends -->
 
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% depenses.forEach(depense => { %>
+      <div class="modal fade" id="<%= depense.id_depense %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= depense.id_depense %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="<%= depense.id_depense %>ModalCenterTitle">
+                  Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer la dépense <%= depense.nom %> ?</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+              </button>
+              <form action="/deleteDepense/<%= depense.id_depense %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                  </div>
+              </form>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="<%= depense.id_depense %>ModalCenter<%= depense.id_depense %>" tabindex="-1"
+        aria-labelledby="<%= depense.id_depense %>ModalCenterTitle<%= depense.id_depense %>" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= depense.id_depense %>ModalCenterTitle<%= depense.id_depense %>">
+                Modiffication
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/updateDepense/<%= depense.id_depense %>?_method=PUT" method="post">
+              <div class="modal-body">
+                
+                  <!-- Row starts -->
+                  <div class="row gx-3">
+                    <div class="col-sm-12">
+                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                        <h6 class="m-0">Details de la Dépense</h6>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Nom de le dépense<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="a1" placeholder="Entrer le nom" value="<%= depense.nom%>" name="nom" required>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Montant<span class="text-danger">*</span></label>
+                          <input type="number" min="1" step="0.01" max="999999999" class="form-control" value="<%= depense.montant%>" name="montant" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">Date <span class="text-danger">*</span></label>
+                          <input type="date" class="form-control" placeholder="Date" value="<%= depense.date %>" name="date" required>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a5">Catégorie <span class="text-danger">*</span></label>
+                          <!-- <input type="text" class="form-control" id="a5" placeholder="Entrer le post occuper" name="poste" required> -->
+                          <select class="form-select" id="categorie" name="categ">
+                            <% if(categories.length !== 0){ categories.forEach(categorie => { %>
+                                  <option value="<%= categorie.id_categ %>"><%= categorie.nom %></option>
+                            <% }) }else{ %>
+                              <option value="null">Aucune categorie disponinble</option>
+                            <% } %>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a2">Description <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="a8" placeholder="Enter une description"  rows="2" name="desc"><%= depense.description%></textarea>
+                      </div>
+                    </div>
+                  <!-- Row ends -->
+                  
+                
+              </div>
+              <div class="modal-footer">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary" <% categories.length !== 0 ? '' : 'desabled' %> >Appliquer les modification</button>
+                  </div>
+                </div>
+                <!-- <a href="/updatePoste/<%= depense.id_depense %>" class="btn btn-danger"
+                  data-bs-title="Modifier">
+                  Appliquer les modification
+                </a> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    
     <!-- *************
 			************ JavaScript Files *************
 		************* -->

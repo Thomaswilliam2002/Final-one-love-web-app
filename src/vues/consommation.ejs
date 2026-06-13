@@ -190,104 +190,6 @@
                                         <i class="ri-edit-box-line"></i>
                                     </button>
                                 </div>
-
-                                <div class="modal fade" id="del<%= consommation.id_conso %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Confirmer la suppression</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p>Voulez-vous vraiment supprimer cette <strong> consommations</strong> ?</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <form action="/deleteConsommation/<%= consommation.id_conso %>?_method=DELETE" method="post">
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="modal fade" id="edit<%= consommation.id_conso %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Modification des information de la Consommation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="/updateConsommation/<%= consommation.id_conso %>?_method=PUT" method="post">
-                                        <div class="modal-body text-start">
-                                          <div class="row gx-3">
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Consommateur</label>
-                                                <select name="consommateur" id="" class="form-select" required>
-                                                    <% personnels.forEach(personnel => { %>
-                                                        <option value="<%= personnel.Personnel.id_personnel %>" <%= consommation.consommateur == personnel.Personnel.id_personnel ? 'selected' : '' %> ><%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> (<%= personnel.Poste.nom_poste %>)</option>
-                                                    <% }) %>
-                                                </select>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Marqueur</label>
-                                                <input type="text" class="form-control" value="<%= consommation.detailsMarqueur.nom %> <%= consommation.detailsMarqueur.prenom %>" readonly required>
-                                              </div>
-                                            </div>
-                                            <input type="hidden" class="form-control" value="<%= consommation.detailsMarqueur.id_personnel %>" name="marqueur" required>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Type de Consommateur</label>
-                                                <select value="<%= consommation.type_consommateur %>" class="form-select" name="type_consommateur" required>
-                                                  <option value="Administration" <%= consommation.type_consommateur == 'Administration' ? 'selected' : '' %> >Administration</option>
-                                                  <option value="Personnel" <%= consommation.type_consommateur == 'Personnel' ? 'selected' : '' %>>Personnel</option>
-                                                </select>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Lieu de Consommation</label>
-                                                <input type="text" class="form-control" value="<%= consommation.lieu %>" name="lieu" required readonly>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Article</label>
-                                                <input type="text" class="form-control" value="<%= consommation.article %>" name="article">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Quantiter</label>
-                                                <input type="number" min="1" class="form-control" value="<%= consommation.quantiter %>" name="quantiter">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                <div class="mb-3">
-                                                  <label class="form-label">Prix Unitaire</label>
-                                                  <input type="number" min="0" class="form-control" step="0.01" value="<%= consommation.prix_unit %>" name="prix_unit">
-                                                </div>
-                                              </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label">Commantaire</label>
-                                                <textarea class="form-control" rows="2" name="commentaire" placeholder="Commantaire"><%= consommation.commantaire %></textarea>
-                                              </div>
-                                            </div>
-                  
-                                          </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
                               </td>
                             </tr>
                           <% }) %>
@@ -306,6 +208,111 @@
         </div>
         </div>
       </div>
+
+      <!-- ========================= -->
+      <!-- 🔥 MODALS (SORTIS ICI) -->
+      <!-- ========================= -->
+
+      <% consommations.forEach(consommation => { %>
+        <div class="modal fade" id="del<%= consommation.id_conso %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer cette <strong> consommations</strong> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="/deleteConsommation/<%= consommation.id_conso %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="edit<%= consommation.id_conso %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification des information de la Consommation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/updateConsommation/<%= consommation.id_conso %>?_method=PUT" method="post">
+                <div class="modal-body text-start">
+                  <div class="row gx-3">
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Consommateur</label>
+                        <select name="consommateur" id="" class="form-select" required>
+                            <% personnels.forEach(personnel => { %>
+                                <option value="<%= personnel.Personnel.id_personnel %>" <%= consommation.consommateur == personnel.Personnel.id_personnel ? 'selected' : '' %> ><%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> (<%= personnel.Poste.nom_poste %>)</option>
+                            <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Marqueur</label>
+                        <input type="text" class="form-control" value="<%= consommation.detailsMarqueur.nom %> <%= consommation.detailsMarqueur.prenom %>" readonly required>
+                      </div>
+                    </div>
+                    <input type="hidden" class="form-control" value="<%= consommation.detailsMarqueur.id_personnel %>" name="marqueur" required>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Type de Consommateur</label>
+                        <select value="<%= consommation.type_consommateur %>" class="form-select" name="type_consommateur" required>
+                          <option value="Administration" <%= consommation.type_consommateur == 'Administration' ? 'selected' : '' %> >Administration</option>
+                          <option value="Personnel" <%= consommation.type_consommateur == 'Personnel' ? 'selected' : '' %>>Personnel</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Lieu de Consommation</label>
+                        <input type="text" class="form-control" value="<%= consommation.lieu %>" name="lieu" required readonly>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Article</label>
+                        <input type="text" class="form-control" value="<%= consommation.article %>" name="article">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Quantiter</label>
+                        <input type="number" min="1" class="form-control" value="<%= consommation.quantiter %>" name="quantiter">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label">Prix Unitaire</label>
+                          <input type="number" min="0" class="form-control" step="0.01" value="<%= consommation.prix_unit %>" name="prix_unit">
+                        </div>
+                      </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-12">
+                      <div class="mb-3">
+                        <label class="form-label">Commantaire</label>
+                        <textarea class="form-control" rows="2" name="commentaire" placeholder="Commantaire"><%= consommation.commantaire %></textarea>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+
     <%- include('script')%>
     
     <script>

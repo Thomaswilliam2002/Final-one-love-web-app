@@ -125,35 +125,7 @@
                                                 <i class="ri-delete-bin-line"></i>
                                               </button>
                                               <!-- Modal -->
-                                              <div class="modal fade" id="<%= caisse.id_caisse %>ModalCenter" tabindex="-1"
-                                                aria-labelledby="<%= caisse.id_caisse %>ModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                      <h5 class="modal-title" id="<%= caisse.id_caisse %>ModalCenterTitle">
-                                                        Supprimer
-                                                      </h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                      <p>Voulez-vous vraiment supprimer la Caisse: <%= caisse.nom %> ?</p>
-                                                      <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente) liés à cette caisse.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                        annuler
-                                                      </button>
-                                                      <form action="/deleteCaisse/<%= caisse.id_caisse %>?_method=DELETE" method="post">
-                                                        <div class="col-sm-12">
-                                                          <div class="d-flex gap-2 justify-content-end">
-                                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                          </div>
-                                                        </div>
-                                                      </form>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
+                                              
                                               <% }%>
                                           <!-- Card ends -->
                                         <!-- ----------------------------------------------------------------------------------------- -->
@@ -200,6 +172,46 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+    <% caisses.forEach(caisse => { %>
+      <%
+      if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+      %>
+      <div class="modal fade" id="<%= caisse.id_caisse %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= caisse.id_caisse %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= caisse.id_caisse %>ModalCenterTitle">
+                Supprimer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer la Caisse: <%= caisse.nom %> ?</p>
+              <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente) liés à cette caisse.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteCaisse/<%= caisse.id_caisse %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }%>
+    <% }) %>
+
 
     <!-- *************
 			************ JavaScript Files *************

@@ -57,25 +57,11 @@
           <!-- App body starts -->
           <div class="app-body">
             <% if(msg) {%>
-                <% if(msg === 'ajout') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-success" role="alert">
-                    <b>Client </b> ajouter avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'modif') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-info" role="alert">
-                    <b>Client </b> modifier avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-                <% if(msg === 'sup') {%>
-                  <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                    <b>Client </b> supprimer avec succes !
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <% }%>
-              <% }%>
+              <div class="alert bg-white border alert-dismissible fade show <%= tc%>" role="alert">
+              <b><%= msg%></b>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          <% }%>
             <!-- Row starts -->
             <div class="row gx-3">
               <div class="col-sm-12">
@@ -125,34 +111,7 @@
                                             <i class="ri-eye-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="<%= client.id_client %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="<%= client.id_client %>ModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="<%= client.id_client %>ModalCenterTitle">
-                                                    Supprimer
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <p>Voulez-vous vraiment supprimer le Client <%= client.nom_client %> ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                  </button>
-                                                  <form action="/deleteClient/<%= client.id_client %>?_method=DELETE" method="post">
-                                                    <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                      </div>
-                                                    </div>
-                                                </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                     
                                     <!-- ----------------------------------------------------------------------------------------- -->
@@ -210,41 +169,7 @@
               </div>
             </div>
             <!-- Row ends -->
-            <div>
-              <!-- Modal XL -->
-              <div class="modal fade" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalXlLabel">
-                        Extra large modal
-                      </h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="table-responsive">
-                        <table class="table customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des Clients">
-                          <thead class="text-center">
-                            <tr>
-                              <th>ID</th>
-                              <th>Date de début</th>
-                              <th>Date de fin</th>
-                              <th>Montant</th>
-                              <th>Nuitée</th>
-                              <th>Appart attribué</th>
-                            </tr>
-                          </thead>
-                          <tbody class="text-center" id="modolBody">
-                            
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
           <!-- App body ends -->
 
@@ -262,6 +187,78 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+    <% clients.forEach(client => { %>
+      <%if(['comptable', 'admin'].includes(user.Poste.nom_poste.toLowerCase())){%>
+        <div class="modal fade" id="<%= client.id_client %>ModalCenter" tabindex="-1"
+          aria-labelledby="<%= client.id_client %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= client.id_client %>ModalCenterTitle">
+                  Supprimer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer le Client <%= client.nom_client %> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <form action="/deleteClient/<%= client.id_client %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <%}%>
+    <% }) %>
+
+    <div>
+      <!-- Modal XL -->
+      <div class="modal fade" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalXlLabel">
+                Historique des Opperations
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table customButtone m-0 align-middle dataTable" data-export-subtitle="Liste des Clients">
+                  <thead class="text-center">
+                    <tr>
+                      <th>ID</th>
+                      <th>Date de début</th>
+                      <th>Date de fin</th>
+                      <th>Montant</th>
+                      <th>Nuitée</th>
+                      <th>Appart attribué</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center" id="modolBody">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- *************
 			************ JavaScript Files *************

@@ -105,34 +105,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                       </button>
                                       <!-- Modal -->
-                                      <div class="modal fade" id="<%= bar.id_barSimple %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="<%= bar.id_barSimple %>ModalCenterTitle">
-                                                Confirmer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <form action="/deleteBarS/<%= bar.id_barSimple %>?_method=DELETE" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      
                                   <!-- Card ends -->
                                
                                 <!-- ----------------------------------------------------------------------------------------- -->
@@ -168,34 +141,7 @@
                                           <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= bar.id_barVip %>ModalCenter" tabindex="-1"
-                                          aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= bar.id_barVip %>ModalCenterTitle">
-                                                  Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                  annuler
-                                                </button>
-                                                <form action="/deleteBarV/<%= bar.id_barVip%>?_method=DELETE" method="post">
-                                                  <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                      <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                   
                                   <!-- ----------------------------------------------------------------------------------------- -->
@@ -231,34 +177,7 @@
                                           <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= bar.id_barSimple %>ModalCenter" tabindex="-1"
-                                          aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= bar.id_barSimple %>ModalCenterTitle">
-                                                  Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                  annuler
-                                                </button>
-                                                <form action="/deleteCClub/<%= bar.id_cclub %>?_method=DELETE" method="post">
-                                                  <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                      <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                   
                                   <!-- ----------------------------------------------------------------------------------------- -->
@@ -304,6 +223,102 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+    <% bars.forEach(bar => { %>
+      <div class="modal fade" id="<%= bar.id_barSimple %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= bar.id_barSimple %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteBarS/<%= bar.id_barSimple %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
+    <% barv.forEach(bar => { %>
+      <div class="modal fade" id="<%= bar.id_barVip %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= bar.id_barVip %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteBarV/<%= bar.id_barVip%>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
+    <% crazyc.forEach(bar => { %>
+      <div class="modal fade" id="<%= bar.id_barSimple %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= bar.id_barSimple %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer <%= bar.nom %> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteCClub/<%= bar.id_cclub %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

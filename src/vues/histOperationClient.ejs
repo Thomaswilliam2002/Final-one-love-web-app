@@ -118,34 +118,7 @@
                                                     <i class="ri-delete-bin-line"></i>
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="appj<%= journal.id_journal %>ModalCenter" tabindex="-1"
-                                                    aria-labelledby="appj<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h5 class="modal-title" id="appj<%= journal.id_journal %>ModalCenterTitle">
-                                                            Confirmer
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <p>Voulez-vous vraiment supprimer ce Séjour ?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                            annuler
-                                                        </button>
-                                                        <form action="/deleteSejour/<%= journal.id_journal %>?_method=DELETE" method="post">
-                                                            <div class="col-sm-12">
-                                                            <div class="d-flex gap-2 justify-content-end">
-                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                            </div>
-                                                            </div>
-                                                        </form>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
+                                                
                                             <!-- Card ends -->
                                             </div>
                                             <!-- ----------------------------------------------------------------------------------- -->
@@ -156,83 +129,7 @@
                                               <i class="ri-edit-box-line"></i>
                                               </button>
                                               <!-- Modal -->
-                                              <div class="modal fade" id="update<%= journal.id_journal %>ModalCenter" tabindex="-1"
-                                                aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-xl">
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                      <h5 class="modal-title" id="update<%= journal.id_journal %>ModalCenterTitle" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                                        Modification 
-                                                      </h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                      <form action="/updateSejour/<%= journal.id_journal %>?_method=PUT" method="post">
-                                                        <div class="row gx-3">
-                                                          <div class="col-sm-12">
-                                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                              <h6 class="m-0">Details du séjour</h6>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Nom et Prenom du Client <span class="text-danger">*</span></label>
-                                                              <input type="text" class="form-control" value="<%= journal.Client.nom_client%> <%= journal.Client.prenom_client%>" readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Prix nuitée <span class="text-danger">*</span></label>
-                                                              <input type="number" min="0" step="0.01" value="<%= journal.loyer%>" class="form-control" readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Nombre de nuitée <span class="text-danger">*</span></label>
-                                                              <input type="number" min="1" class="form-control" value="<%= journal?.nuiter ? journal?.nuiter : 0 %>" readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a1">Nom d'Appartement attribuer <span class="text-danger">*</span></label>
-                                                              <input type="text" class="form-control" value="<%= journal.Appartement.nom_appart %>" readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a2">Date arrivée <span class="text-danger">*</span></label>
-                                                              <input type="date" class="form-control" value="<%= journal.date_debut%>" readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a2">Date départ prévu <span class="text-danger">*</span></label>
-                                                              <input type="date" class="form-control" value="<%= journal.date_fin%>"  readonly required>
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a2">Date départ réel <span class="text-danger">*</span></label>
-                                                              <input type="date" class="form-control" value="<%= journal.date_fin_reel%>" name="date_fin_reel" placeholder="Entrer la date" >
-                                                            </div>
-                                                          </div>
-                                                          <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                            <div class="mb-3">
-                                                              <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
-                                                              <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"><%= journal.Commentaire %></textarea>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                          annuler
-                                                        </button>
-                                                        <button type="submit" class="btn btn-danger">Appliquer les modification</button>
-                                                      </form>
-                                                    </div>
-                                                  </div>
-                                                <!-- </form> -->
-                                                </div>
-                                              </div>
+                                              
                                               <!-- Card ends -->
                                             <!-- ----------------------------------------------------------------------------------- -->
                                         </div>
@@ -296,34 +193,7 @@
                                                   <i class="ri-delete-bin-line"></i>
                                               </button>
                                               <!-- Modal -->
-                                              <div class="modal fade" id="paiS<%= Journal.id_journal %>ModalCenter" tabindex="-1"
-                                                  aria-labelledby="paiS<%= Journal.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                                  <div class="modal-dialog modal-dialog-centered">
-                                                  <div class="modal-content">
-                                                      <div class="modal-header">
-                                                      <h5 class="modal-title" id="paiS<%= Journal.id_journal %>ModalCenterTitle">
-                                                          Confirmer
-                                                      </h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                      </div>
-                                                      <div class="modal-body">
-                                                      <p>Voulez-vous vraiment supprimer cet Historique de paiement de Séjour ?</p>
-                                                      </div>
-                                                      <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                          annuler
-                                                      </button>
-                                                      <form action="/deletePaiementSejour/<%= Journal.id_journal %>?_method=DELETE" method="post">
-                                                          <div class="col-sm-12">
-                                                          <div class="d-flex gap-2 justify-content-end">
-                                                              <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                          </div>
-                                                          </div>
-                                                      </form>
-                                                      </div>
-                                                  </div>
-                                                  </div>
-                                              </div>
+                                              
                                           <!-- Card ends -->
                                           </div>
                                       </div>
@@ -363,6 +233,150 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% AppartJournalEnrichies.forEach(journal => { %>
+      <div class="modal fade" id="appj<%= journal.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="appj<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="appj<%= journal.id_journal %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer ce Séjour ?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <form action="/deleteSejour/<%= journal.id_journal %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="update<%= journal.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="update<%= journal.id_journal %>ModalCenterTitle" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                Modification 
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="/updateSejour/<%= journal.id_journal %>?_method=PUT" method="post">
+                <div class="row gx-3">
+                  <div class="col-sm-12">
+                    <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                      <h6 class="m-0">Details du séjour</h6>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a1">Nom et Prenom du Client <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" value="<%= journal.Client.nom_client%> <%= journal.Client.prenom_client%>" readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a1">Prix nuitée <span class="text-danger">*</span></label>
+                      <input type="number" min="0" step="0.01" value="<%= journal.loyer%>" class="form-control" readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a1">Nombre de nuitée <span class="text-danger">*</span></label>
+                      <input type="number" min="1" class="form-control" value="<%= journal?.nuiter ? journal?.nuiter : 0 %>" readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a1">Nom d'Appartement attribuer <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" value="<%= journal.Appartement.nom_appart %>" readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a2">Date arrivée <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control" value="<%= journal.date_debut%>" readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a2">Date départ prévu <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control" value="<%= journal.date_fin%>"  readonly required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a2">Date départ réel <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control" value="<%= journal.date_fin_reel%>" name="date_fin_reel" placeholder="Entrer la date" >
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-lg-4 col-sm-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="a2">Commentaire <span class="text-danger">*</span></label>
+                      <textarea class="form-control" id="a8"  name="commentaire" placeholder="Entrer un commentaire" rows="2"><%= journal.Commentaire %></textarea>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <button type="submit" class="btn btn-danger">Appliquer les modification</button>
+              </form>
+            </div>
+          </div>
+        <!-- </form> -->
+        </div>
+      </div>
+    <% }) %>
+
+    <% paiementSejoures.forEach(Journal => { %>
+      <div class="modal fade" id="paiS<%= Journal.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="paiS<%= Journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="paiS<%= Journal.id_journal %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer cet Historique de paiement de Séjour ?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <form action="/deletePaiementSejour/<%= Journal.id_journal %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

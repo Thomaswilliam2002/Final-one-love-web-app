@@ -64,53 +64,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="modal fade" id="<%= salon.id_salon %>" tabindex="-1">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <form action="/addSalonJournal" method="POST">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Danse</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                              </div>
-                              
-                              <div class="modal-body">
-                                <p>Prix d'une Danse : <strong><%= salon.prix %> FCFA</strong></p>
-                                <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
-                                  <div class="mb-3">
-                                    <label class="form-label">Banseuses</label>
-                                    <select name="danseuse" id="" class="form-select" required>
-                                        <% if(danseuses.length > 0){danseuses.forEach(danseuse => { %>
-                                            <option value="<%= danseuse.Personnel.id_personnel %>" ><%= danseuse.Personnel.nom %> <%= danseuse.Personnel.prenom %></option>
-                                        <% })}else{ %>
-                                          <option value="" >Aucune danseuse n'est enregistrer</option>
-                                        <% } %>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-xxl-12 col-lg-4 col-sm-12">
-                                  <div class="mb-3">
-                                      <label class="form-label">Marqueur</label>
-                                    <input type="text" class="form-control" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" readonly required>
-                                  </div>
-                                </div>
-                                <input type="hidden" class="form-control" value="<%= user.Personnel.id_personnel %>" name="marqueur">
-                                <input type="hidden" class="form-control" value="<%= salon.prix %>" name="montant">
-                                <input type="hidden" class="form-control" value="<%= salon.id_salon %>" name="id_salon">
-                                <div class="col-xxl-12 col-lg-12 col-sm-12">
-                                  <div class="mb-3">
-                                    <label class="form-label">Commantaire</label>
-                                    <textarea class="form-control" rows="2" name="commentaire" placeholder="Commantaire"></textarea>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <button type="submit" class="btn btn-success">Valider la Danse</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
+                      
                     <% })} else{ %>
                       <div class="alert bg-white border alert-dismissible fade show text-bg-danger" role="alert">
                         <b>Aucun Salon Privé Disponible</b>
@@ -207,71 +161,6 @@
                                           <i class="ri-edit-box-line"></i>
                                       </button>
                                   </div>
-
-                                  <div class="modal fade" id="del<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Confirmer la suppression</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <p>Voulez-vous vraiment supprimer ce <strong> salons</strong> ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <form action="/deleteSalon/<%= salon.id_salon %>?_method=DELETE" method="post">
-                                              <button type="submit" class="btn btn-danger">Supprimer</button>
-                                          </form>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="modal fade" id="edit<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Modification des information du salon</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="/updateSalon/<%= salon.id_salon %>?_method=PUT" method="post">
-                                          <div class="modal-body text-start">
-                                              <div class="row gx-3">
-                                                  <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Nom</label>
-                                                        <input type="text" value="<%= salon.nom %>" name="nom" class="form-control" required>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                                      <div class="mb-3">
-                                                          <label class="form-label">Prix</label>
-                                                        <input type="number" value="<%= salon.prix %>" name="prix" min="0" step="0,01" class="form-control" required>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-sm-12">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Adresse</label>
-                                                        <textarea class="form-control" rows="1" name="adresse" placeholder="Adresse"><%= salon.adresse %></textarea>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-xxl-3 col-lg-4 col-sm-12">
-                                                      <div class="mb-3">
-                                                        <label class="form-label">Commantaire</label>
-                                                        <textarea class="form-control" rows="2"  name="Commantaire" placeholder="Commantaire"><%= salon.commentaire %></textarea>
-                                                      </div>
-                                                    </div>
-                                              </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                            <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
-                                          </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </td>
                               </tr>
                             <% }) %>
@@ -326,26 +215,6 @@
                                           <i class="ri-delete-bin-line"></i>
                                       </button>
                                   </div>
-
-                                  <div class="modal fade" id="j<%= salonsJournal.id_journal %>" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">Confirmer la suppression</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <p>Voulez-vous vraiment supprimer ce <strong> Journal</strong> ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <form action="/deleteSalonJournal/<%= salonsJournal.id_journal %>?_method=DELETE" method="post">
-                                              <button type="submit" class="btn btn-danger">Supprimer</button>
-                                          </form>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </td>
                               </tr>
                             <% }) %>
@@ -356,6 +225,7 @@
                   </div>
                 </div>
               </div>
+              
             <%}%>
           </div>
           <div class="app-footer bg-white">
@@ -365,6 +235,151 @@
         </div>
         </div>
       </div>
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% if(salons.length > 0){salons.forEach(salon => { %>
+      <div class="modal fade" id="<%= salon.id_salon %>" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/addSalonJournal" method="POST">
+              <div class="modal-header">
+                <h5 class="modal-title">Danse</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              
+              <div class="modal-body">
+                <p>Prix d'une Danse : <strong><%= salon.prix %> FCFA</strong></p>
+                <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="mb-3">
+                    <label class="form-label">Banseuses</label>
+                    <select name="danseuse" id="" class="form-select" required>
+                        <% if(danseuses.length > 0){danseuses.forEach(danseuse => { %>
+                            <option value="<%= danseuse.Personnel.id_personnel %>" ><%= danseuse.Personnel.nom %> <%= danseuse.Personnel.prenom %></option>
+                        <% })}else{ %>
+                          <option value="" >Aucune danseuse n'est enregistrer</option>
+                        <% } %>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xxl-12 col-lg-4 col-sm-12">
+                  <div class="mb-3">
+                      <label class="form-label">Marqueur</label>
+                    <input type="text" class="form-control" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" readonly required>
+                  </div>
+                </div>
+                <input type="hidden" class="form-control" value="<%= user.Personnel.id_personnel %>" name="marqueur">
+                <input type="hidden" class="form-control" value="<%= salon.prix %>" name="montant">
+                <input type="hidden" class="form-control" value="<%= salon.id_salon %>" name="id_salon">
+                <div class="col-xxl-12 col-lg-12 col-sm-12">
+                  <div class="mb-3">
+                    <label class="form-label">Commantaire</label>
+                    <textarea class="form-control" rows="2" name="commentaire" placeholder="Commantaire"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-success">Valider la Danse</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% })} %>
+
+    <%if(['comptable', 'admin', 'caissier central'].includes(user.Poste.nom_poste.toLowerCase())){%>
+      <% salons.forEach(salon => { %>
+        <div class="modal fade" id="del<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer ce <strong> salons</strong> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="/deleteSalon/<%= salon.id_salon %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="edit<%= salon.id_salon %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification des information du salon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/updateSalon/<%= salon.id_salon %>?_method=PUT" method="post">
+                <div class="modal-body text-start">
+                    <div class="row gx-3">
+                        <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label">Nom</label>
+                              <input type="text" value="<%= salon.nom %>" name="nom" class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-6">
+                            <div class="mb-3">
+                                <label class="form-label">Prix</label>
+                              <input type="number" value="<%= salon.prix %>" name="prix" min="0" step="0,01" class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Adresse</label>
+                              <textarea class="form-control" rows="1" name="adresse" placeholder="Adresse"><%= salon.adresse %></textarea>
+                            </div>
+                          </div>
+                          <div class="col-xxl-3 col-lg-4 col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Commantaire</label>
+                              <textarea class="form-control" rows="2"  name="Commantaire" placeholder="Commantaire"><%= salon.commentaire %></textarea>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    <% })} %>
+
+    <% salonsJournals.forEach(salonsJournal => { %>
+      <div class="modal fade" id="j<%= salonsJournal.id_journal %>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmer la suppression</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer ce <strong> Journal</strong> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <form action="/deleteSalonJournal/<%= salonsJournal.id_journal %>?_method=DELETE" method="post">
+                  <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
     <%- include('script')%>
     
     <script>

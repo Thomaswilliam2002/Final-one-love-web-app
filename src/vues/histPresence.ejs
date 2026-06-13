@@ -61,7 +61,7 @@
                         <tbody class="text-center">
                             <% i = 1; histps.forEach(histp => { %>
                             <tr>
-                            <td><%= i %></td>
+                            <td><%= histp.slug_id %></td>
                             <td><%= histp.Personnel.nom %> <%= histp.Personnel.prenom %></td>
                             <td><%= histp.etat_presence %></td>
                             <td><%= histp.date %></td>
@@ -79,36 +79,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= histp.id_presence %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="<%=histp.id_presence%>ModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <!-- <form action="/deletehistp/<%= histp.id_presence %>?_method=DELETE" method="post"> -->
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= histp.id_presence %>ModalCenterTitle">
-                                                Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                                <p>Voulez-vous vraiment supprimer cette présence ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                                </button>
-                                                <form action="/deletePresence/<%= histp.id_presence %>?_method=DELETE&etat=present" method="post">
-                                                <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                </div>
-                                                </form>
-                                            </div>
-                                            </div>
-                                        <!-- </form> -->
-                                        </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                 </div>
                             </td>
@@ -145,6 +116,45 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% if (histps && histps.length > 0) { %>
+      <% histps.forEach(histp => { %>
+        <div class="modal fade" id="<%= histp.id_presence %>ModalCenter" tabindex="-1"
+          aria-labelledby="<%=histp.id_presence%>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <!-- <form action="/deletehistp/<%= histp.id_presence %>?_method=DELETE" method="post"> -->
+              <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="<%= histp.id_presence %>ModalCenterTitle">
+                  Confirmer
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                  <p>Voulez-vous vraiment supprimer cette présence ?</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                  </button>
+                  <form action="/deletePresence/<%= histp.id_presence %>?_method=DELETE&etat=present" method="post">
+                  <div class="col-sm-12">
+                      <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                      </div>
+                  </div>
+                  </form>
+              </div>
+              </div>
+          <!-- </form> -->
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
 
     <!-- *************
 			************ JavaScript Files *************

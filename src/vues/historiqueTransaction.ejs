@@ -106,34 +106,7 @@
                                             <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= je.id_journal %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="<%= je.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= je.id_journal %>ModalCenterTitle">
-                                                    Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <p>Voulez-vous vraiment supprimer cet historique ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                </button>
-                                                <form action="/deleteEmpruntJournal/<%= je.id_journal %>?_method=DELETE" method="post">
-                                                    <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                    </div>
-                                                </form>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                   </div>
                                 </td>
@@ -197,34 +170,7 @@
                                               <i class="ri-delete-bin-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="jc<%= jc.id_journal %>ModalCenter" tabindex="-1"
-                                              aria-labelledby="jc<%= jc.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                  <div class="modal-header">
-                                                  <h5 class="modal-title" id="jc<%= jc.id_journal %>ModalCenterTitle">
-                                                      Confirmer
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                  </div>
-                                                  <div class="modal-body">
-                                                  <p>Voulez-vous vraiment supprimer cet historique ?</p>
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                      annuler
-                                                  </button>
-                                                  <form action="/deleteCreanceJournal/<%= jc.id_journal %>?_method=DELETE" method="post">
-                                                      <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                          <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                      </div>
-                                                      </div>
-                                                  </form>
-                                                  </div>
-                                              </div>
-                                              </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                     </div>
                                   </td>
@@ -261,6 +207,72 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% jes.forEach(je => { %>
+      <div class="modal fade" id="<%= je.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= je.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="<%= je.id_journal %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer cet historique ?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <form action="/deleteEmpruntJournal/<%= je.id_journal %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+      </div>
+    <% }) %>
+
+    <% jcs.forEach(jc => { %>
+      <div class="modal fade" id="jc<%= jc.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="jc<%= jc.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="jc<%= jc.id_journal %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer cet historique ?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <form action="/deleteCreanceJournal/<%= jc.id_journal %>?_method=DELETE" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

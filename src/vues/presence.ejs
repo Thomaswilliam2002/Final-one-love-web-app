@@ -140,180 +140,183 @@
               </div>
             </div>
           </div>
-
-        </div> <div class="modal fade" id="modalArrivee" tabindex="-1">
-          <div class="modal-dialog">
-            <form action="/addArrivee" method="POST" class="modal-content">
-              <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">Pointer une prise de service</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Employé de retour</label>
-                    <select name="id_personnel" class="form-select" required>
-                      <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
-                        <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
-                      <% }}) %>
-                    </select>
-                  </div>
-                <%}else{%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Nom & Prenom</label>
-                    <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
-                  </div>
-                  <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
-                <%}%>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Date de début</label>
-                  <input type="date" name="date_debut" class="form-control" required>
-                </div>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Heure d'arrivée</label>
-                  <input type="time" name="heure_arriver" class="form-control" value="<%= new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) %>" required>
-                </div>
-                <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success w-100">Valider l'arrivée</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="modal fade" id="modalDepart" tabindex="-1">
-          <div class="modal-dialog">
-            <form action="/updateDepart" method="POST" class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Enregistrer une fin de service</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Employé de retour</label>
-                    <select name="id_personnel" class="form-select" required>
-                      <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
-                        <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
-                      <% }}) %>
-                    </select>
-                  </div>
-                <%}else{%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Nom & Prenom</label>
-                    <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
-                  </div>
-                  <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
-                <%}%>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Date de fin</label>
-                  <input type="date" name="date_fin" class="form-control" required>
-                </div>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Heure de départ</label>
-                  <input type="time" name="heure_deppart" class="form-control" required>
-                </div>
-                <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w-100">Valider le départ</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Les absence -->
-        <div class="modal fade" id="modalAbsenceDebut" tabindex="-1">
-          <div class="modal-dialog">
-            <form action="/addAbsenceDebut" method="POST" class="modal-content">
-              <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title">Déclarer une Absence</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Employé de retour</label>
-                    <select name="id_personnel" class="form-select" required>
-                      <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
-                        <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
-                      <% }}) %>
-                    </select>
-                  </div>
-                <%}else{%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Nom & Prenom</label>
-                    <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
-                  </div>
-                  <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
-                <%}%>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Date de début</label>
-                  <input type="date" name="date_debut" class="form-control" required>
-                </div>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Heure de début</label>
-                  <input type="time" name="heure_debut" class="form-control" required>
-                </div>
-              <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
-              <div class="mb-3 text-center">
-                  <label class="form-label">Justification</label>
-                  <textarea name="justification" class="form-control" placeholder="Raison de l'absence..."></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-danger w-100">Enregistrer l'absence</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="modal fade" id="modalAbsenceFin" tabindex="-1">
-          <div class="modal-dialog">
-            <form action="/updateAbsenceFin" method="POST" class="modal-content">
-              <div class="modal-header bg-warning text-dark">
-                <h5 class="modal-title">Retour d'Absence</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Employé de retour</label>
-                    <select name="id_personnel" class="form-select" required>
-                      <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
-                        <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
-                      <% }}) %>
-                    </select>
-                  </div>
-                <%}else{%>
-                  <div class="mb-3 text-center">
-                    <label class="form-label">Nom & Prenom</label>
-                    <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
-                  </div>
-                  <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
-                <%}%>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Date de retour (Fin)</label>
-                  <input type="date" name="date_fin" class="form-control" required>
-                </div>
-                <div class="mb-3 text-center">
-                  <label class="form-label">Heure d'arrivée</label>
-                  <input type="time" name="heure_fin" class="form-control" value="<%= new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) %>" required>
-                </div>
-                <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-warning w-100 text-dark">Clôturer l'absence</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
         <div class="app-footer bg-white text-center py-3">
           <span>© OneLove Admin 2026</span>
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- 🔥 MODALS (SORTIS ICI) -->
+  <!-- ========================= -->
+
+  </div> <div class="modal fade" id="modalArrivee" tabindex="-1">
+    <div class="modal-dialog">
+      <form action="/addArrivee" method="POST" class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Pointer une prise de service</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Employé de retour</label>
+              <select name="id_personnel" class="form-select" required>
+                <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
+                  <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
+                <% }}) %>
+              </select>
+            </div>
+          <%}else{%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Nom & Prenom</label>
+              <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
+            </div>
+            <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
+          <%}%>
+          <div class="mb-3 text-center">
+            <label class="form-label">Date de début</label>
+            <input type="date" name="date_debut" class="form-control" required>
+          </div>
+          <div class="mb-3 text-center">
+            <label class="form-label">Heure d'arrivée</label>
+            <input type="time" name="heure_arriver" class="form-control" value="<%= new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) %>" required>
+          </div>
+          <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">Valider l'arrivée</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalDepart" tabindex="-1">
+    <div class="modal-dialog">
+      <form action="/updateDepart" method="POST" class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Enregistrer une fin de service</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Employé de retour</label>
+              <select name="id_personnel" class="form-select" required>
+                <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
+                  <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
+                <% }}) %>
+              </select>
+            </div>
+          <%}else{%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Nom & Prenom</label>
+              <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
+            </div>
+            <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
+          <%}%>
+          <div class="mb-3 text-center">
+            <label class="form-label">Date de fin</label>
+            <input type="date" name="date_fin" class="form-control" required>
+          </div>
+          <div class="mb-3 text-center">
+            <label class="form-label">Heure de départ</label>
+            <input type="time" name="heure_deppart" class="form-control" required>
+          </div>
+          <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary w-100">Valider le départ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Les absence -->
+  <div class="modal fade" id="modalAbsenceDebut" tabindex="-1">
+    <div class="modal-dialog">
+      <form action="/addAbsenceDebut" method="POST" class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">Déclarer une Absence</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Employé de retour</label>
+              <select name="id_personnel" class="form-select" required>
+                <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
+                  <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
+                <% }}) %>
+              </select>
+            </div>
+          <%}else{%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Nom & Prenom</label>
+              <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
+            </div>
+            <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
+          <%}%>
+          <div class="mb-3 text-center">
+            <label class="form-label">Date de début</label>
+            <input type="date" name="date_debut" class="form-control" required>
+          </div>
+          <div class="mb-3 text-center">
+            <label class="form-label">Heure de début</label>
+            <input type="time" name="heure_debut" class="form-control" required>
+          </div>
+        <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
+        <div class="mb-3 text-center">
+            <label class="form-label">Justification</label>
+            <textarea name="justification" class="form-control" placeholder="Raison de l'absence..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger w-100">Enregistrer l'absence</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalAbsenceFin" tabindex="-1">
+    <div class="modal-dialog">
+      <form action="/updateAbsenceFin" method="POST" class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title">Retour d'Absence</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <%if(['admin', 'comptable', 'caissier central', 'caissier'].includes(user.Personnel.type_personnel)){%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Employé de retour</label>
+              <select name="id_personnel" class="form-select" required>
+                <% personnels.forEach(p => { if(p.type_personnel !== 'admin'){%>
+                  <option value="<%= p.id_personnel %>"><%= p.nom %> <%= p.prenom %></option>
+                <% }}) %>
+              </select>
+            </div>
+          <%}else{%>
+            <div class="mb-3 text-center">
+              <label class="form-label">Nom & Prenom</label>
+              <input type="text" name="" value="<%= user.Personnel.nom %> <%= user.Personnel.prenom %>" class="form-control" required disabled>
+            </div>
+            <input type="hidden" name="id_personnel" value="<%= user.Personnel.id_personnel %>" class="form-control" >
+          <%}%>
+          <div class="mb-3 text-center">
+            <label class="form-label">Date de retour (Fin)</label>
+            <input type="date" name="date_fin" class="form-control" required>
+          </div>
+          <div class="mb-3 text-center">
+            <label class="form-label">Heure d'arrivée</label>
+            <input type="time" name="heure_fin" class="form-control" value="<%= new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) %>" required>
+          </div>
+          <input type="hidden" name="pointeur" value="<%= user.Personnel.id_personnel %>">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning w-100 text-dark">Clôturer l'absence</button>
+        </div>
+      </form>
     </div>
   </div>
 

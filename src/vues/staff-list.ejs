@@ -114,37 +114,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                       </button>
                                       <!-- Modal -->
-                                      <div class="modal fade" id="<%= personnel.id_personnel %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <!-- <form action="/deletePersonnel/<%= personnel.id_personnel %>?_method=DELETE" method="post"> -->
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="<%= personnel.id_personnel %>ModalCenterTitle">
-                                                Confirmer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                              <p>Voulez-vous vraiment supprimer <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> ?</p>
-                                              <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente,...) si il y en a, liés à <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %>.</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <form action="/deletePersonnel/<%= personnel.Personnel.id_personnel %>?_method=DELETE" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        <!-- </form> -->
-                                        </div>
-                                      </div>
+                                      
                                   <!-- Card ends -->
                                 <% }%>
                                 <% if(user.Personnel.type_personnel === 'comptable'){if(personnel.type_personnel !== 'admin'){%>
@@ -209,6 +179,45 @@
     </div>
     <!-- Page wrapper ends -->
 
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% personnels.forEach(personnel => { %>
+      <% if(personnel.Personnel.type_personnel !== 'admin'){%>
+        <div class="modal fade" id="<%= personnel.id_personnel %>ModalCenter" tabindex="-1"
+          aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <!-- <form action="/deletePersonnel/<%= personnel.id_personnel %>?_method=DELETE" method="post"> -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= personnel.id_personnel %>ModalCenterTitle">
+                  Confirmer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                <p>Voulez-vous vraiment supprimer <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %> ?</p>
+                <p>La suppression est irriversible et entraînera la suppression de tous les comptes et les opérations(Historique de vente,...) si il y en a, liés à <%= personnel.Personnel.nom %> <%= personnel.Personnel.prenom %>.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <form action="/deletePersonnel/<%= personnel.Personnel.id_personnel %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          <!-- </form> -->
+          </div>
+        </div>
+      <% }%>
+    <%}) %>
     <!-- *************
 			************ JavaScript Files *************
 		************* -->

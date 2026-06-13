@@ -90,35 +90,7 @@
                                             <i class="ri-delete-bin-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="<%= maisonColse.id_mclose %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="<%= maisonColse.id_mclose %>ModalCenterTitle">
-                                                    Confirmer
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                                  <p>Voulez-vous vraiment supprimer la maison close <%= maisonColse.nom %> ?</p>
-                                                  <p>Cella va entrainé la suppression de tout les données associée a la Maison close. cella inclue les chambre ainsi que les Historique </p>
-                                                </div>
-                                                <div class="modal-footer" >
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    annuler
-                                                  </button>
-                                                  <form action="/deleteMClose/<%= maisonColse.id_mclose %>?_method=DELETE" method="post">
-                                                    <div class="col-sm-12">
-                                                      <div class="d-flex gap-2 justify-content-end">
-                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                      </div>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                       <!-- Card ends -->
                                       
                                       <!-- ----------------------------------------------------------------------------------------- -->
@@ -134,55 +106,7 @@
                                         <i class="ri-edit-box-line"></i>
                                       </button>
                                       <!-- Modal -->
-                                      <div class="modal fade" id="1<%= maisonColse.id_mclose %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="ersonnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="1<%= maisonColse.id_mclose %>ModalCenterTitle">
-                                                Modification
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                              <form action="/updateMClose/<%= maisonColse.id_mclose %>?_method=PUT" method="post">
-                                                <div class="row gx-3">
-                                                  <div class="col-sm-12">
-                                                    <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                      <h6 class="m-0">Details de la Maison close</h6>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                    <div class="mb-3">
-                                                      <label class="form-label" for="a1">Nom<span class="text-danger">*</span></label>
-                                                      <input type="text" class="form-control" id="a1" value="<%= maisonColse.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                    <div class="mb-3">
-                                                      <label class="form-label" for="a1">Adresse<span class="text-danger">*</span></label>
-                                                      <input type="text" class="form-control" id="a1" value="<%= maisonColse.adresse %>" placeholder="Entrer l'adresse" name="adresse">
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                    <div class="mb-3">
-                                                      <label class="form-label" for="a1">Nombre de chambre<span class="text-danger">*</span></label>
-                                                      <input type="number" min="0" class="form-control" id="a1" value="<%= maisonColse.nb_chambre %>" placeholder="Entrer le nombre de chambre" name="nb">
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                  annuler
-                                                </button>
-                                                <button type="submit" class="btn btn-danger">Appliquer les modification</button>
-                                              </form>
-                                            </div>
-                                            <div class="modal-footer" >
-                                              
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      
                                       <!-- Card ends -->
                                       
                                       <!-- ----------------------------------------------------------------------------------------- -->
@@ -246,34 +170,7 @@
                                                   <i class="ri-delete-bin-line"></i>
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="<%= chambre.id_chambre %>ModalCenter<%= chambre.id_chambre %>" tabindex="-1"
-                                                  aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                                  <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                      <div class="modal-header">
-                                                        <h5 class="modal-title" id="<%= chambre.id_chambre %>ModalCenterTitle<%= chambre.id_chambre %>">
-                                                          Confirmer
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                      </div>
-                                                      <div class="modal-body">
-                                                        <p>Voulez-vous vraiment supprimer la chambre <%= chambre.nom %> ?</p>
-                                                      </div>
-                                                      <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                          annuler
-                                                        </button>
-                                                        <form action="/deleteChambre/<%= chambre.id_chambre %>?_method=DELETE" method="post">
-                                                          <div class="col-sm-12">
-                                                            <div class="d-flex gap-2 justify-content-end">
-                                                              <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                            </div>
-                                                          </div>
-                                                        </form>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
+                                                
                                             <!-- Card ends -->
                                           </div>
                                           <!-- ----------------------------------------------------------------------------------------- -->
@@ -289,65 +186,7 @@
                                             <i class="ri-edit-box-line"></i>
                                           </button>
                                           <!-- Modal -->
-                                          <div class="modal fade" id="c<%= chambre.id_chambre %>ModalCenter" tabindex="-1"
-                                            aria-labelledby="c<%= chambre.id_chambre %>ModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="c<%= chambre.id_chambre %>ModalCenterTitle">
-                                                    Modification
-                                                  </h5>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                                  <form action="/updateChambre/<%= chambre.id_chambre %>?_method=PUT" method="post">
-                                                    <div class="row gx-3">
-                                                      <div class="col-sm-12">
-                                                        <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                          <h6 class="m-0">Details de la chambre</h6>
-                                                        </div>
-                                                      </div>
-                                                      <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                        <div class="mb-3">
-                                                          <label class="form-label" for="a1">Nom<span class="text-danger">*</span></label>
-                                                          <input type="text" class="form-control" id="a1" value="<%= chambre.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
-                                                        </div>
-                                                      </div>
-                                                      <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                        <div class="mb-3">
-                                                          <label class="form-label" for="a1">Loyer<span class="text-danger">*</span></label>
-                                                          <input type="number" min="0" step="0.01" class="form-control" id="a1" value="<%= chambre.loyer %>" placeholder="Entrer le loyer" name="loyer">
-                                                        </div>
-                                                      </div>
-                                                      <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                        <div class="mb-3">
-                                                          <label class="form-label" for="a2">Disponibiliter <span class="text-danger">*</span></label>
-                                                          <select class="form-select" id="type" name="dispo">
-                                                            <option value="Libre">Libre</option>
-                                                            <option value="Indisponible">Indisponible</option>
-                                                            <option value="Occuper">Occuper</option>
-                                                          </select>
-                                                        </div>
-                                                      </div>
-                                                      <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                        <div class="mb-3">
-                                                          <label class="form-label" for="a2">Description<span class="text-danger">*</span></label>
-                                                          <textarea name="desc" id="" class="form-control" rows="2" placeholder="Entrer une description"><%= chambre.description %></textarea>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                      annuler
-                                                    </button>
-                                                    <button type="submit" class="btn btn-danger">Appliquer les modification</button>
-                                                  </form>
-                                                </div>
-                                                <div class="modal-footer" >
-                                                  
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
+                                          
                                           <!-- Card ends -->
                                           <!-- ----------------------------------------------------------------------------------------- -->
                                           <a href="/onechambre/<%= chambre.id_chambre %>/<%= maisonColse.id_mclose %>" class="btn btn-outline-info btn-sm"
@@ -457,6 +296,192 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% if(maisonColses.length > 0){ %>
+      <% maisonColses.forEach((maisonColse, index) => { a = 0; %>
+        <% chambres.forEach((chambre, index) => { 
+          if(chambre.id_mclose === maisonColse.id_mclose){
+            a++;
+          }
+        })%>
+
+        <div class="modal fade" id="<%= maisonColse.id_mclose %>ModalCenter" tabindex="-1"
+          aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="<%= maisonColse.id_mclose %>ModalCenterTitle">
+                  Confirmer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                <p>Voulez-vous vraiment supprimer la maison close <%= maisonColse.nom %> ?</p>
+                <p>Cella va entrainé la suppression de tout les données associée a la Maison close. cella inclue les chambre ainsi que les Historique </p>
+              </div>
+              <div class="modal-footer" >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+                </button>
+                <form action="/deleteMClose/<%= maisonColse.id_mclose %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="1<%= maisonColse.id_mclose %>ModalCenter" tabindex="-1"
+          aria-labelledby="ersonnel.id_personnelModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="1<%= maisonColse.id_mclose %>ModalCenterTitle">
+                  Modification
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                <form action="/updateMClose/<%= maisonColse.id_mclose %>?_method=PUT" method="post">
+                  <div class="row gx-3">
+                    <div class="col-sm-12">
+                      <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                        <h6 class="m-0">Details de la Maison close</h6>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Nom<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="a1" value="<%= maisonColse.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Adresse<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="a1" value="<%= maisonColse.adresse %>" placeholder="Entrer l'adresse" name="adresse">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="a1">Nombre de chambre<span class="text-danger">*</span></label>
+                        <input type="number" min="0" class="form-control" id="a1" value="<%= maisonColse.nb_chambre %>" placeholder="Entrer le nombre de chambre" name="nb">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    annuler
+                  </button>
+                  <button type="submit" class="btn btn-danger">Appliquer les modification</button>
+                </form>
+              </div>
+              <div class="modal-footer" >
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <%if(a > 0){ %>
+          <% chambres.forEach(chambre => {if(chambre.id_mclose === maisonColse.id_mclose){%>
+            <div class="modal fade" id="<%= chambre.id_chambre %>ModalCenter<%= chambre.id_chambre %>" tabindex="-1"
+              aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="<%= chambre.id_chambre %>ModalCenterTitle<%= chambre.id_chambre %>">
+                      Confirmer
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Voulez-vous vraiment supprimer la chambre <%= chambre.nom %> ?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      annuler
+                    </button>
+                    <form action="/deleteChambre/<%= chambre.id_chambre %>?_method=DELETE" method="post">
+                      <div class="col-sm-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="c<%= chambre.id_chambre %>ModalCenter" tabindex="-1"
+              aria-labelledby="c<%= chambre.id_chambre %>ModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="c<%= chambre.id_chambre %>ModalCenterTitle">
+                      Modification
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                    <form action="/updateChambre/<%= chambre.id_chambre %>?_method=PUT" method="post">
+                      <div class="row gx-3">
+                        <div class="col-sm-12">
+                          <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                            <h6 class="m-0">Details de la chambre</h6>
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a1">Nom<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="a1" value="<%= chambre.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a1">Loyer<span class="text-danger">*</span></label>
+                            <input type="number" min="0" step="0.01" class="form-control" id="a1" value="<%= chambre.loyer %>" placeholder="Entrer le loyer" name="loyer">
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a2">Disponibiliter <span class="text-danger">*</span></label>
+                            <select class="form-select" id="type" name="dispo">
+                              <option value="Libre">Libre</option>
+                              <option value="Indisponible">Indisponible</option>
+                              <option value="Occuper">Occuper</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a2">Description<span class="text-danger">*</span></label>
+                            <textarea name="desc" id="" class="form-control" rows="2" placeholder="Entrer une description"><%= chambre.description %></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        annuler
+                      </button>
+                      <button type="submit" class="btn btn-danger">Appliquer les modification</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer" >
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } }) %>
+        <% } %>
+
+      <% })} %>
 
     <!-- *************
 			************ JavaScript Files *************

@@ -86,36 +86,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="<%= hista.id_presence %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="<%=hista.id_presence%>ModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <!-- <form action="/deletehista/<%= hista.id_presence %>?_method=DELETE" method="post"> -->
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="<%= hista.id_presence %>ModalCenterTitle">
-                                                Confirmer
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
-                                                <p>Voulez-vous vraiment supprimer cette Absence ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                                </button>
-                                                <form action="/deletePresence/<%= hista.id_presence %>?_method=DELETE&etat=absent" method="post">
-                                                <div class="col-sm-12">
-                                                    <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                    </div>
-                                                </div>
-                                                </form>
-                                            </div>
-                                            </div>
-                                        <!-- </form> -->
-                                        </div>
-                                        </div>
+                                        
                                     <!-- Card ends -->
                                 </div>
                             </td>
@@ -152,6 +123,43 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% i = 1; histas.forEach(hista => { %>
+      <div class="modal fade" id="<%= hista.id_presence %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%=hista.id_presence%>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- <form action="/deletehista/<%= hista.id_presence %>?_method=DELETE" method="post"> -->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="<%= hista.id_presence %>ModalCenterTitle">
+                Confirmer
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="white-space: normal; word-wrap: break-word; overflow: break-word;">
+                <p>Voulez-vous vraiment supprimer cette Absence ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+                </button>
+                <form action="/deletePresence/<%= hista.id_presence %>?_method=DELETE&etat=absent" method="post">
+                <div class="col-sm-12">
+                    <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+            </div>
+        <!-- </form> -->
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

@@ -85,90 +85,6 @@
                                         <i class="ri-edit-box-line"></i>
                                     </button>
                                 </div>
-
-                                <div class="modal fade" id="del<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Confirmer la suppression</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p>Voulez-vous vraiment supprimer le fournisseur <strong><%= fournisseur.nom %></strong> ?</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <form action="/deleteFournisseur<%= fournisseur.id_fournisseur %>?_method=DELETE" method="post">
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="modal fade" id="edit<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Modification des information du fournisseur</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form action="/updateFournisseur/<%= fournisseur.id_fournisseur %>?_method=PUT" method="post">
-                                        <div class="modal-body text-start">
-                                          <div class="row gx-3">
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Nom</label>
-                                                <input type="text" class="form-control" value="<%= fournisseur.nom %>" name="nom" required>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Pseudo</label>
-                                                <input type="text" class="form-control" value="<%= fournisseur.pseudo %>" name="pseudo">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" value="<%= fournisseur.email %>" name="email">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Tel 1</label>
-                                                <input type="text" class="form-control" value="<%= fournisseur.numero1 %>" name="numero1">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Tel 2</label>
-                                                <input type="text" class="form-control" value="<%= fournisseur.numero2 %>" name="numero2">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-4 col-sm-6">
-                                              <div class="mb-3">
-                                                <label class="form-label">Adresse</label>
-                                                <input type="text" class="form-control" value="<%= fournisseur.adresse %>" name="adresse">
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-lg-6 col-sm-8">
-                                              <div class="mb-3">
-                                                <label class="form-label">Commantaire</label>
-                                                <textarea class="form-control" rows="3" name="desc" placeholder="Commantaire"><%= fournisseur.commantaire %></textarea>
-                                              </div>
-                                            </div>
-                  
-                                          </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                          <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
                               </td>
                             </tr>
                           <% }) %>
@@ -249,6 +165,98 @@
         </div>
         </div>
       </div>
+
+      <!-- ========================= -->
+      <!-- 🔥 MODALS (SORTIS ICI) -->
+      <!-- ========================= -->
+
+      <% fournisseurs.forEach(fournisseur => { %>
+        <div class="modal fade" id="del<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer le fournisseur <strong><%= fournisseur.nom %></strong> ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="/deleteFournisseur<%= fournisseur.id_fournisseur %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="edit<%= fournisseur.id_fournisseur %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification des information du fournisseur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/updateFournisseur/<%= fournisseur.id_fournisseur %>?_method=PUT" method="post">
+                <div class="modal-body text-start">
+                  <div class="row gx-3">
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Nom</label>
+                        <input type="text" class="form-control" value="<%= fournisseur.nom %>" name="nom" required>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Pseudo</label>
+                        <input type="text" class="form-control" value="<%= fournisseur.pseudo %>" name="pseudo">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="<%= fournisseur.email %>" name="email">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Tel 1</label>
+                        <input type="text" class="form-control" value="<%= fournisseur.numero1 %>" name="numero1">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Tel 2</label>
+                        <input type="text" class="form-control" value="<%= fournisseur.numero2 %>" name="numero2">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Adresse</label>
+                        <input type="text" class="form-control" value="<%= fournisseur.adresse %>" name="adresse">
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-sm-8">
+                      <div class="mb-3">
+                        <label class="form-label">Commantaire</label>
+                        <textarea class="form-control" rows="3" name="desc" placeholder="Commantaire"><%= fournisseur.commantaire %></textarea>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" class="btn btn-primary">Appliquer les modifications</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      <% }) %>
+
     <%- include('script')%>
     
     <script>

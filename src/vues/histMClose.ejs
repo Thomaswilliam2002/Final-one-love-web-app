@@ -83,9 +83,9 @@
                           </tr>
                         </thead>
                         <tbody class="text-center" id="tbody">
-                            <% i = 1;journals.forEach(journal => { %>
+                            <% journals.forEach(journal => { %>
                                 <tr>
-                                    <td><%= i %></td>
+                                    <td><%= journal.slug_id %></td>
                                     <td><%= journal.MaisonClose.nom %></td>
                                     <td><%= journal.Chambre.nom %></td>
                                     <td class="calcule"><%= journal.loyer %></td>
@@ -103,40 +103,13 @@
                                                     <i class="ri-delete-bin-line"></i> 
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="<%= journal.id_journal %>ModalCenter" tabindex="-1"
-                                                    aria-labelledby="<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h5 class="modal-title" id="<%= journal.id_journal %>ModalCenterTitle">
-                                                            Confirmer
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <p>Voulez-vous vraiment supprimer cet Historique ?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                            annuler
-                                                        </button>
-                                                        <form action="/deleteChJournal/<%= journal.id_journal %>/<%= journal.id_chambre %>/<%= journal.id_mclose %>?_method=DELETE&sender=hist" method="post">
-                                                            <div class="col-sm-12">
-                                                            <div class="d-flex gap-2 justify-content-end">
-                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                            </div>
-                                                            </div>
-                                                        </form>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
+                                                
                                             <!-- Card ends -->
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                            <% i++ }) %>  
+                            <% }) %>  
                         </tbody>
                       </table>
                       <table id="" class="table truncate m-0 align-middle dataTable">
@@ -176,6 +149,41 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% journals.forEach(journal => { %>
+      <div class="modal fade" id="<%= journal.id_journal %>ModalCenter" tabindex="-1"
+        aria-labelledby="<%= journal.id_journal %>ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="<%= journal.id_journal %>ModalCenterTitle">
+                Confirmer
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer cet Historique ?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+            </button>
+            <form action="/deleteChJournal/<%= journal.id_journal %>/<%= journal.id_chambre %>/<%= journal.id_mclose %>?_method=DELETE&sender=hist" method="post">
+                <div class="col-sm-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+      </div>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

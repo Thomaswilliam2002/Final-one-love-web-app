@@ -123,35 +123,7 @@
                                                       <i class="ri-delete-bin-line"></i>
                                                   </button>
                                                   <!-- Modal -->
-                                                  <div class="modal fade" id="salaire<%= Journal.id_salaire %>ModalCenter" tabindex="-1"
-                                                      aria-labelledby="salaire<%= Journal.id_salaire %>ModalCenterTitle" aria-hidden="true">
-                                                      <div class="modal-dialog modal-dialog-centered">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                          <h5 class="modal-title" id="salaire<%= Journal.id_salaire %>ModalCenterTitle">
-                                                              Confirmer
-                                                          </h5>
-                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                          <p>Voulez-vous vraiment supprimer cet Historique de Declaration de Salaire ?</p>
-                                                          <p>Noter bien que cella entainera la suppression de tout les avance et paiement de salaire rattacher</p>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                              annuler
-                                                          </button>
-                                                          <form action="/deleteSalaire/<%= Journal.id_salaire %>?_method=DELETE" method="post">
-                                                              <div class="col-sm-12">
-                                                              <div class="d-flex gap-2 justify-content-end">
-                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                              </div>
-                                                              </div>
-                                                          </form>
-                                                          </div>
-                                                      </div>
-                                                      </div>
-                                                  </div>
+                                                  
                                               <!-- Card ends -->
                                               </div>
                                           </div>
@@ -227,34 +199,7 @@
                                                       <i class="ri-delete-bin-line"></i>
                                                   </button>
                                                   <!-- Modal -->
-                                                  <div class="modal fade" id="avance<%= Journal.id_avance %>ModalCenter" tabindex="-1"
-                                                      aria-labelledby="avance<%= Journal.id_avance %>ModalCenterTitle" aria-hidden="true">
-                                                      <div class="modal-dialog modal-dialog-centered">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                          <h5 class="modal-title" id="avance<%= Journal.id_avance %>ModalCenterTitle">
-                                                              Confirmer
-                                                          </h5>
-                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                          <p>Voulez-vous vraiment supprimer cet Historique d'Avence sur Salaire ?</p>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                              annuler
-                                                          </button>
-                                                          <form action="/deleteASalaire/<%= Journal.id_avance %>?_method=DELETE" method="post">
-                                                              <div class="col-sm-12">
-                                                              <div class="d-flex gap-2 justify-content-end">
-                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                              </div>
-                                                              </div>
-                                                          </form>
-                                                          </div>
-                                                      </div>
-                                                      </div>
-                                                  </div>
+                                                  
                                               <!-- Card ends -->
                                               </div>
                                           </div>
@@ -330,34 +275,7 @@
                                                       <i class="ri-delete-bin-line"></i>
                                                   </button>
                                                   <!-- Modal -->
-                                                  <div class="modal fade" id="paiement<%= Journal.id_paisal %>ModalCenter" tabindex="-1"
-                                                      aria-labelledby="paiement<%= Journal.id_paisal %>ModalCenterTitle" aria-hidden="true">
-                                                      <div class="modal-dialog modal-dialog-centered">
-                                                      <div class="modal-content">
-                                                          <div class="modal-header">
-                                                          <h5 class="modal-title" id="paiement<%= Journal.id_paisal %>ModalCenterTitle">
-                                                              Confirmer
-                                                          </h5>
-                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                          <p>Voulez-vous vraiment supprimer cet Historique de Paiement de Salaire ?</p>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                              annuler
-                                                          </button>
-                                                          <form action="/deletePSalaire/<%= Journal.id_paisal %>?_method=DELETE" method="post">
-                                                              <div class="col-sm-12">
-                                                              <div class="d-flex gap-2 justify-content-end">
-                                                                  <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                              </div>
-                                                              </div>
-                                                          </form>
-                                                          </div>
-                                                      </div>
-                                                      </div>
-                                                  </div>
+                                                  
                                               <!-- Card ends -->
                                               </div>
                                           </div>
@@ -395,6 +313,116 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% salaires.forEach(Journal => { %>
+      <%
+        if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+      %>
+        <div class="modal fade" id="salaire<%= Journal.id_salaire %>ModalCenter" tabindex="-1"
+          aria-labelledby="salaire<%= Journal.id_salaire %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="salaire<%= Journal.id_salaire %>ModalCenterTitle">
+                  Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cet Historique de Declaration de Salaire ?</p>
+              <p>Noter bien que cella entainera la suppression de tout les avance et paiement de salaire rattacher</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+              </button>
+              <form action="/deleteSalaire/<%= Journal.id_salaire %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                  </div>
+              </form>
+              </div>
+          </div>
+          </div>
+        </div>
+      <% } %>
+    <% }) %>
+
+    <% avanceSalaires.forEach(Journal => { %>
+      <%
+        if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+      %>
+        <div class="modal fade" id="avance<%= Journal.id_avance %>ModalCenter" tabindex="-1"
+          aria-labelledby="avance<%= Journal.id_avance %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="avance<%= Journal.id_avance %>ModalCenterTitle">
+                  Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cet Historique d'Avence sur Salaire ?</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+              </button>
+              <form action="/deleteASalaire/<%= Journal.id_avance %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                  </div>
+              </form>
+              </div>
+          </div>
+          </div>
+        </div>
+      <% } %>
+    <% }) %>
+
+    <% paiementSalaires.forEach(Journal => { %>
+      <%
+        if (!['caissier central'].includes(user?.Poste?.nom_poste?.toLowerCase())){
+      %>
+        <div class="modal fade" id="paiement<%= Journal.id_paisal %>ModalCenter" tabindex="-1"
+          aria-labelledby="paiement<%= Journal.id_paisal %>ModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="paiement<%= Journal.id_paisal %>ModalCenterTitle">
+                  Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer cet Historique de Paiement de Salaire ?</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  annuler
+              </button>
+              <form action="/deletePSalaire/<%= Journal.id_paisal %>?_method=DELETE" method="post">
+                  <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                  </div>
+              </form>
+              </div>
+          </div>
+          </div>
+        </div>
+      <% } %>
+    <% }) %>
 
     <!-- *************
 			************ JavaScript Files *************

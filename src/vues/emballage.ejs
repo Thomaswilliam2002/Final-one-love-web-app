@@ -109,35 +109,7 @@
                                         <i class="ri-delete-bin-line"></i>
                                       </button>
                                       <!-- Modal -->
-                                      <div class="modal fade" id="delete<%= emballage.id_emballage %>ModalCenter" tabindex="-1"
-                                        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="delete<%= emballage.id_emballage %>ModalCenterTitle">
-                                                Confirmer
-                                              </h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                              <p>Voulez-vous vraiment supprimer l'article: <%= emballage.nom %> ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                annuler
-                                              </button>
-                                              <form action="/deleteEmballage/<%= emballage.id_emballage %>?_method=DELETE&art=emballage" method="post">
-                                                <div class="col-sm-12">
-                                                  <div class="d-flex gap-2 justify-content-end">
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                  </div>
-                                                </div>
-                                              </form>
-                                            </div>
-                                          </div>
-                                        <!-- </form> -->
-                                        </div>
-                                      </div>
+                                      
                                   <!-- Card ends -->
                                 <!-- ----------------------------------------------------------------------------------- -->
                                 <!-- Card starts -->
@@ -147,66 +119,7 @@
                                   <i class="ri-edit-box-line"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="update<%= emballage.id_emballage %>ModalCenter" tabindex="-1"
-                                  aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                    <form action="/updateEmballage/<%= emballage.id_emballage %>?_method=PUT" method="post">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="update<%= emballage.id_emballage %>ModalCenterTitle">
-                                          Modification
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <div class="row gx-3">
-                                          <div class="col-sm-12">
-                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                              <h6 class="m-0">Details d'emballage</h6>
-                                            </div>
-                                          </div>
-                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a1">Nom de l'emballage<span class="text-danger">*</span></label>
-                                              <input type="text" class="form-control" id="a1" value="<%= emballage.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
-                                            </div>
-                                          </div>
-                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a2">Categorie<span class="text-danger">*</span></label>
-                                              <select class="form-select" id="dep" name="categ">
-                                                <% if(categories){ categories.forEach(categorie => {%>
-                                                    <option value="<%= categorie.id_categ %>"><%= categorie.nom %></option>
-                                                <% })}else{ %>
-                                                  <option value="null">Aucune categorie disponinble</option>
-                                                <% } %>
-                                              </select>
-                                            </div>
-                                          </div>
-                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a1">Seuil de rappel<span class="text-danger">*</span></label>
-                                              <input type="text" class="form-control" id="a1" value="<%= emballage.seuil %>" placeholder="Entrer le nouveau nom" name="seuil" required>
-                                            </div>
-                                          </div>
-                                          <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a8">Description <span class="text-danger">*</span></label>
-                                              <textarea class="form-control" id="a8" rows="2" name="desc"><%= emballage.description %></textarea>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                          annuler
-                                        </button>
-                                        <button type="submit" class="btn btn-danger">Appliquer les modification</button>
-                                      </form>
-                                      </div>
-                                    </div>
-                                  <!-- </form> -->
-                                </div>
+                                
                                 </div>
                                   <!-- Card ends -->
                                 <!-- ----------------------------------------------------------------------------------- -->
@@ -222,82 +135,7 @@
                                   <i class="ri-file-reduce-line"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="<%= emballage.id_emballage %>exampleModalCenter" tabindex="-1"
-                                  aria-labelledby="<%= emballage.id_emballage %>exampleModalCenterTitle" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="<%= emballage.id_emballage %>exampleModalCenterTitle">
-                                          Modiffication apres Sortie d'un Emballage
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <!-- Row starts -->
-                                        <% if (emballage.quantiter >= 1){ if(caisses.length > 0){%>
-                                        <form action="/addHSortie/<%= emballage.id_emballage %>?art=emballage" method="post">
-                                        <div class="row gx-3">
-                                          <div class="col-sm-12">
-                                            <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                              <h6 class="m-0">Details de la Vente</h6>
-                                            </div>
-                                          </div>
-                                          
-                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a1">Quantiter/Nombre a retirer<span class="text-danger">*</span></label>
-                                              <input type="number" min="1"  max="<%= emballage.quantiter %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
-                                            </div>
-                                          </div>
-                                          <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> 
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                              <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
-                                            </div>
-                                          </div>
-                                          <div class="col-sm-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a8">Nom de la caisse destinataire<span class="text-danger">*</span></label>
-                                              <select name="dest" class="form-select" id="">
-                                                <option disabled value="" selected>choisir un destinataire</option>
-                                                <% if(caisses.length > 0){ caisses.forEach(c => {%>
-                                                  <option value="<%= c.id_lieu %>|<%= c.type_lieu %>|<%= c.id_caisse %>" ><%= c.nom %> (<%= c.type_lieu %>)</option>
-                                                <% }) }%>
-                                              </select>
-                                            </div>
-                                          </div>
-                                          <div class="col-sm-12">
-                                            <div class="mb-3">
-                                              <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
-                                              <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="cmm"></textarea>
-                                            </div>
-                                          </div>
-                                          <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
-                                          <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Annuler
-                                          </button>
-                                          <button type="submit" class="btn btn-danger">Confirmer le retrait</button>
-                                        </form>
-                                        <% } else { %>
-                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                                            <b>Imposssible </b> de diminuer le stock ! <br>
-                                            Actuellement Aucune caisse n'est enregistrer . <br>
-                                            <a href="/formAddCaisse">Enregistrer une Caisse</a> et réessayer.
-                                          </div>
-                                        <% } %>
-                                        <% } else { %>
-                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                                            <b>Imposssible </b> de diminuer le stock ! <br>
-                                            Actuellement le stock est a <b>0</b> .
-                                          </div>
-                                        <% } %>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                                 <!-- Card ends -->
                               </div>
                                 <!-- -------------------------------------------------------------------------------------------------- -->
@@ -306,76 +144,7 @@
                                   <i class="ri-file-add-line"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="<%= emballage.id_emballage %>exampleModalCenter<%= emballage.id_emballage %>" tabindex="-1"
-                                  aria-labelledby="<%= emballage.id_emballage %>exampleModalCenterTitle<%=emballage.id_emballage %>" aria-hidden="true">
-                                  <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="<%= emballage.id_emballage %>exampleModalCenterTitle<%= emballage.id_emballage %>">
-                                          Modiffication apres Entrer d'un Emballage
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <!-- Row starts -->
-                                        <% if(fournisseurs.length > 0){ %>
-                                          <form action="/addHEntrer/<%= emballage.id_emballage %>?art=emballage" method="post">
-                                          <div class="row gx-3">
-                                            <div class="col-sm-12">
-                                              <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                <h6 class="m-0">Details de l'ajout</h6>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
-                                                <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
-                                              </div>
-                                            </div>
-                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
-                                                <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
-                                              </div>
-                                            </div>
-                                            <!-- <div class="col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a8">Nom de l'émetteur<span class="text-danger">*</span></label>
-                                                <textarea class="form-control" id="a8" placeholder="Ajouter le nom l'entité ou de la personne et qui ou d'où vien l'emballage " rows="2" name="dest" required></textarea>
-                                              </div>
-                                            </div> -->
-                                            <div class="col-sm-12">
-                                              <div class="mb-3">
-                                                <label class="form-label" for="a8">Choisisez le Fournisseur<span class="text-danger">*</span></label>
-                                                <select name="fournisseur" class="form-select" id="">
-                                                  <option disabled value="" selected>choisir un Fournisseur</option>
-                                                  <% if(fournisseurs.length > 0){ fournisseurs.forEach(f => {%>
-                                                    <option value="<%= f.id_fournisseur %>" ><%= f.nom %> (<%= f.pseudo %>)</option>
-                                                  <% }) }%>
-                                                </select>
-                                              </div>
-                                            </div>
-                                            <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
-                                            <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
-                                          </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                              Annuler
-                                            </button>
-                                            <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
-                                          </form>
-                                        <% } else { %>
-                                          <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
-                                            <b>Imposssible </b> de faire l'approvisionnement ! <br>
-                                            Actuellement aucun fournisseur n'est enregistrer. <br>
-                                            <a href="/fournisseur#formAddFournisseur">Enregistrer un Fournisseur</a> et réessayer.
-                                          </div>
-                                        <% } %>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                
                                 <!-- ----------------------------------------------------------------------------------- -->
                               </div>
                             </td>
@@ -411,6 +180,252 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <% emballages.forEach((emballage, index) => { %>
+      <div class="modal fade" id="delete<%= emballage.id_emballage %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="delete<%= emballage.id_emballage %>ModalCenterTitle">
+                Confirmer
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Voulez-vous vraiment supprimer l'article: <%= emballage.nom %> ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <form action="/deleteEmballage/<%= emballage.id_emballage %>?_method=DELETE&art=emballage" method="post">
+                <div class="col-sm-12">
+                  <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        <!-- </form> -->
+        </div>
+      </div>
+
+      <div class="modal fade" id="update<%= emballage.id_emballage %>ModalCenter" tabindex="-1"
+        aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+          <form action="/updateEmballage/<%= emballage.id_emballage %>?_method=PUT" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title" id="update<%= emballage.id_emballage %>ModalCenterTitle">
+                Modification
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                    <h6 class="m-0">Details d'emballage</h6>
+                  </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a1">Nom de l'emballage<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="a1" value="<%= emballage.nom %>" placeholder="Entrer le nouveau nom" name="nom" required>
+                  </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a2">Categorie<span class="text-danger">*</span></label>
+                    <select class="form-select" id="dep" name="categ">
+                      <% if(categories){ categories.forEach(categorie => {%>
+                          <option value="<%= categorie.id_categ %>"><%= categorie.nom %></option>
+                      <% })}else{ %>
+                        <option value="null">Aucune categorie disponinble</option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a1">Seuil de rappel<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="a1" value="<%= emballage.seuil %>" placeholder="Entrer le nouveau nom" name="seuil" required>
+                  </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a8">Description <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="a8" rows="2" name="desc"><%= emballage.description %></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                annuler
+              </button>
+              <button type="submit" class="btn btn-danger">Appliquer les modification</button>
+            </form>
+            </div>
+          </div>
+        <!-- </form> -->
+      </div>
+
+      <div class="modal fade" id="<%= emballage.id_emballage %>exampleModalCenter" tabindex="-1"
+        aria-labelledby="<%= emballage.id_emballage %>exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= emballage.id_emballage %>exampleModalCenterTitle">
+                Modiffication apres Sortie d'un Emballage
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Row starts -->
+              <% if (emballage.quantiter >= 1){ if(caisses.length > 0){%>
+              <form action="/addHSortie/<%= emballage.id_emballage %>?art=emballage" method="post">
+              <div class="row gx-3">
+                <div class="col-sm-12">
+                  <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                    <h6 class="m-0">Details de la Vente</h6>
+                  </div>
+                </div>
+                
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a1">Quantiter/Nombre a retirer<span class="text-danger">*</span></label>
+                    <input type="number" min="1"  max="<%= emballage.quantiter %>" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quqntiter" name="nbr" required>
+                  </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> 
+                  <div class="mb-3">
+                    <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                    <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a8">Nom de la caisse destinataire<span class="text-danger">*</span></label>
+                    <select name="dest" class="form-select" id="">
+                      <option disabled value="" selected>choisir un destinataire</option>
+                      <% if(caisses.length > 0){ caisses.forEach(c => {%>
+                        <option value="<%= c.id_lieu %>|<%= c.type_lieu %>|<%= c.id_caisse %>" ><%= c.nom %> (<%= c.type_lieu %>)</option>
+                      <% }) }%>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="a8">Commantaire<span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="a8" placeholder="un commantaire ?" rows="2" name="cmm"></textarea>
+                  </div>
+                </div>
+                <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
+                <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Annuler
+                </button>
+                <button type="submit" class="btn btn-danger">Confirmer le retrait</button>
+              </form>
+              <% } else { %>
+                <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                  <b>Imposssible </b> de diminuer le stock ! <br>
+                  Actuellement Aucune caisse n'est enregistrer . <br>
+                  <a href="/formAddCaisse">Enregistrer une Caisse</a> et réessayer.
+                </div>
+              <% } %>
+              <% } else { %>
+                <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                  <b>Imposssible </b> de diminuer le stock ! <br>
+                  Actuellement le stock est a <b>0</b> .
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="<%= emballage.id_emballage %>exampleModalCenter<%= emballage.id_emballage %>" tabindex="-1"
+        aria-labelledby="<%= emballage.id_emballage %>exampleModalCenterTitle<%=emballage.id_emballage %>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="<%= emballage.id_emballage %>exampleModalCenterTitle<%= emballage.id_emballage %>">
+                Modiffication apres Entrer d'un Emballage
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Row starts -->
+              <% if(fournisseurs.length > 0){ %>
+                <form action="/addHEntrer/<%= emballage.id_emballage %>?art=emballage" method="post">
+                <div class="row gx-3">
+                  <div class="col-sm-12">
+                    <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                      <h6 class="m-0">Details de l'ajout</h6>
+                    </div>
+                  </div>
+                  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="mb-3">
+                      <label class="form-label" for="a1">Quantiter/Nombre a ajouter<span class="text-danger">*</span></label>
+                      <input type="number" min="1" step="0.01" class="form-control" id="a1" placeholder="Entrer le nombre ou la quantiter" name="nb" required>
+                    </div>
+                  </div>
+                  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="mb-3">
+                      <label class="form-label" for="a2">Prix a l'unité <span class="text-danger">*</span></label>
+                      <input type="number" min="0" step="0.01" class="form-control" id="a2" placeholder="Entrer le prix unitaire" name="prix" required>
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-12">
+                    <div class="mb-3">
+                      <label class="form-label" for="a8">Nom de l'émetteur<span class="text-danger">*</span></label>
+                      <textarea class="form-control" id="a8" placeholder="Ajouter le nom l'entité ou de la personne et qui ou d'où vien l'emballage " rows="2" name="dest" required></textarea>
+                    </div>
+                  </div> -->
+                  <div class="col-sm-12">
+                    <div class="mb-3">
+                      <label class="form-label" for="a8">Choisisez le Fournisseur<span class="text-danger">*</span></label>
+                      <select name="fournisseur" class="form-select" id="">
+                        <option disabled value="" selected>choisir un Fournisseur</option>
+                        <% if(fournisseurs.length > 0){ fournisseurs.forEach(f => {%>
+                          <option value="<%= f.id_fournisseur %>" ><%= f.nom %> (<%= f.pseudo %>)</option>
+                        <% }) }%>
+                      </select>
+                    </div>
+                  </div>
+                  <input type="hidden" class="form-control" id="a2" name="type" value="emballage">
+                  <input type="hidden" class="form-control" id="a2" name="idpro" value="<%= emballage.id_emballage %>">
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Annuler
+                  </button>
+                  <button type="submit" class="btn btn-success">Confirmer l'ajout</button>
+                </form>
+              <% } else { %>
+                <div class="alert bg-white border alert-dismissible fade show text-danger" role="alert">
+                  <b>Imposssible </b> de faire l'approvisionnement ! <br>
+                  Actuellement aucun fournisseur n'est enregistrer. <br>
+                  <a href="/fournisseur#formAddFournisseur">Enregistrer un Fournisseur</a> et réessayer.
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
 
     <!-- *************
 			************ JavaScript Files *************

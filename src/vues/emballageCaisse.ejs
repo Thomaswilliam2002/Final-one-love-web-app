@@ -83,51 +83,7 @@
                                     <i class="">Mise a jour</i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="ModalCenter" tabindex="-1"
-                                aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalCenterTitle">
-                                        Compte
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                        <div class="modal-body">
-                                            <form action="" method="post">
-                                                <div class="row gx-3">
-                                                  <div class="col-sm-12">
-                                                    <div class="bg-light rounded-2 px-3 py-2 mb-3">
-                                                      <h6 class="m-0">Emballage name</h6>
-                                                    </div>
-                                                  </div>
-                                                  
-                                                  <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                    <div class="mb-3">
-                                                      <label class="form-label" for="a1">Stock<span class="text-danger">*</span></label>
-                                                      <input type="number" min="0"  max="" step="0.1" class="form-control" id="a1" placeholder="Stock actuelle" name="stock" required>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-xxl-3 col-lg-6 col-sm-6">
-                                                    <div class="mb-3">
-                                                      <label class="form-label" for="a2">Quantiter vendu <span class="text-danger">*</span></label>
-                                                      <input type="number" min="0" step="0.1" class="form-control" id="a2" placeholder="Quantiter vendu" name="prix" required>
-                                                    </div>
-                                                  </div>
-                                                  <input type="hidden" class="form-control" id="a2" name="type" value="produit">
-                                                  <input type="hidden" class="form-control" id="a2" name="idpro" value="">
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    Annuler
-                                                  </button>
-                                                  <button type="submit" class="btn btn-danger">Appliquer les modifications</button>
-                                                </div>
-                                              </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
+                                
                             </div>
                         </div>
                     <%}%>
@@ -152,6 +108,56 @@
 
     </div>
     <!-- Page wrapper ends -->
+
+    <!-- ========================= -->
+    <!-- 🔥 MODALS (SORTIS ICI) -->
+    <!-- ========================= -->
+
+    <div class="modal fade" id="ModalCenter" tabindex="-1"
+      aria-labelledby="personnel.id_personnelModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="ModalCenterTitle">
+              Compte
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+              <div class="modal-body">
+                  <form action="" method="post">
+                      <div class="row gx-3">
+                        <div class="col-sm-12">
+                          <div class="bg-light rounded-2 px-3 py-2 mb-3">
+                            <h6 class="m-0">Emballage name</h6>
+                          </div>
+                        </div>
+                        
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a1">Stock<span class="text-danger">*</span></label>
+                            <input type="number" min="0"  max="" step="0.1" class="form-control" id="a1" placeholder="Stock actuelle" name="stock" required>
+                          </div>
+                        </div>
+                        <div class="col-xxl-3 col-lg-6 col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label" for="a2">Quantiter vendu <span class="text-danger">*</span></label>
+                            <input type="number" min="0" step="0.1" class="form-control" id="a2" placeholder="Quantiter vendu" name="prix" required>
+                          </div>
+                        </div>
+                        <input type="hidden" class="form-control" id="a2" name="type" value="produit">
+                        <input type="hidden" class="form-control" id="a2" name="idpro" value="">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Annuler
+                        </button>
+                        <button type="submit" class="btn btn-danger">Appliquer les modifications</button>
+                      </div>
+                    </form>
+              </div>
+          </div>
+      </div>
+    </div>
 
     <!-- *************
 			************ JavaScript Files *************

@@ -21,7 +21,7 @@ allHEntrer = (app) => {
 
 addHEntrer = (app) => {
     app.post('/addHEntrer/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
-        const {nb, prix, type, idpro, fournisseur} = req.body;
+        const {nb, prix, type, idpro, fournisseur, date} = req.body;
         if(req.query.art === 'produit'){
             Produit.findByPk(req.params.id)
                 .then(produit => {
@@ -31,7 +31,8 @@ addHEntrer = (app) => {
                         prix_unit: prix,
                         type: type,
                         id_probal: idpro,
-                        id_fournisseur: fournisseur
+                        id_fournisseur: fournisseur,
+                        date: date
                     })
                         .then(hentrer => {
                             Produit.update({

@@ -101,7 +101,6 @@
                                 <th>Montant</th>
                                 <th class="no-calc">Fournisseur</th>
                                 <th class="no-calc">Date de l'operation</th>
-                                <th class="no-calc">Heure de l'operation</th>
                                 <th class="no-calc">Action</th>
                               </tr>
                             </thead>
@@ -113,8 +112,7 @@
                                 <td><%= hachat.prix_unit %></td>
                                 <td><%= hachat.prix_unit * hachat.quantiter %></td>
                                 <td><%= hachat?.Fournisseur?.nom ? hachat?.Fournisseur?.nom : "Aucun" %></td>
-                                <td><%= new Date(hachat.created).getDate() %>-<%= new Date(hachat.created).getMonth() + 1 %>-<%= new Date(hachat.created).getFullYear()%></td>
-                                <td><%= new Date(hachat.created).getHours() %>-<%= new Date(hachat.created).getMinutes() %>-<%= new Date(hachat.created).getSeconds()%></td>
+                                <td><%= hachat.date %></td>
                                 <td>
                                   <div class="d-inline-flex gap-1">
                                     <!-- ----------------------------------------------------------------------------------- -->
@@ -194,7 +192,6 @@
                                 <th class="no-calc">Destinataire</th>
                                 <th class="no-calc">Commantaire</th>
                                 <th class="no-calc">Date de l'operation</th>
-                                <th class="no-calc">Heure de l'operation</th>
                                 <th class="no-calc">Action</th> 
                               </tr>
                             </thead>
@@ -214,8 +211,7 @@
                                   <td class="calcule2"><%= hvente.prix_unit * hvente.quantiter %></td>
                                   <td><%= hvente.caisse.nom %></td>
                                   <td class="wrap-text"><%= hvente.commantaire %></td>
-                                  <td><%= new Date(hvente.created).getDate() %>-<%= new Date(hvente.created).getMonth() + 1 %>-<%= new Date(hvente.created).getFullYear()%></td>
-                                  <td><%= new Date(hvente.created).getHours() %>-<%= new Date(hvente.created).getMinutes() %>-<%= new Date(hvente.created).getSeconds()%></td>
+                                  <td><%= hvente.date %></td>
                                   <td>
                                     <div class="d-inline-flex gap-1">
                                       

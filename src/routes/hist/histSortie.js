@@ -153,7 +153,7 @@ addHSortie = (app) => {
 
         try {
 
-            const { nbr, prix, type, idpro, dest, cmm } = req.body;
+            const { nbr, prix, type, idpro, dest, cmm, date } = req.body;
             const art = req.query.art;
             const [desti, type_lieu, id_caisse] = dest.split('|');
             let model;
@@ -188,7 +188,8 @@ addHSortie = (app) => {
                 receveur: desti,
                 type_lieu_receveur: type_lieu,
                 commantaire: cmm,
-                id_caisse: id_caisse
+                id_caisse: id_caisse,
+                date: date
             });
 
             await model.update({

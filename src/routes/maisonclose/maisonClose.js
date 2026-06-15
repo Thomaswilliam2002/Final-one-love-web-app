@@ -10,7 +10,7 @@ const {protrctionRoot, authorise} = require('../../middleware/protectRoot');
 // }
 
 allMClose = (app) => {
-    app.get('/allMClose', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/allMClose', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         MaisonColse.findAll({
             where:{is_active: true},
             order:[['id_mclose', 'ASC']]
@@ -45,7 +45,7 @@ allMClose = (app) => {
 }
 
 oneMClose = (app) => {
-    app.get('/oneMClose/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.get('/oneMClose/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         MaisonColse.findByPk(req.params.id)
             .then(maisonColse => {
                 Chambre.findOne({

@@ -21,7 +21,7 @@ allChambre = (app) => {
 }
 
 oneChambre = (app) => {
-    app.get('/oneChambre/:id/:id_mc', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.get('/oneChambre/:id/:id_mc', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try {
 
             const { id, id_mc } = req.params;
@@ -103,7 +103,7 @@ addChambre = (app) => {
 }
 
 updateChambre = (app) => {
-    app.put('/updateChambre/:id', protrctionRoot, authorise('admin', 'comptable'), (req, res) => {
+    app.put('/updateChambre/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), (req, res) => {
         const {nom, loyer, dispo, desc} = req.body
         Chambre.update({
             nom: nom,
@@ -127,7 +127,7 @@ updateChambre = (app) => {
 }
 
 deleteChambre = (app) => {
-    app.delete('/deleteChambre/:id', protrctionRoot, authorise('admin', 'comptable'), async (req, res) => {
+    app.delete('/deleteChambre/:id', protrctionRoot, authorise('admin', 'comptable', 'caissier central'), async (req, res) => {
         try{
             const t = await sequelize.transaction();
             await Chambre.update({is_active: false}, {where: {id_chambre: req.params.id}, transaction: t});

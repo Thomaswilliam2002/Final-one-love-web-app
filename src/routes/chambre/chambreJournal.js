@@ -52,7 +52,7 @@ addChJournal = (app) => {
             manquant: manquant,
         })
             .then(chambreJournal => {
-                res.redirect('/formFondBarClub?msg=Journal ajouter avec succes pour la chambre ' + chambreNom + ' et la maison colse ' + mclose1 + '&type=mclose')
+                res.redirect('/formFondBarClub?msg=Journal ajouter avec succes pour la chambre ' + chambreNom + ' de la maison colse ' + mclose1 + '&type=mclose')
             })
             .catch(_ => {
                 console.error(_);

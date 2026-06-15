@@ -41,13 +41,15 @@ oneChJournal = (app) => {
 
 addChJournal = (app) => {
     app.post('/addChJournal', (req, res) => {
-        const {mclose1, chambre2, montant, date, commentaire, manquant, chambreNom} = req.body;
+        const {mclose1, chambre2, montant, date, commentaire, manquant} = req.body;
+        const chambreNom = chambre2.split('|')[1]
+        const chambre = chambre2.split('|')[0]
         ChambreJournal.create({
             loyer:montant,
             motif: '',
             description: commentaire,
             date: date,
-            id_chambre: chambre2,
+            id_chambre: chambre,
             id_mclose: mclose1,
             manquant: manquant,
         })

@@ -792,7 +792,7 @@
       }
 
       mclose.addEventListener('change', () => {
-        chambre.innerHTML = ''; //<option value="null">Aucune chambre</option>
+        chambre.innerHTML = '<option value="">Choisissez une chambre</option>'; //<option value="null">Aucune chambre</option>
 
         chambres.forEach(ch => {
           if (mclose.value == ch.id_mclose) {
@@ -809,7 +809,7 @@
 
       chambre.addEventListener('change', () => {
         const elementid = chambre.value
-        const element = chambres.find((ch) => {return ch.id_chambre == elementid})
+        const element = chambres.find((ch) => {return ch.id_chambre == elementid.split('|')[0]})
         total.value=element.total
         dette.value=element.dette_manuelle 
         detteS.value=element.manquant_total_systeme

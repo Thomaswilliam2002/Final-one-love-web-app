@@ -41,7 +41,7 @@ oneChJournal = (app) => {
 
 addChJournal = (app) => {
     app.post('/addChJournal', (req, res) => {
-        const {mclose1, chambre2, montant, date, commentaire, manquant} = req.body;
+        const {mclose1, chambre2, montant, date, commentaire, manquant, chambreNom} = req.body;
         ChambreJournal.create({
             loyer:montant,
             motif: '',
@@ -52,7 +52,7 @@ addChJournal = (app) => {
             manquant: manquant,
         })
             .then(chambreJournal => {
-                res.redirect('/formFondBarClub?msg=Journal ajouter avec succes pour la chambre ' + chambre2 + ' et la maison colse ' + mclose1 + '&type=mclose')
+                res.redirect('/formFondBarClub?msg=Journal ajouter avec succes pour la chambre ' + chambreNom + ' et la maison colse ' + mclose1 + '&type=mclose')
             })
             .catch(_ => {
                 console.error(_);
